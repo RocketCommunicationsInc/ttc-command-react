@@ -4,6 +4,10 @@
   align-items: center;
 }
 
+rux-container::part(body)  {
+  overflow-x: hidden;
+}
+
 .pass-plan rux-select {
   display: flex;
 }
@@ -23,7 +27,6 @@
   flex-flow: row nowrap;
   width: 100%;
   align-items: center;
-  margin-top: var(--spacing-1);
 }
 
 .rux-tree-content div:nth-of-type(1) {
@@ -33,6 +36,22 @@
 
 .rux-tree-content div:nth-of-type(2) {
   margin-right: var(--spacing-3);
+}
+
+.rux-tree-content div:nth-of-type(3) {
+  margin-right: 12rem
+}
+
+rux-progress {
+  width: 16rem;
+}
+
+rux-progress::part(progress) {
+  height: var(--spacing-3)
+}
+
+.rux-tree-content div rux-progress::part(output) {
+  visibility: hidden;
 }
 
 li {
@@ -56,7 +75,6 @@ li {
 
 .tree-wrapper .arrow::part(indicator) {
   align-items: center;
-  background-color: red;
 }
 
 .banner {
@@ -64,4 +82,15 @@ height: var(--spacing-6);
 width: 100%;
 background-color: var(--color-background-surface-selected);
 text-align: center;
+}
+
+.pass-plan div[slot='footer'] {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.pass-plan rux-input {
+  width: 100%;
+  margin-right: var(--spacing-2)
 }

@@ -5,6 +5,9 @@ import {
   RuxTree,
   RuxTreeNode,
   RuxCheckbox,
+  RuxProgress,
+  RuxInput,
+  RuxButton,
 } from "@astrouxds/react";
 // import { useTTCGRMContacts } from "@astrouxds/mock-data";
 import "./PassPlan.css";
@@ -69,6 +72,9 @@ const Constellation = () => {
                 <RuxCheckbox />
               </div>
               <div>Verify MENMONIC = ON</div>
+              <div>
+                <RuxProgress value={60} />
+              </div>
             </div>
 
             <RuxTreeNode slot="node">
@@ -77,6 +83,13 @@ const Constellation = () => {
           </RuxTreeNode>
         </RuxTree>
       </li>
+      <div slot="footer">
+        <RuxInput
+          type="search"
+          placeholder="Start typing to search commands..."
+        />
+        <RuxButton>Add to Queue</RuxButton>
+      </div>
     </RuxContainer>
   );
 };

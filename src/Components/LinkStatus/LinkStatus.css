@@ -1,0 +1,19 @@
+  .link-status rux-table-body rux-table-row:nth-of-type(2), 
+  .link-status rux-table-body rux-table-row:nth-of-type(4), 
+  .link-status rux-table-body rux-table-row:nth-of-type(6)  {
+    background-color: var(--color-background-base-header);
+    width: 100%;
+    text-align: right;
+  }
+
+  .link-status span{
+   display: flex;
+   gap: .5rem;
+  }
+
+.total {
+   margin-left: auto;
+  }
+
+
+

@@ -98,73 +98,30 @@ const GlobalStatusBar = () => {
         </div>
 
         <div className="status-indicators" slot="right-side">
-          <RuxPopUp placement="bottom" closeOnSelect>
-            <RuxMenu
-              onRuxmenuselected={() =>
-                addToast("This feature has not been implemented", false, 3000)
-              }
-            >
-              <RuxMenuItem>Investigate</RuxMenuItem>
-            </RuxMenu>
-            <RuxMonitoringIcon
-              status={status1}
-              icon="antenna-off"
-              label="Lion-A"
-              notifications={notifications1}
-              slot="trigger"
-            ></RuxMonitoringIcon>
-          </RuxPopUp>
-
-          <RuxPopUp placement="bottom" closeOnSelect>
-            <RuxMenu
-              onRuxmenuselected={() =>
-                addToast("This feature has not been implemented", false, 3000)
-              }
-            >
-              <RuxMenuItem>Investigate</RuxMenuItem>
-            </RuxMenu>
-            <RuxMonitoringIcon
-              status={status2}
-              icon="satellite-transmit"
-              label="Iron 4090"
-              notifications={notifications1}
-              slot="trigger"
-            ></RuxMonitoringIcon>
-          </RuxPopUp>
-
-          <RuxPopUp placement="bottom" closeOnSelect>
-            <RuxMenu
-              onRuxmenuselected={() =>
-                addToast("This feature has not been implemented", false, 3000)
-              }
-            >
-              <RuxMenuItem>Investigate</RuxMenuItem>
-            </RuxMenu>
-            <RuxMonitoringIcon
-              status={status3}
-              icon="antenna-receive"
-              label="Comms"
-              notifications={notifications2}
-              slot="trigger"
-            />
-          </RuxPopUp>
-
-          <RuxPopUp placement="bottom" closeOnSelect>
-            <RuxMenu
-              onRuxmenuselected={() =>
-                addToast("This feature has not been implemented", false, 3000)
-              }
-            >
-              <RuxMenuItem>Investigate</RuxMenuItem>
-            </RuxMenu>
-            <RuxMonitoringIcon
-              status={status4}
-              icon="processor"
-              label="Software"
-              notifications={notifications3}
-              slot="trigger"
-            />
-          </RuxPopUp>
+          <RuxMonitoringIcon
+            status={status1}
+            icon="antenna-off"
+            label="Lion-A"
+            notifications={notifications1}
+          />
+          <RuxMonitoringIcon
+            status={status2}
+            icon="satellite-transmit"
+            label="Iron 4090"
+            notifications={notifications1}
+          />
+          <RuxMonitoringIcon
+            status={status3}
+            icon="antenna-receive"
+            label="Comms"
+            notifications={notifications2}
+          />
+          <RuxMonitoringIcon
+            status={status4}
+            icon="processor"
+            label="Software"
+            notifications={notifications3}
+          />
         </div>
       </RuxGlobalStatusBar>
     </>

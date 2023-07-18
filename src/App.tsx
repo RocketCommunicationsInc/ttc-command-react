@@ -1,5 +1,5 @@
 import Alerts from "./Components/Alerts/Alerts";
-import Constellation from "./Components/PassPlan/PassPlan";
+import PassPlan from "./Components/PassPlan/PassPlan";
 import Watcher from "./Components/Watcher/Watcher";
 import GlobalStatusBar from "./Components/GlobalStatusBar";
 import LinkStatus from "Components/LinkStatus/LinkStatus";
@@ -23,7 +23,7 @@ function App() {
         <GlobalStatusBar />
         <div className="background">
           <Alerts />
-          <Constellation />
+          <PassPlan />
           <LinkStatus />
           <Subsystems />
           <Watcher />

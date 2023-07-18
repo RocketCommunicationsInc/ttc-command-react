@@ -47,13 +47,10 @@ rux-container.pass-plan {
 
 .link-status {
   grid-area: link-status;
-  background-color: rebeccapurple;
-  padding-right: var(--spacing-3);
 }
 
 .subsystems {
   grid-area: subsystems;
-  background-color: royalblue;
 }
 
 .watcher rux-container {
