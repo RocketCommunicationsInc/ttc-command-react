@@ -56,9 +56,8 @@ rux-container.pass-plan {
   background-color: royalblue;
 }
 
-.watcher {
+.watcher rux-container {
 grid-area: watcher;
- display: flex;
 }
 
 /* GlOBAL TABLE STYLES */

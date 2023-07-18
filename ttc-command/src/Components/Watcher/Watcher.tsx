@@ -7,8 +7,6 @@ import {
   RuxTableHeaderRow,
   RuxTableHeaderCell,
   RuxTableBody,
-  RuxAccordion,
-  RuxAccordionItem,
 } from "@astrouxds/react";
 import WatcherListItem from "./WatcherListItem";
 import { generateMnemonics } from "@astrouxds/mock-data";
@@ -65,50 +63,41 @@ const Watcher = () => {
         <div slot="header" style={styles.container}>
           Watcher
         </div>
-        <RuxAccordion>
-          <RuxAccordionItem expanded>
-            <span slot="label">IRON 4090</span>
-            <div className="table-wrapper">
-              <RuxTable>
-                <RuxTableHeader>
-                  <RuxTableHeaderRow>
-                    <RuxTableHeaderCell>
-                      {/* placeholder for status icon column */}
-                    </RuxTableHeaderCell>
-                    <RuxTableHeaderCell>Mnemonic</RuxTableHeaderCell>
-                    <RuxTableHeaderCell>Unit</RuxTableHeaderCell>
-                    <RuxTableHeaderCell>Threshold</RuxTableHeaderCell>
-                    <RuxTableHeaderCell>Actual</RuxTableHeaderCell>
-                    <RuxTableHeaderCell>
-                      {/* placeholder for actions menu column */}
-                    </RuxTableHeaderCell>
-                  </RuxTableHeaderRow>
-                </RuxTableHeader>
-                <RuxTableBody>
-                  {updatedMnemoncicsData.map(
-                    (
-                      dataObj: Mnemonic & { previousReadings: number[] },
-                      index
-                    ) => {
-                      const lastDataPoint =
-                        dataObj.previousReadings.at(-1) || 0;
-                      const chartDataSlope =
-                        lastDataPoint - dataObj.previousReadings[0];
-                      return (
-                        <WatcherListItem
-                          key={dataObj.id}
-                          rowData={dataObj}
-                          chartDataSlope={chartDataSlope}
-                          index={index}
-                        />
-                      );
-                    }
-                  )}
-                </RuxTableBody>
-              </RuxTable>
-            </div>
-          </RuxAccordionItem>
-        </RuxAccordion>
+        <div className="table-wrapper">
+          <RuxTable>
+            <RuxTableHeader>
+              <RuxTableHeaderRow>
+                <RuxTableHeaderCell>
+                  {/* placeholder for status icon column */}
+                </RuxTableHeaderCell>
+                <RuxTableHeaderCell>Mnemonic</RuxTableHeaderCell>
+                <RuxTableHeaderCell>Unit</RuxTableHeaderCell>
+                <RuxTableHeaderCell>Threshold</RuxTableHeaderCell>
+                <RuxTableHeaderCell>Actual</RuxTableHeaderCell>
+                <RuxTableHeaderCell>
+                  {/* placeholder for actions menu column */}
+                </RuxTableHeaderCell>
+              </RuxTableHeaderRow>
+            </RuxTableHeader>
+            <RuxTableBody>
+              {updatedMnemoncicsData.map(
+                (dataObj: Mnemonic & { previousReadings: number[] }, index) => {
+                  const lastDataPoint = dataObj.previousReadings.at(-1) || 0;
+                  const chartDataSlope =
+                    lastDataPoint - dataObj.previousReadings[0];
+                  return (
+                    <WatcherListItem
+                      key={dataObj.id}
+                      rowData={dataObj}
+                      chartDataSlope={chartDataSlope}
+                      index={index}
+                    />
+                  );
+                }
+              )}
+            </RuxTableBody>
+          </RuxTable>
+        </div>
       </RuxContainer>
     </div>
   );

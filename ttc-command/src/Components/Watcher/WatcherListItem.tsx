@@ -8,7 +8,6 @@ import {
   RuxMenuItem,
 } from "@astrouxds/react";
 import MnemonicPopUp from "./MnemonicPopUp";
-import ThresholdInput from "./ThresholdInput";
 import type { Mnemonic, Status } from "@astrouxds/mock-data";
 import { addToast } from "../../utils";
 
@@ -28,9 +27,7 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
         <MnemonicPopUp triggerValue={rowData.mnemonicId} data={rowData} />
       </RuxTableCell>
       <RuxTableCell> {rowData.unit}</RuxTableCell>
-      <RuxTableCell>
-        <ThresholdInput savedValue={String(rowData.thresholdMax)} />
-      </RuxTableCell>
+      <RuxTableCell>{String(rowData.thresholdMax)}</RuxTableCell>
       <RuxTableCell>
         <>
           {rowData.currentValue}

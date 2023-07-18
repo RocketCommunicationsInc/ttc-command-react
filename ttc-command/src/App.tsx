@@ -1,5 +1,5 @@
 import Alerts from "./Components/Alerts/Alerts";
-import Constellation from "./Components/Constellation/Constellation";
+import Constellation from "./Components/PassPlan/PassPlan";
 import Watcher from "./Components/Watcher/Watcher";
 import GlobalStatusBar from "./Components/GlobalStatusBar";
 import LinkStatus from "Components/LinkStatus/LinkStatus";
