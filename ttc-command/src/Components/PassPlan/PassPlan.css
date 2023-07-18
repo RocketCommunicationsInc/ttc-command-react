@@ -1,83 +1,67 @@
-/* HEADER STYLES */
-
-.constellation div[slot="header"] {
+.header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
 }
 
-.constellation div[slot="header"] .slider {
+.pass-plan rux-select {
   display: flex;
-  margin-left: auto;
 }
 
-/* NOTIFICATION BANNER STYLES */
+.pass-plan rux-select::part(select) {
+  flex-direction: row;
+  width: 8rem;
+}
 
-.constellation rux-notification rux-button::part(container) {
+.pass-plan rux-select::part(label) {
+  margin-right: var(--spacing-3);
+  margin-top: .5rem;
+}
+
+.rux-tree-content {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  align-items: center;
+  margin-top: var(--spacing-1);
+}
+
+.rux-tree-content div:nth-of-type(1) {
+  margin-right: 2rem;
+  width: 2rem;
+}
+
+.rux-tree-content div:nth-of-type(2) {
+  margin-right: var(--spacing-3);
+}
+
+li {
+  list-style-type: none;
+}
+
+.rux-tree-header {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  height: var(--spacing-8);
   padding-inline: var(--spacing-2);
+  font-size: var(--spacing-4);
+  align-items: center;
+  box-shadow: 0px 3px 3px 0px rgb(0 0 0 / 40%);
 }
 
-/* CONSTELLATION TABLE STYLES */
-
-.constellation rux-table-header-row rux-icon {
-  vertical-align: middle;
-  width: 32px;
+.rux-tree-header span:nth-of-type(1) {
+  margin-right: 5.6rem;
 }
 
-.constellation rux-table-header-row .visible {
-  visibility: visible;
-}
-.constellation rux-table-header-row .hidden {
-  visibility: hidden;
+.tree-wrapper .arrow::part(indicator) {
+  align-items: center;
+  background-color: red;
 }
 
-.constellation rux-table-cell:last-of-type rux-icon {
-  margin-inline: 1rem;
-  cursor: pointer;
-}
-
-.constellation #state-t-cell {
-  text-transform: capitalize;
-}
-
-/* TIMELINE STYLES */
-
-/* .constellation rux-time-region::part(container) {
-  margin: 3px;
-  border: 1px solid var(--color-border-interactive-muted);
-} */
-
-.constellation rux-timeline {
-  height: 100%;
-  overflow: auto;
-}
-
-rux-track div[slot="label"] {
-  display: flex;
-}
-
-rux-track rux-status {
-  padding-right: 1rem;
-}
-
-rux-time-region {
-  cursor: pointer;
-}
-
-rux-timeline {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-}
-
-.timeline-wrapper::-webkit-scrollbar:horizontal {
-  position: sticky;
-  bottom: 0;
-}
-
-.timeline-wrapper {
-  height: 100%;
-  overflow-y: auto;
-  position: relative;
-  display: flex;
-  flex-direction: row;
+.banner {
+height: var(--spacing-6);
+width: 100%;
+background-color: var(--color-background-surface-selected);
+text-align: center;
 }
