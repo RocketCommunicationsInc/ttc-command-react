@@ -1,0 +1,82 @@
+/* APPLICATION LAYOUT & GRID STYLES */
+
+.app-container {
+  height: 100%;
+  overflow: hidden;
+}
+
+.background {
+  height: calc(100% - var(--spacing-24));
+  padding: var(--spacing-3);
+  background-color: var(--color-background-base-default);
+  color: var(--color-text-primary);
+  display: grid;
+  gap: var(--spacing-3);
+  grid-template-columns: calc(30% - 10px) calc(46% - 10px) calc(24.25% - 10px);
+  grid-template-rows: 1fr 1fr 35%;
+  grid-template-areas:
+    "alerts pass-plan link-status"
+    "alerts pass-plan subsystems"
+    "alerts pass-plan watcher";
+}
+
+rux-container::part(container) {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 2px);
+  overflow-y: hidden;
+}
+
+rux-container::part(body) {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: hidden;
+  padding: 0;
+  /* to color small space above scrollbar */
+  background-color: var(--color-background-base-header);
+}
+
+rux-container.alerts {
+  grid-area: alerts;
+}
+
+rux-container.pass-plan {
+  grid-area: pass-plan;
+}
+
+.link-status {
+  grid-area: link-status;
+  background-color: rebeccapurple;
+  padding-right: var(--spacing-3);
+}
+
+.subsystems {
+  grid-area: subsystems;
+  background-color: royalblue;
+}
+
+.watcher {
+grid-area: watcher;
+ display: flex;
+}
+
+/* GlOBAL TABLE STYLES */
+
+.table-wrapper {
+  overflow-y: scroll;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  margin-top: 40px;
+}
+
+rux-table-header {
+  top: 0;
+  position: sticky;
+  z-index: 10;
+}
+
+rux-status::part(status) {
+  margin-inline: auto;
+}
