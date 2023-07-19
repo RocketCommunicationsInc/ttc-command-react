@@ -26,7 +26,7 @@ const Subsystems = () => {
           <RuxTableCell>
             <RuxStatus status="serious" />
           </RuxTableCell>
-          <RuxTableCell>Payloade</RuxTableCell>
+          <RuxTableCell>Payload</RuxTableCell>
           <RuxTableCell>
             <RuxIcon size="1rem" icon="launch" />
           </RuxTableCell>
