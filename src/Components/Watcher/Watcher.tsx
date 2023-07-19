@@ -58,8 +58,7 @@ const Watcher = () => {
   }, []);
 
   return (
-    <div className="watcher">
-      <RuxContainer>
+      <RuxContainer className="watcher">
         <div slot="header" style={styles.container}>
           Watcher
         </div>
@@ -99,7 +98,6 @@ const Watcher = () => {
           </RuxTable>
         </div>
       </RuxContainer>
-    </div>
   );
 };
 
