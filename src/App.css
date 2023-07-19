@@ -5,8 +5,9 @@
   overflow: hidden;
 }
 
-.background {
-  height: calc(100% - var(--spacing-24));
+.command-background {
+  visibility: hidden;
+  /* height: calc(100% - var(--spacing-24));
   padding: var(--spacing-3);
   background-color: var(--color-background-base-default);
   color: var(--color-text-primary);
@@ -17,7 +18,21 @@
   grid-template-areas:
     "alerts pass-plan link-status"
     "alerts pass-plan subsystems"
-    "alerts pass-plan watcher";
+    "alerts pass-plan watcher"; */
+}
+
+.investigate-background {
+  height: calc(100% - var(--spacing-24));
+  padding: var(--spacing-3);
+  background-color: var(--color-background-base-default);
+  color: var(--color-text-primary);
+  display: grid;
+  gap: var(--spacing-3);
+  grid-template-columns: calc(50% - 12px) calc(45% - 12px);
+  grid-template-rows: calc(33% - 12px) calc(28.25% - 12px) ;
+  grid-template-areas:
+    "investigate-subsystems start-tracker"
+    "investigate-subsystems electronics"
 }
 
 rux-container::part(container) {
@@ -57,6 +72,18 @@ rux-container.pass-plan {
 grid-area: watcher;
 }
 
+rux-container.electronics {
+  grid-area: electronics;
+}
+
+rux-container.start-tracker {
+  grid-area: star-tracker;
+}
+
+rux-container.investigate-subsystem {
+  grid-area: investigate-subsystem;
+}
+
 /* GlOBAL TABLE STYLES */
 
 .table-wrapper {
@@ -75,4 +102,104 @@ rux-table-header {
 
 rux-status::part(status) {
   margin-inline: auto;
+}
+
+/* INVESTIGATE OVERLAY STYLES*/
+
+/* .investigate {
+  display: none;
+} */
+.investigate__overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  opacity: 0;
+  transition: opacity 0.3s;
+  will-change: opacity;
+  background-color: #000;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.investigate rux-container div[slot="header"] {
+  display: flex;
+  gap: 1rem;
+}
+
+.investigate rux-container div[slot="header"] rux-button {
+  margin-left: auto;
+}
+
+.investigate__close {
+  /* Optional */
+  margin: 0;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.investigate__wrapper {
+  position: fixed;
+  top: 6.75rem;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 500px;
+  z-index: 99;
+  overflow: auto;
+  transition: transform 0.3s;
+  will-change: transform;
+  display: flex;
+  flex-direction: column;
+  -webkit-transform: translate3d(103%, 0, 0);
+  transform: translate3d(103%, 0, 0); /* extra 3% because of box-shadow */
+  -webkit-overflow-scrolling: touch; /* enables momentum scrolling in iOS overflow elements */
+}
+
+/* investigate CONTENT  */
+
+.investigate-title-status {
+  margin-right: 0.25rem;
+}
+
+.investigate__content {
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 100%;
+  flex-grow: 1;
+  /* Optional */
+  padding: 1.5rem;
+  background-color: var(--color-background-surface-default);
+}
+
+.investigate--left .investigate__wrapper {
+  left: 0;
+  right: auto;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+}
+
+.investigate.is-active {
+  display: block;
+}
+
+.investigate.is-visible .investigate__wrapper {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+.investigate.is-visible .investigate__overlay {
+  opacity: 0.5;
 }

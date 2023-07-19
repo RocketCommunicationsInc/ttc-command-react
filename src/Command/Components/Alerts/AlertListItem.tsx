@@ -7,7 +7,7 @@ import {
 } from "@astrouxds/react";
 import { useTTCGRMActions } from "@astrouxds/mock-data";
 import type { Alert } from "@astrouxds/mock-data";
-import { addToast } from "../../utils/index";
+import { addToast } from "../../../utils/index";
 
 type PropTypes = {
   alertItem: Alert;

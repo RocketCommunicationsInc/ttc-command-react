@@ -10,7 +10,7 @@ import {
   RuxToastStack,
 } from "@astrouxds/react";
 import type { Status } from "@astrouxds/mock-data";
-import { addToast } from "../utils";
+import { addToast } from "../../utils";
 import "./GlobalStatusBar.css";
 
 const GlobalStatusBar = () => {

@@ -9,7 +9,7 @@ import {
 } from "@astrouxds/react";
 import MnemonicPopUp from "./MnemonicPopUp";
 import type { Mnemonic, Status } from "@astrouxds/mock-data";
-import { addToast } from "../../utils";
+import { addToast } from "../../../utils";
 
 type PropTypes = {
   rowData: Mnemonic;
