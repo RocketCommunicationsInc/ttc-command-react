@@ -12,7 +12,7 @@
   color: var(--color-text-primary);
   display: grid;
   gap: var(--spacing-3);
-  grid-template-columns: calc(30% - 12px) calc(46% - 12px) calc(24%);
+  grid-template-columns: calc(30% - 12px) calc(45% - 12px) calc(25%);
   grid-template-rows: calc(31% - 12px) calc(27.2% - 12px) calc(41.8%);
   grid-template-areas:
     "alerts pass-plan link-status"
