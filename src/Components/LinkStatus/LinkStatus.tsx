@@ -18,29 +18,29 @@ const LinkStatus = () => {
             <RuxTableCell>
               <span>
                 <RuxStatus status="serious" /> Lock
-                <span className="total">-</span>
+                <span className="total">-99</span>
               </span>
             </RuxTableCell>
           </RuxTableRow>
           <RuxTableRow>
-            <RuxTableCell>Signal Strength: -</RuxTableCell>
+            <RuxTableCell>Signal Strength: -72.64</RuxTableCell>
           </RuxTableRow>
           <RuxTableRow>
             <RuxTableCell>
               <span>
                 <RuxStatus status="serious" />
-                Telemetry<span className="total">-</span>
+                Telemetry<span className="total">99.0</span>
               </span>
             </RuxTableCell>
           </RuxTableRow>
           <RuxTableRow>
-            <RuxTableCell>Total Frame Count: 0</RuxTableCell>
+            <RuxTableCell>Total Frame Count: 49336</RuxTableCell>
           </RuxTableRow>
           <RuxTableRow>
             <RuxTableCell>
               <span>
                 <RuxStatus status="serious" />
-                VCC <span className="total">-</span>
+                VCC <span className="total">7,290</span>
               </span>
             </RuxTableCell>
           </RuxTableRow>
