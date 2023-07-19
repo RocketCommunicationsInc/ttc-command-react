@@ -24,14 +24,14 @@ function App() {
     <div className="app-container">
       <TTCGRMProvider options={options}>
         <GlobalStatusBar />
-        <div className="command-background">
+        <div className="command-background" data-active="true">
           <Alerts />
           <PassPlan />
           <LinkStatus />
           <Subsystems />
           <Watcher />
         </div>
-        <div className="investigate-background">
+        <div className="investigate-background" data-active="false">
           <InvestigateSubsystems />
           <StartTracker />
           <Electronics />

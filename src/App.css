@@ -5,9 +5,8 @@
   overflow: hidden;
 }
 
-.command-background {
-  visibility: hidden;
-  /* height: calc(100% - var(--spacing-24));
+.command-background[data-active=true] {
+  height: calc(100% - var(--spacing-24));
   padding: var(--spacing-3);
   background-color: var(--color-background-base-default);
   color: var(--color-text-primary);
@@ -18,21 +17,29 @@
   grid-template-areas:
     "alerts pass-plan link-status"
     "alerts pass-plan subsystems"
-    "alerts pass-plan watcher"; */
+    "alerts pass-plan watcher";
 }
 
-.investigate-background {
+.command-background[data-active=false] {
+  display: none;
+}
+
+.investigate-background[data-active=true] {
   height: calc(100% - var(--spacing-24));
   padding: var(--spacing-3);
   background-color: var(--color-background-base-default);
   color: var(--color-text-primary);
   display: grid;
   gap: var(--spacing-3);
-  grid-template-columns: calc(50% - 12px) calc(45% - 12px);
-  grid-template-rows: calc(33% - 12px) calc(28.25% - 12px) ;
+  grid-template-columns: calc(25% - 12px) calc(75%);
+  grid-template-rows: calc(50% - 12px) calc(50%) ;
   grid-template-areas:
-    "investigate-subsystems start-tracker"
+    "investigate-subsystems star-tracker"
     "investigate-subsystems electronics"
+}
+
+.investigate-background[data-active=false] {
+  display: none;
 }
 
 rux-container::part(container) {
@@ -49,7 +56,7 @@ rux-container::part(body) {
   overflow-y: hidden;
   padding: 0;
   /* to color small space above scrollbar */
-  background-color: var(--color-background-base-header);
+  /* background-color: var(--color-background-base-header); */
 }
 
 rux-container.alerts {
@@ -76,12 +83,12 @@ rux-container.electronics {
   grid-area: electronics;
 }
 
-rux-container.start-tracker {
+rux-container.star-tracker {
   grid-area: star-tracker;
 }
 
 rux-container.investigate-subsystem {
-  grid-area: investigate-subsystem;
+  grid-area: investigate-subsystems;
 }
 
 /* GlOBAL TABLE STYLES */

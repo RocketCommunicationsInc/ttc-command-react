@@ -1,0 +1,8 @@
+.subsystems_footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.subsystems_footer rux-button {
+    cursor: pointer;
+}

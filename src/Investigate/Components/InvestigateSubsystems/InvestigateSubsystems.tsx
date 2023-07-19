@@ -3,11 +3,24 @@ import {
   RuxTree,
   RuxTreeNode,
   RuxStatus,
+  RuxButton,
 } from "@astrouxds/react";
+import { useState } from "react";
+import './InvestigateSubsystems.css'
 
 const InvestigateSubsystems = () => {
+  const [investigatePanelActive, setInvestigatePanelActive] = useState<boolean>(false)
+  const handleReturnToCommandClick = () => {
+    setInvestigatePanelActive(() => !investigatePanelActive)
+    const investigatePanelElement = document.querySelector('.investigate-background')!;
+    const commandPanelElement = document.querySelector('.command-background')!;
+
+    investigatePanelActive ? investigatePanelElement?.setAttribute('data-active', 'true') : investigatePanelElement.setAttribute('data-active', 'false')
+    !investigatePanelActive ? commandPanelElement?.setAttribute('data-active', 'true') : commandPanelElement.setAttribute('data-active', 'false')
+  }
+
   return (
-    <RuxContainer className="investigate-subsystem">
+    <RuxContainer className="investigate-subsystem" data-active={investigatePanelActive}>
       <div slot="header">Iron 4090 Subsystems</div>
       <RuxTree>
         <RuxTreeNode>
@@ -47,6 +60,11 @@ const InvestigateSubsystems = () => {
           Thermal
         </RuxTreeNode>
       </RuxTree>
+      <div className="subsystems_footer" slot="footer">
+        <RuxButton borderless icon="keyboard-arrow-left" onClick={handleReturnToCommandClick}>
+          Return to Command
+        </RuxButton>
+      </div>
     </RuxContainer>
   );
 };
