@@ -32,14 +32,11 @@ const Constellation = () => {
       <li className="pass-plan-list">
         <RuxTree>
           <RuxTreeNode>
-            <div className="rux-tree-content">
-              <div slot="prefix">1</div>
-              <div>
+              <div className="rux-tree-node_prefix" slot="prefix">1</div>
+              <div className="rux-tree-node_content">
                 <RuxCheckbox />
+                Verify MNEMONIC = ON
               </div>
-              <div>Verify MNEMONIC = ON</div>
-            </div>
-
             <RuxTreeNode slot="node">
               <div className="rux-tree-content">Children</div>
             </RuxTreeNode>
@@ -49,14 +46,11 @@ const Constellation = () => {
       <li className="pass-plan-list">
         <RuxTree>
           <RuxTreeNode>
-            <div className="rux-tree-content">
-              <div slot="prefix">2</div>
-              <div>
+              <div className="rux-tree-node_prefix" slot="prefix">2</div>
+              <div className="rux-tree-node_content">
                 <RuxCheckbox />
+                Verify MNEMONIC = ON
               </div>
-              <div>Verify MNEMONIC = ON</div>
-            </div>
-
             <RuxTreeNode slot="node">
               <div className="rux-tree-content">Children</div>
             </RuxTreeNode>
@@ -66,16 +60,12 @@ const Constellation = () => {
       <li className="pass-plan-list">
         <RuxTree>
           <RuxTreeNode>
-            <div className="rux-tree-content">
-              <div slot="prefix">3</div>
-              <div>
-                <RuxCheckbox />
-              </div>
-
-                <div>Verify MNEMONIC = ON</div>
-                <RuxProgress slot="suffix" value={60} />
+            <div className="rux-tree-node_prefix" slot="prefix">3</div>
+            <div className="rux-tree-node_content">
+              <RuxCheckbox />
+              Verify MNEMONIC = ON
             </div>
-
+            <RuxProgress slot="suffix" hideLabel={true} value={60} />
             <RuxTreeNode slot="node">
               <div className="rux-tree-content">Children</div>
             </RuxTreeNode>
