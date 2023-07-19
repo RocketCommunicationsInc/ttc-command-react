@@ -31,7 +31,10 @@ function App() {
           <Subsystems />
           <Watcher />
         </div>
-        <div className="investigate-background" data-active="false">
+        <div
+          className="investigate-background"
+          //data-active="false"
+        >
           <InvestigateSubsystems />
           <StartTracker />
           <Electronics />

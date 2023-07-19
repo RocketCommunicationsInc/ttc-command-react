@@ -8,6 +8,7 @@ import {
   RuxMenuItem,
   RuxMonitoringIcon,
   RuxToastStack,
+  RuxMenuItemDivider,
 } from "@astrouxds/react";
 import type { Status } from "@astrouxds/mock-data";
 import { addToast } from "../../utils";
@@ -83,6 +84,8 @@ const GlobalStatusBar = () => {
         >
           <RuxIcon slot="trigger" size="small" icon="apps" />
           <RuxMenu onRuxmenuselected={(e) => menuSelect(e)}>
+            <RuxMenuItem value="investigate">TTC Investigate</RuxMenuItem>
+            <RuxMenuItemDivider />
             <RuxMenuItem value="themeToggle">
               {lightTheme ? "Dark" : "Light"} Theme
             </RuxMenuItem>

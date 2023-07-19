@@ -111,11 +111,12 @@ rux-status::part(status) {
   margin-inline: auto;
 }
 
-/* INVESTIGATE OVERLAY STYLES*/
+/* INVESTIGATE OVERLAY STYLES */
 
 /* .investigate {
   display: none;
 } */
+
 .investigate__overlay {
   position: fixed;
   top: 0;
@@ -144,7 +145,6 @@ rux-status::part(status) {
 }
 
 .investigate__close {
-  /* Optional */
   margin: 0;
   padding: 0;
   border: none;
@@ -186,7 +186,6 @@ rux-status::part(status) {
   overflow-y: auto;
   height: 100%;
   flex-grow: 1;
-  /* Optional */
   padding: 1.5rem;
   background-color: var(--color-background-surface-default);
 }

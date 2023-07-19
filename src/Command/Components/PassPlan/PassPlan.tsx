@@ -8,6 +8,7 @@ import {
   RuxProgress,
   RuxInput,
   RuxButton,
+  RuxPopUp,
 } from "@astrouxds/react";
 import "./PassPlan.css";
 
@@ -76,6 +77,23 @@ const Constellation = () => {
         </RuxTree>
       </li>
       <div slot="footer">
+        <RuxPopUp placement="top-start">
+          <RuxButton slot="trigger" iconOnly icon="unfold-more" />
+          <div className="history-popup">
+            <span>Recent Commands:</span>
+            <ul>
+              <li>80000</li>
+              <li>80010</li>
+              <li>Memory Dump 4</li>
+              <li>QPR Command 3</li>
+              <li>Satellite Command</li>
+            </ul>
+            <span>Quick Response Procedures:</span>
+            <ul>
+              <li>QRP Command</li>
+            </ul>
+          </div>
+        </RuxPopUp>
         <RuxInput
           type="search"
           placeholder="Start typing to search commands..."
