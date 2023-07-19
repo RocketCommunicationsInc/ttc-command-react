@@ -9,10 +9,6 @@
   overflow: hidden;
 }
 
-.watcher .table-wrapper {
-  height: calc(100% - 58px);
-}
-
 .watcher rux-table-header-cell {
   text-align: right;
 }

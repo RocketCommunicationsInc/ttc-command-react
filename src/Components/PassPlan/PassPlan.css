@@ -22,24 +22,25 @@ rux-container::part(body)  {
   margin-top: .5rem;
 }
 
-.rux-tree-content {
+rux-tree-node::part(node) {
   display: flex;
-  flex-flow: row nowrap;
-  width: 100%;
+  align-items: center;
+  /* This is to account for the width of the caret on the left side of the node so the padding looks even.  */
+  padding-inline-end: var(--spacing-3);
+}
+
+.rux-tree-node_prefix {
+  margin-inline: var(--spacing-6) var(--spacing-8);
+  width: var(--spacing-3)
+}
+
+.rux-tree-node_content {
+  display: flex;
   align-items: center;
 }
 
-.rux-tree-content div:nth-of-type(1) {
-  margin-right: 2rem;
-  width: 2rem;
-}
-
-.rux-tree-content div:nth-of-type(2) {
-  margin-right: var(--spacing-3);
-}
-
-.rux-tree-content div:nth-of-type(3) {
-  margin-right: 12rem
+.rux-tree-node_content > rux-checkbox {
+  margin-inline-end: var(--spacing-6);
 }
 
 rux-progress {
@@ -61,7 +62,6 @@ li {
 .rux-tree-header {
   display: flex;
   flex-flow: row nowrap;
-  width: 100%;
   height: var(--spacing-8);
   padding-inline: var(--spacing-2);
   font-size: var(--spacing-4);
