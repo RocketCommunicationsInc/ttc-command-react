@@ -16,8 +16,8 @@ const Subsystems = () => {
         <RuxTableRow>
           <RuxTableCell>
             <RuxStatus status="serious" />
+            Altitude
           </RuxTableCell>
-          <RuxTableCell>Altitude</RuxTableCell>
           <RuxTableCell>
             <RuxIcon size="1rem" icon="launch" />
           </RuxTableCell>
@@ -25,8 +25,8 @@ const Subsystems = () => {
         <RuxTableRow>
           <RuxTableCell>
             <RuxStatus status="serious" />
+            Payload
           </RuxTableCell>
-          <RuxTableCell>Payload</RuxTableCell>
           <RuxTableCell>
             <RuxIcon size="1rem" icon="launch" />
           </RuxTableCell>
@@ -34,8 +34,8 @@ const Subsystems = () => {
         <RuxTableRow>
           <RuxTableCell>
             <RuxStatus status="serious" />
+            Power
           </RuxTableCell>
-          <RuxTableCell>Power</RuxTableCell>
           <RuxTableCell>
             <RuxIcon size="1rem" icon="launch" />
           </RuxTableCell>
@@ -43,8 +43,8 @@ const Subsystems = () => {
         <RuxTableRow>
           <RuxTableCell>
             <RuxStatus status="serious" />
+            Propulsion
           </RuxTableCell>
-          <RuxTableCell>Propulsion</RuxTableCell>
           <RuxTableCell>
             <RuxIcon size="1rem" icon="launch" />
           </RuxTableCell>
@@ -52,8 +52,8 @@ const Subsystems = () => {
         <RuxTableRow>
           <RuxTableCell>
             <RuxStatus status="serious" />
+            Thermal
           </RuxTableCell>
-          <RuxTableCell>Thermal</RuxTableCell>
           <RuxTableCell>
             <RuxIcon size="1rem" icon="launch" />
           </RuxTableCell>
