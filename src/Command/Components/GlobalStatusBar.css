@@ -21,10 +21,10 @@ rux-menu-item[value="themeToggle"] span {
 }
 
 .history-popup {
-padding-inline: var(--spacing-1);
-padding-block: var(--spacing-050);
-height: 13rem;
-overflow: auto;
+  padding-inline: var(--spacing-1);
+  padding-block: var(--spacing-050);
+  height: 13rem;
+  overflow: auto;
 }
 
 .history-popup span {
@@ -34,5 +34,5 @@ overflow: auto;
 
 .history-popup ul {
   padding-left: var(--spacing-2);
-  margin-block: var(--spacing-2)
+  margin-block: var(--spacing-2);
 }
