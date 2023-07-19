@@ -38,8 +38,9 @@ rux-container::part(body)  {
   margin-right: var(--spacing-3);
 }
 
-.rux-tree-content div:nth-of-type(3) {
-  margin-right: 12rem
+.rux-tree-content_node-split {
+  display: flex;
+  justify-content: space-between;
 }
 
 rux-progress {
@@ -61,7 +62,6 @@ li {
 .rux-tree-header {
   display: flex;
   flex-flow: row nowrap;
-  width: 100%;
   height: var(--spacing-8);
   padding-inline: var(--spacing-2);
   font-size: var(--spacing-4);

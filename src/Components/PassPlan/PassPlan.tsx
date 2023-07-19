@@ -33,11 +33,11 @@ const Constellation = () => {
         <RuxTree>
           <RuxTreeNode>
             <div className="rux-tree-content">
-              <div>1</div>
+              <div slot="prefix">1</div>
               <div>
                 <RuxCheckbox />
               </div>
-              <div>Verify MENMONIC = ON</div>
+              <div>Verify MNEMONIC = ON</div>
             </div>
 
             <RuxTreeNode slot="node">
@@ -50,11 +50,11 @@ const Constellation = () => {
         <RuxTree>
           <RuxTreeNode>
             <div className="rux-tree-content">
-              <div>2</div>
+              <div slot="prefix">2</div>
               <div>
                 <RuxCheckbox />
               </div>
-              <div>Verify MENMONIC = ON</div>
+              <div>Verify MNEMONIC = ON</div>
             </div>
 
             <RuxTreeNode slot="node">
@@ -67,14 +67,13 @@ const Constellation = () => {
         <RuxTree>
           <RuxTreeNode>
             <div className="rux-tree-content">
-              <div>3</div>
+              <div slot="prefix">3</div>
               <div>
                 <RuxCheckbox />
               </div>
-              <div>Verify MENMONIC = ON</div>
-              <div>
-                <RuxProgress value={60} />
-              </div>
+
+                <div>Verify MNEMONIC = ON</div>
+                <RuxProgress slot="suffix" value={60} />
             </div>
 
             <RuxTreeNode slot="node">

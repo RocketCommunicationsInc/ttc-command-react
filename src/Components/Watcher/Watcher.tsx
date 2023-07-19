@@ -37,7 +37,7 @@ const Watcher = () => {
   useEffect(() => {
     const watcherDiv = document.querySelector(".watcher");
     const tableRows = watcherDiv?.querySelectorAll("rux-table-row");
-    //sets first menmonic as selected on mount
+    //sets first MNEMONIC as selected on mount
     tableRows?.[0].setAttribute("selected", "");
 
     tableRows?.forEach((row) => {
