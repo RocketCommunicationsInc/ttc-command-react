@@ -25,6 +25,7 @@
   pointer-events: all;
   cursor: pointer;
 }
+
 .model-diagram .selected-state {
   fill: #ffffff;
   transition: opacity 0.25s;
