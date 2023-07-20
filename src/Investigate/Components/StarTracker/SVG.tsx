@@ -1,3 +1,5 @@
+import "./SVG.css";
+
 const SVG = () => {
   return (
     <svg
