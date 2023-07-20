@@ -1,5 +1,5 @@
 import type { Contact } from "@astrouxds/mock-data";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InvestigateSubsystems from "./InvestigateSubsystems/InvestigateSubsystems";
 import Assembly from "./Assembly/Assembly";
 import Mnemonics from "./Mnemonics/Mnemonics";
