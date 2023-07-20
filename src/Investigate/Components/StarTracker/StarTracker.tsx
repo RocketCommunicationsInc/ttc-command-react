@@ -93,7 +93,7 @@ const StarTracker = () => {
 
   return (
     <RuxContainer className="star-tracker">
-      <div slot="header">Star Trackers</div>
+      <div slot="header">Star Tracker Assembly</div>
       <CytoscapeComponent
         elements={elements}
         style={{ width: "100%", height: "100%" }}
@@ -101,7 +101,6 @@ const StarTracker = () => {
         zoomingEnabled={false}
         panningEnabled={false}
       />
-      ;
     </RuxContainer>
   );
 };
