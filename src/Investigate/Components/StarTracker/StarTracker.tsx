@@ -81,7 +81,7 @@ const StarTracker = () => {
         "text-valign": "center",
       },
     },
-    //lines between the data squares
+    //lines between the squares
     {
       selector: "edge",
       style: {

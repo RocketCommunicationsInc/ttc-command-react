@@ -57,7 +57,7 @@ rux-container::part(body) {
   overflow-y: hidden;
   padding: 0;
   /* to color small space above scrollbar */
-  /* background-color: var(--color-background-base-header); */
+  background-color: var(--color-background-base-header);
 }
 
 rux-container.alerts {
