@@ -25,7 +25,7 @@ const generateMnemonicValue = () =>
 const generateChartData = () =>
   faker.helpers.multiple(() => generateMnemonicValue(), { count: 9 });
 
-const mnemonicsData = generateMnemonics(10);
+const mnemonicsData = generateMnemonics(10, {});
 const updatedMnemoncicsData = mnemonicsData.map((data) => {
   return {
     ...data,
