@@ -9,7 +9,7 @@ import { TTCGRMProvider } from "@astrouxds/mock-data";
 
 import "@astrouxds/astro-web-components/dist/astro-web-components/astro-web-components.css";
 import "./App.css";
-import StartTracker from "Investigate/Components/StarTracker/StarTracker";
+import StarTracker from "Investigate/Components/StarTracker/StarTracker";
 import Electronics from "Investigate/Components/Electronics/Electronics";
 import { useState } from "react";
 
@@ -23,16 +23,20 @@ const options = {
 function App() {
   const [commandPanelActive, setCommandPanelActive] = useState<boolean>(true)
   const [investigatePanelActive, setInvestigatePanelActive] = useState<boolean>(false)
-  
+  const [appName, setAppName] = useState<string>('COMMAND')
+
   const handleAppSwap = () => {
     setInvestigatePanelActive(() => !investigatePanelActive)
     setCommandPanelActive(() => !commandPanelActive)
+
+    appName === 'COMMAND' ? setAppName(() => 'INVESTIGATE') : setAppName(() => 'COMMAND')
+    
   }
 
   return (
     <div className="app-container">
       <TTCGRMProvider options={options}>
-        <GlobalStatusBar />
+        <GlobalStatusBar appName={appName} />
         <div className="command-background" data-active={commandPanelActive}>
           <Alerts />
           <PassPlan />
@@ -42,7 +46,7 @@ function App() {
         </div>
         <div className="investigate-background" data-active={investigatePanelActive}>
           <InvestigateSubsystems handleAppSwap={handleAppSwap} />
-          <StartTracker />
+          <StarTracker />
           <Electronics />
         </div>
       </TTCGRMProvider>

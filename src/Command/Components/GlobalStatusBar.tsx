@@ -14,7 +14,7 @@ import type { Status } from "@astrouxds/mock-data";
 import { addToast } from "../../utils";
 import "./GlobalStatusBar.css";
 
-const GlobalStatusBar = () => {
+const GlobalStatusBar = ({ appName }: { appName: string }) => {
   const [status1, setStatus1] = useState<Status>("off");
   const [status2, setStatus2] = useState<Status>("standby");
   const [status3, setStatus3] = useState<Status>("normal");
@@ -71,7 +71,7 @@ const GlobalStatusBar = () => {
       <RuxToastStack />
       <RuxGlobalStatusBar
         appDomain="TT&C"
-        appName="COMMAND"
+        appName={appName}
         username="J. Smith"
         app-state="Demo"
         app-state-color="tag1"
