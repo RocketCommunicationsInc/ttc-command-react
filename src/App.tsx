@@ -11,7 +11,7 @@ import "./App.css";
 import { useState } from "react";
 
 import { generateContact } from "@astrouxds/mock-data";
-import type { Contact } from "@astrouxds/mock-data";
+import type { Contact, Subsystem } from "@astrouxds/mock-data";
 import Investigate from "Investigate/Components/Investigate";
 
 const options = {
@@ -27,9 +27,14 @@ const contact: Contact = generateContact(0, {
 
 function App() {
   const [showInvestigate, setShowInvestigate] = useState<boolean>(false);
+  const [selectedSubsystem, setSelectedSubsystem] = useState<Subsystem>(
+    contact.subsystems[0]
+  );
 
   const toggleInvestigate = () => {
     setShowInvestigate((prevState) => !prevState);
+    if (showInvestigate) setSelectedSubsystem(contact.subsystems[0])
+    
   };
 
   return (
@@ -41,7 +46,11 @@ function App() {
         <div className="command-background" data-active={!showInvestigate}>
           <Alerts toggleInvestigate={toggleInvestigate} />
           <PassPlan />
-          <Subsystems toggleInvestigate={toggleInvestigate} />
+          <Subsystems
+            subsystems={contact.subsystems}
+            toggleInvestigate={toggleInvestigate}
+            setSelectedSubsystem={setSelectedSubsystem}
+          />
           <LinkStatus />
           <Watcher />
         </div>
@@ -49,6 +58,7 @@ function App() {
           contact={contact}
           toggleInvestigate={toggleInvestigate}
           showInvestigate={showInvestigate}
+          selectedSubsystem={selectedSubsystem}
         />
       </TTCGRMProvider>
     </div>
