@@ -21,15 +21,9 @@ const options = {
   limit: 45,
 };
 
-  const contact: Contact = generateContact(0, {
-    desiredSubsystems: [
-      "Altitude",
-      "Payload",
-      "Power",
-      "Propulsion",
-      "Thermal",
-    ],
-  });
+const contact: Contact = generateContact(0, {
+  desiredSubsystems: ["Altitude", "Payload", "Power", "Propulsion", "Thermal"],
+});
 
 function App() {
   const [showInvestigate, setShowInvestigate] = useState<boolean>(false);
@@ -45,13 +39,17 @@ function App() {
           appName={showInvestigate ? "INVESTIGATE" : "COMMAND"}
         />
         <div className="command-background" data-active={!showInvestigate}>
-          <Alerts toggleInvestigate={toggleInvestigate}/>
+          <Alerts toggleInvestigate={toggleInvestigate} />
           <PassPlan />
           <Subsystems toggleInvestigate={toggleInvestigate} />
           <LinkStatus />
           <Watcher />
         </div>
-        <Investigate contact={contact} toggleInvestigate={toggleInvestigate} showInvestigate={showInvestigate} />
+        <Investigate
+          contact={contact}
+          toggleInvestigate={toggleInvestigate}
+          showInvestigate={showInvestigate}
+        />
       </TTCGRMProvider>
     </div>
   );

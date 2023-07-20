@@ -30,7 +30,11 @@ const InvestigateSubsystems = ({
             <RuxStatus slot="prefix" status={subsystem.status} />
             {subsystem.name}
             {subsystem.childSubsystems.map((child, index) => (
-              <RuxTreeNode slot="node" selected={index === 0 ? true : false} onRuxtreenodeselected={() => toggleChildSubsystem(child.name)}>
+              <RuxTreeNode
+                slot="node"
+                selected={index === 0 ? true : false}
+                onRuxtreenodeselected={() => toggleChildSubsystem(child.name)}
+              >
                 <RuxStatus slot="prefix" status={child.status} />
                 {child.name}
               </RuxTreeNode>

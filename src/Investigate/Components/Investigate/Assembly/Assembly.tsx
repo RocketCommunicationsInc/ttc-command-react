@@ -3,9 +3,9 @@ import CytoscapeComponent from "react-cytoscapejs";
 
 type PropTypes = {
   childSubsystem: string;
-}
+};
 
-const Assembly = ({childSubsystem}: PropTypes) => {
+const Assembly = ({ childSubsystem }: PropTypes) => {
   const elements = [
     { data: { id: "one", label: "Lens" }, position: { x: 100, y: 150 } },
     { data: { id: "two", label: "Baffle" }, position: { x: 250, y: 150 } },
