@@ -25,22 +25,16 @@ function App() {
       <TTCGRMProvider options={options}>
         <GlobalStatusBar />
         <div className="command-background" data-active="true">
-          {/* <Alerts />
+          <Alerts />
           <PassPlan />
           <Subsystems />
           <LinkStatus />
-        <Watcher /> */}
+          <Watcher />
+        </div>
+        <div className="investigate-background" data-active="false">
           <InvestigateSubsystems />
           <StartTracker />
           <Electronics />
-        </div>
-        <div
-          className="investigate-background"
-          //data-active="false"
-        >
-          {/* <InvestigateSubsystems />
-          <StartTracker />
-          <Electronics /> */}
         </div>
       </TTCGRMProvider>
     </div>

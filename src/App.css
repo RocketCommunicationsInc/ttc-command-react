@@ -23,9 +23,9 @@
 .command-background[data-active=false] {
   display: none;
 }
-/* .investigate-background[data-active=true] */
 
-.command-background[data-active=true] {
+
+.investigate-background[data-active=true] {
   height: calc(100% - var(--spacing-24));
   padding: var(--spacing-3);
   background-color: var(--color-background-base-default);
