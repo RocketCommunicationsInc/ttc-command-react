@@ -1,6 +1,7 @@
 .subsystems rux-icon {
   float: right;
   padding-right: var(--spacing-2);
+  cursor: pointer;
 }
 
 .subsystems rux-table-cell:nth-of-type(1) {

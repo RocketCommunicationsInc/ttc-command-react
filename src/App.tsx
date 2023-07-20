@@ -1,13 +1,17 @@
-import Alerts from "./Components/Alerts/Alerts";
-import PassPlan from "./Components/PassPlan/PassPlan";
-import Watcher from "./Components/Watcher/Watcher";
-import GlobalStatusBar from "./Components/GlobalStatusBar";
-import LinkStatus from "Components/LinkStatus/LinkStatus";
-import Subsystems from "Components/Subsystems/Subsystems";
+import Alerts from "./Command/Components/Alerts/Alerts";
+import PassPlan from "./Command/Components/PassPlan/PassPlan";
+import Watcher from "./Command/Components/Watcher/Watcher";
+import GlobalStatusBar from "./Command/Components/GlobalStatusBar";
+import LinkStatus from "Command/Components/LinkStatus/LinkStatus";
+import Subsystems from "Command/Components/Subsystems/Subsystems";
+import InvestigateSubsystems from "./Investigate/Components/InvestigateSubsystems/InvestigateSubsystems";
 import { TTCGRMProvider } from "@astrouxds/mock-data";
 
 import "@astrouxds/astro-web-components/dist/astro-web-components/astro-web-components.css";
 import "./App.css";
+import StarTracker from "Investigate/Components/StarTracker/StarTracker";
+import Electronics from "Investigate/Components/Electronics/Electronics";
+import { useState } from "react";
 
 const options = {
   alertsPercentage: 50 as const,
@@ -17,16 +21,33 @@ const options = {
 };
 
 function App() {
+  const [commandPanelActive, setCommandPanelActive] = useState<boolean>(true)
+  const [investigatePanelActive, setInvestigatePanelActive] = useState<boolean>(false)
+  const [appName, setAppName] = useState<string>('COMMAND')
+
+  const handleAppSwap = () => {
+    setInvestigatePanelActive(() => !investigatePanelActive)
+    setCommandPanelActive(() => !commandPanelActive)
+
+    appName === 'COMMAND' ? setAppName(() => 'INVESTIGATE') : setAppName(() => 'COMMAND')
+    
+  }
+
   return (
     <div className="app-container">
       <TTCGRMProvider options={options}>
-        <GlobalStatusBar />
-        <div className="background">
+        <GlobalStatusBar appName={appName} />
+        <div className="command-background" data-active={commandPanelActive}>
           <Alerts />
           <PassPlan />
+          <Subsystems handleAppSwap={handleAppSwap} />
           <LinkStatus />
-          <Subsystems />
           <Watcher />
+        </div>
+        <div className="investigate-background" data-active={investigatePanelActive}>
+          <InvestigateSubsystems handleAppSwap={handleAppSwap} />
+          <StarTracker />
+          <Electronics />
         </div>
       </TTCGRMProvider>
     </div>
