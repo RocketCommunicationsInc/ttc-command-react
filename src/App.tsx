@@ -12,7 +12,7 @@ import { useState } from "react";
 
 import { generateContact } from "@astrouxds/mock-data";
 import type { Contact } from "@astrouxds/mock-data";
-import Investigate from "Investigate/Components/Investigate/Investigate";
+import Investigate from "Investigate/Components/Investigate";
 
 const options = {
   alertsPercentage: 50 as const,

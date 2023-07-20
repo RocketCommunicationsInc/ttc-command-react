@@ -5,19 +5,19 @@ import {
   RuxStatus,
   RuxButton,
 } from "@astrouxds/react";
-import "./InvestigateSubsystems.css";
+import "./SubsystemsTree.css";
 import type { Subsystem } from "@astrouxds/mock-data";
 
 type PropTypes = {
   toggleInvestigate: () => void;
-  toggleChildSubsystem: (prop: string) => any;
+  setChildSubsystem: React.Dispatch<React.SetStateAction<string>>;
   satName: string;
   subsystems: Subsystem[];
 };
 
-const InvestigateSubsystems = ({
+const SubsystemsTree = ({
   toggleInvestigate,
-  toggleChildSubsystem,
+  setChildSubsystem,
   satName,
   subsystems,
 }: PropTypes) => {
@@ -26,14 +26,13 @@ const InvestigateSubsystems = ({
       <div slot="header">{satName} Subsystems</div>
       <RuxTree>
         {subsystems.map((subsystem, index) => (
-          <RuxTreeNode expanded={index === 0 ? true : false}>
+          <RuxTreeNode>
             <RuxStatus slot="prefix" status={subsystem.status} />
             {subsystem.name}
             {subsystem.childSubsystems.map((child, index) => (
               <RuxTreeNode
                 slot="node"
-                selected={index === 0 ? true : false}
-                onRuxtreenodeselected={() => toggleChildSubsystem(child.name)}
+                onRuxtreenodeselected={() => setChildSubsystem(child.name)}
               >
                 <RuxStatus slot="prefix" status={child.status} />
                 {child.name}
@@ -55,4 +54,4 @@ const InvestigateSubsystems = ({
   );
 };
 
-export default InvestigateSubsystems;
+export default SubsystemsTree;

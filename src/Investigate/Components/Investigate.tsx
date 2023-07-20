@@ -1,6 +1,6 @@
 import type { Contact } from "@astrouxds/mock-data";
 import { useState } from "react";
-import InvestigateSubsystems from "./InvestigateSubsystems/InvestigateSubsystems";
+import SubsystemsTree from "./Subsystems/SubsystemsTree";
 import Assembly from "./Assembly/Assembly";
 import Mnemonics from "./Mnemonics/Mnemonics";
 import "./Investigate.css";
@@ -19,15 +19,12 @@ const Investigate = ({
   const [childSubsystem, setChildSubsystem] = useState<string>(
     contact.subsystems[0].childSubsystems[0].name
   );
-  const toggleChildSubsystem = (childSystem: string) => {
-    setChildSubsystem(() => childSystem);
-  };
 
   return (
     <div className="investigate-background" data-active={showInvestigate}>
-      <InvestigateSubsystems
+      <SubsystemsTree
         toggleInvestigate={toggleInvestigate}
-        toggleChildSubsystem={toggleChildSubsystem}
+        setChildSubsystem={setChildSubsystem}
         satName={contact.satellite}
         subsystems={contact.subsystems}
       />
