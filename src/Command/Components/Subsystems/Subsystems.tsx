@@ -8,7 +8,11 @@ import {
 } from "@astrouxds/react";
 import "./Subsystems.css";
 
-const Subsystems = ({ toggleInvestigate }: { toggleInvestigate: () => void }) => {
+const Subsystems = ({
+  toggleInvestigate,
+}: {
+  toggleInvestigate: () => void;
+}) => {
   return (
     <RuxContainer className="subsystems">
       <div slot="header">Subsystems</div>

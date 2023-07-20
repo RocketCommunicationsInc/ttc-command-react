@@ -14,7 +14,7 @@ import Mnemonics from "Investigate/Components/Mnemonics/Mnemonics";
 import { useState } from "react";
 
 import { generateContact } from "@astrouxds/mock-data";
-import type { Contact } from '@astrouxds/mock-data'
+import type { Contact } from "@astrouxds/mock-data";
 
 const options = {
   alertsPercentage: 50 as const,
@@ -43,7 +43,9 @@ function App() {
   return (
     <div className="app-container">
       <TTCGRMProvider options={options}>
-        <GlobalStatusBar appName={showInvestigate ? "INVESTIGATE" : "COMMAND"} />
+        <GlobalStatusBar
+          appName={showInvestigate ? "INVESTIGATE" : "COMMAND"}
+        />
         <div className="command-background" data-active={!showInvestigate}>
           <Alerts />
           <PassPlan />
@@ -51,11 +53,12 @@ function App() {
           <LinkStatus />
           <Watcher />
         </div>
-        <div
-          className="investigate-background"
-          data-active={showInvestigate}
-        >
-          <InvestigateSubsystems toggleInvestigate={toggleInvestigate} satName={contact.satellite} subsystems={contact.subsystems} />
+        <div className="investigate-background" data-active={showInvestigate}>
+          <InvestigateSubsystems
+            toggleInvestigate={toggleInvestigate}
+            satName={contact.satellite}
+            subsystems={contact.subsystems}
+          />
           <Assembly />
           <Mnemonics />
         </div>
