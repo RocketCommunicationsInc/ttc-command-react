@@ -4,17 +4,15 @@ import Watcher from "./Command/Components/Watcher/Watcher";
 import GlobalStatusBar from "./Command/Components/GlobalStatusBar";
 import LinkStatus from "Command/Components/LinkStatus/LinkStatus";
 import Subsystems from "Command/Components/Subsystems/Subsystems";
-import InvestigateSubsystems from "./Investigate/Components/InvestigateSubsystems/InvestigateSubsystems";
 import { TTCGRMProvider } from "@astrouxds/mock-data";
 
 import "@astrouxds/astro-web-components/dist/astro-web-components/astro-web-components.css";
 import "./App.css";
-import Assembly from "Investigate/Components/Assembly/Assembly";
-import Mnemonics from "Investigate/Components/Mnemonics/Mnemonics";
 import { useState } from "react";
 
 import { generateContact } from "@astrouxds/mock-data";
 import type { Contact } from "@astrouxds/mock-data";
+import Investigate from "Investigate/Components/Investigate/Investigate";
 
 const options = {
   alertsPercentage: 50 as const,
@@ -54,13 +52,7 @@ function App() {
           <Watcher />
         </div>
         <div className="investigate-background" data-active={showInvestigate}>
-          <InvestigateSubsystems
-            toggleInvestigate={toggleInvestigate}
-            satName={contact.satellite}
-            subsystems={contact.subsystems}
-          />
-          <Assembly />
-          <Mnemonics />
+          <Investigate contact={contact} toggleInvestigate={toggleInvestigate} />
         </div>
       </TTCGRMProvider>
     </div>

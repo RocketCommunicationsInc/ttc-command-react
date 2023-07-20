@@ -10,12 +10,14 @@ import type { Subsystem } from "@astrouxds/mock-data";
 
 type PropTypes = {
   toggleInvestigate: () => void;
+  toggleChildSubsystem: (prop: string) => any;
   satName: string;
   subsystems: Subsystem[];
 };
 
 const InvestigateSubsystems = ({
   toggleInvestigate,
+  toggleChildSubsystem,
   satName,
   subsystems,
 }: PropTypes) => {
@@ -28,7 +30,7 @@ const InvestigateSubsystems = ({
             <RuxStatus slot="prefix" status={subsystem.status} />
             {subsystem.name}
             {subsystem.childSubsystems.map((child) => (
-              <RuxTreeNode slot="node">
+              <RuxTreeNode slot="node" onRuxtreenodeselected={() => toggleChildSubsystem(child.name)}>
                 <RuxStatus slot="prefix" status={child.status} />
                 {child.name}
               </RuxTreeNode>
