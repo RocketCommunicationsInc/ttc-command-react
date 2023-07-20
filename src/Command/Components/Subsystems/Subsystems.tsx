@@ -8,7 +8,7 @@ import {
 } from "@astrouxds/react";
 import "./Subsystems.css";
 
-const Subsystems = ({ handleAppSwap }: { handleAppSwap: () => void }) => {
+const Subsystems = ({ toggleInvestigate }: { toggleInvestigate: () => void }) => {
   return (
     <RuxContainer className="subsystems">
       <div slot="header">Subsystems</div>
@@ -19,7 +19,7 @@ const Subsystems = ({ handleAppSwap }: { handleAppSwap: () => void }) => {
             Altitude
           </RuxTableCell>
           <RuxTableCell>
-            <RuxIcon size="1rem" icon="launch" onClick={handleAppSwap} />
+            <RuxIcon size="1rem" icon="launch" onClick={toggleInvestigate} />
           </RuxTableCell>
         </RuxTableRow>
         <RuxTableRow>
@@ -28,7 +28,7 @@ const Subsystems = ({ handleAppSwap }: { handleAppSwap: () => void }) => {
             Payload
           </RuxTableCell>
           <RuxTableCell>
-            <RuxIcon size="1rem" icon="launch" onClick={handleAppSwap} />
+            <RuxIcon size="1rem" icon="launch" onClick={toggleInvestigate} />
           </RuxTableCell>
         </RuxTableRow>
         <RuxTableRow>
@@ -37,7 +37,7 @@ const Subsystems = ({ handleAppSwap }: { handleAppSwap: () => void }) => {
             Power
           </RuxTableCell>
           <RuxTableCell>
-            <RuxIcon size="1rem" icon="launch" onClick={handleAppSwap} />
+            <RuxIcon size="1rem" icon="launch" onClick={toggleInvestigate} />
           </RuxTableCell>
         </RuxTableRow>
         <RuxTableRow>
@@ -46,7 +46,7 @@ const Subsystems = ({ handleAppSwap }: { handleAppSwap: () => void }) => {
             Propulsion
           </RuxTableCell>
           <RuxTableCell>
-            <RuxIcon size="1rem" icon="launch" onClick={handleAppSwap} />
+            <RuxIcon size="1rem" icon="launch" onClick={toggleInvestigate} />
           </RuxTableCell>
         </RuxTableRow>
         <RuxTableRow>
@@ -55,7 +55,7 @@ const Subsystems = ({ handleAppSwap }: { handleAppSwap: () => void }) => {
             Thermal
           </RuxTableCell>
           <RuxTableCell>
-            <RuxIcon size="1rem" icon="launch" onClick={handleAppSwap} />
+            <RuxIcon size="1rem" icon="launch" onClick={toggleInvestigate} />
           </RuxTableCell>
         </RuxTableRow>
       </RuxTable>

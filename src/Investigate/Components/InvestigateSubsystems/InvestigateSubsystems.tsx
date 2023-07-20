@@ -10,9 +10,9 @@ import { generateContact } from "@astrouxds/mock-data";
 import type { Subsystem } from '@astrouxds/mock-data'
 
 const InvestigateSubsystems = ({
-  handleAppSwap,
+  toggleInvestigate,
 }: {
-  handleAppSwap: () => void;
+  toggleInvestigate: () => void;
 }) => {
   const subsystems: Subsystem[] = generateContact(0, {
     desiredSubsystems: [
@@ -23,7 +23,6 @@ const InvestigateSubsystems = ({
       "Thermal",
     ],
   }).subsystems;
-  console.log(subsystems);
 
   return (
     <RuxContainer className="investigate-subsystem">
@@ -46,7 +45,7 @@ const InvestigateSubsystems = ({
         <RuxButton
           borderless
           icon="keyboard-arrow-left"
-          onClick={handleAppSwap}
+          onClick={toggleInvestigate}
         >
           Return to Command
         </RuxButton>

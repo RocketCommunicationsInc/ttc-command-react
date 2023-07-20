@@ -21,36 +21,28 @@ const options = {
 };
 
 function App() {
-  const [commandPanelActive, setCommandPanelActive] = useState<boolean>(true);
-  const [investigatePanelActive, setInvestigatePanelActive] =
-    useState<boolean>(false);
-  const [appName, setAppName] = useState<string>("COMMAND");
+  const [showInvestigate, setShowInvestigate] = useState<boolean>(false);
 
-  const handleAppSwap = () => {
-    setInvestigatePanelActive(() => !investigatePanelActive);
-    setCommandPanelActive(() => !commandPanelActive);
-
-    appName === "COMMAND"
-      ? setAppName(() => "INVESTIGATE")
-      : setAppName(() => "COMMAND");
+  const toggleInvestigate = () => {
+    setShowInvestigate((prevState) => !prevState);
   };
 
   return (
     <div className="app-container">
       <TTCGRMProvider options={options}>
-        <GlobalStatusBar appName={appName} />
-        <div className="command-background" data-active={commandPanelActive}>
+        <GlobalStatusBar appName={showInvestigate ? "INVESTIGATE" : "COMMAND"} />
+        <div className="command-background" data-active={!showInvestigate}>
           <Alerts />
           <PassPlan />
-          <Subsystems handleAppSwap={handleAppSwap} />
+          <Subsystems toggleInvestigate={toggleInvestigate} />
           <LinkStatus />
           <Watcher />
         </div>
         <div
           className="investigate-background"
-          data-active={investigatePanelActive}
+          data-active={showInvestigate}
         >
-          <InvestigateSubsystems handleAppSwap={handleAppSwap} />
+          <InvestigateSubsystems toggleInvestigate={toggleInvestigate} />
           <Assembly />
           <Mnemonics />
         </div>
