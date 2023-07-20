@@ -10,7 +10,7 @@ import { useTTCGRMActions, useTTCGRMAlerts } from "@astrouxds/mock-data";
 import type { Category, Status } from "@astrouxds/mock-data";
 import "./Alerts.css";
 
-const Alerts = ({handleAppSwap} : { handleAppSwap: () => void }) => {
+const Alerts = ({toggleInvestigate} : { toggleInvestigate: () => void }) => {
   const [severitySelection, setSeveritySelection] = useState<Status | "all">(
     "all"
   );
@@ -81,7 +81,7 @@ const Alerts = ({handleAppSwap} : { handleAppSwap: () => void }) => {
       <AlertsList
         severitySelection={severitySelection}
         categorySelection={categorySelection}
-        handleAppSwap={handleAppSwap}
+        handleAppSwap={toggleInvestigate}
       />
       <div slot="footer">
         <RuxButton

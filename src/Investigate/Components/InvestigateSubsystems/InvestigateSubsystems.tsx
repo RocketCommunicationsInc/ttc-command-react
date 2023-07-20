@@ -5,52 +5,43 @@ import {
   RuxStatus,
   RuxButton,
 } from "@astrouxds/react";
-import './InvestigateSubsystems.css'
+import "./InvestigateSubsystems.css";
+import type { Subsystem } from "@astrouxds/mock-data";
 
-const InvestigateSubsystems = ({handleAppSwap}: { handleAppSwap: () => void }) => {
+type PropTypes = {
+  toggleInvestigate: () => void;
+  satName: string;
+  subsystems: Subsystem[];
+};
+
+const InvestigateSubsystems = ({
+  toggleInvestigate,
+  satName,
+  subsystems,
+}: PropTypes) => {
   return (
     <RuxContainer className="investigate-subsystem">
-      <div slot="header">Iron 4090 Subsystems</div>
+      <div slot="header">{satName} Subsystems</div>
       <RuxTree>
-        <RuxTreeNode>
-          <RuxStatus slot="prefix" status="serious" />
-          Altitude
-          <RuxTreeNode slot="node">
-            <RuxStatus slot="prefix" status="serious" />
-            Star Tracker
+        {subsystems.map((subsystem) => (
+          <RuxTreeNode>
+            <RuxStatus slot="prefix" status={subsystem.status} />
+            {subsystem.name}
+            {subsystem.childSubsystems.map((child) => (
+              <RuxTreeNode slot="node">
+                <RuxStatus slot="prefix" status={child.status} />
+                {child.name}
+              </RuxTreeNode>
+            ))}
           </RuxTreeNode>
-          <RuxTreeNode slot="node">
-            <RuxStatus slot="prefix" status="serious" />
-            Earth Sensors
-          </RuxTreeNode>
-          <RuxTreeNode slot="node">
-            <RuxStatus slot="prefix" status="serious" />
-            Reaction Wheels
-          </RuxTreeNode>
-          <RuxTreeNode slot="node">
-            <RuxStatus slot="prefix" status="serious" />
-            Sun Sensors
-          </RuxTreeNode>
-        </RuxTreeNode>
-        <RuxTreeNode>
-          <RuxStatus slot="prefix" status="serious" />
-          Payload
-        </RuxTreeNode>
-        <RuxTreeNode>
-          <RuxStatus slot="prefix" status="serious" />
-          Power
-        </RuxTreeNode>
-        <RuxTreeNode>
-          <RuxStatus slot="prefix" status="serious" />
-          Propulsion
-        </RuxTreeNode>
-        <RuxTreeNode>
-          <RuxStatus slot="prefix" status="serious" />
-          Thermal
-        </RuxTreeNode>
+        ))}
       </RuxTree>
       <div className="subsystems_footer" slot="footer">
-        <RuxButton borderless icon="keyboard-arrow-left" onClick={ handleAppSwap }>
+        <RuxButton
+          borderless
+          icon="keyboard-arrow-left"
+          onClick={toggleInvestigate}
+        >
           Return to Command
         </RuxButton>
       </div>

@@ -5,7 +5,7 @@
   overflow: hidden;
 }
 
-.command-background[data-active=true] {
+.command-background[data-active="true"] {
   height: calc(100% - var(--spacing-24));
   padding: var(--spacing-3);
   background-color: var(--color-background-base-default);
@@ -20,12 +20,11 @@
     "alerts pass-plan watcher";
 }
 
-.command-background[data-active=false] {
+.command-background[data-active="false"] {
   display: none;
 }
 
-
-.investigate-background[data-active=true] {
+.investigate-background[data-active="true"] {
   height: calc(100% - var(--spacing-24));
   padding: var(--spacing-3);
   background-color: var(--color-background-base-default);
@@ -33,13 +32,13 @@
   display: grid;
   gap: var(--spacing-3);
   grid-template-columns: calc(20% - 12px) calc(80%);
-  grid-template-rows: calc(50% - 12px) calc(50%) ;
+  grid-template-rows: calc(50% - 12px) calc(50%);
   grid-template-areas:
     "investigate-subsystems star-tracker"
-    "investigate-subsystems electronics"
+    "investigate-subsystems electronics";
 }
 
-.investigate-background[data-active=false] {
+.investigate-background[data-active="false"] {
   display: none;
 }
 
@@ -77,7 +76,7 @@ rux-container.pass-plan {
 }
 
 .watcher rux-container {
-grid-area: watcher;
+  grid-area: watcher;
 }
 
 rux-container.electronics {

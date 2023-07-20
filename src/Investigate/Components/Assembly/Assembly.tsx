@@ -1,7 +1,7 @@
 import { RuxContainer } from "@astrouxds/react";
 import CytoscapeComponent from "react-cytoscapejs";
 
-const StarTracker = () => {
+const Assembly = () => {
   const elements = [
     { data: { id: "one", label: "Lens" }, position: { x: 100, y: 150 } },
     { data: { id: "two", label: "Baffle" }, position: { x: 250, y: 150 } },
@@ -93,7 +93,7 @@ const StarTracker = () => {
 
   return (
     <RuxContainer className="star-tracker">
-      <div slot="header">Star Trackers</div>
+      <div slot="header">Star Trackers Assembly</div>
       <CytoscapeComponent
         elements={elements}
         style={{ width: "100%", height: "100%" }}
@@ -101,9 +101,8 @@ const StarTracker = () => {
         zoomingEnabled={false}
         panningEnabled={false}
       />
-      ;
     </RuxContainer>
   );
 };
 
-export default StarTracker;
+export default Assembly;

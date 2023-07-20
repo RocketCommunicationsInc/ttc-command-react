@@ -9,9 +9,12 @@ import { TTCGRMProvider } from "@astrouxds/mock-data";
 
 import "@astrouxds/astro-web-components/dist/astro-web-components/astro-web-components.css";
 import "./App.css";
-import StarTracker from "Investigate/Components/StarTracker/StarTracker";
-import Electronics from "Investigate/Components/Electronics/Electronics";
+import Assembly from "Investigate/Components/Assembly/Assembly";
+import Mnemonics from "Investigate/Components/Mnemonics/Mnemonics";
 import { useState } from "react";
+
+import { generateContact } from "@astrouxds/mock-data";
+import type { Contact } from "@astrouxds/mock-data";
 
 const options = {
   alertsPercentage: 50 as const,
@@ -20,34 +23,44 @@ const options = {
   limit: 45,
 };
 
+  const contact: Contact = generateContact(0, {
+    desiredSubsystems: [
+      "Altitude",
+      "Payload",
+      "Power",
+      "Propulsion",
+      "Thermal",
+    ],
+  });
+
 function App() {
-  const [commandPanelActive, setCommandPanelActive] = useState<boolean>(true)
-  const [investigatePanelActive, setInvestigatePanelActive] = useState<boolean>(false)
-  const [appName, setAppName] = useState<string>('COMMAND')
+  const [showInvestigate, setShowInvestigate] = useState<boolean>(false);
 
-  const handleAppSwap = () => {
-    setInvestigatePanelActive(() => !investigatePanelActive)
-    setCommandPanelActive(() => !commandPanelActive)
-
-    appName === 'COMMAND' ? setAppName(() => 'INVESTIGATE') : setAppName(() => 'COMMAND')
-    
-  }
+  const toggleInvestigate = () => {
+    setShowInvestigate((prevState) => !prevState);
+  };
 
   return (
     <div className="app-container">
       <TTCGRMProvider options={options}>
-        <GlobalStatusBar appName={appName} />
-        <div className="command-background" data-active={commandPanelActive}>
-          <Alerts handleAppSwap={handleAppSwap} />
+        <GlobalStatusBar
+          appName={showInvestigate ? "INVESTIGATE" : "COMMAND"}
+        />
+        <div className="command-background" data-active={!showInvestigate}>
+          <Alerts toggleInvestigate={toggleInvestigate}/>
           <PassPlan />
-          <Subsystems handleAppSwap={handleAppSwap} />
+          <Subsystems toggleInvestigate={toggleInvestigate} />
           <LinkStatus />
           <Watcher />
         </div>
-        <div className="investigate-background" data-active={investigatePanelActive}>
-          <InvestigateSubsystems handleAppSwap={handleAppSwap} />
-          <StarTracker />
-          <Electronics />
+        <div className="investigate-background" data-active={showInvestigate}>
+          <InvestigateSubsystems
+            toggleInvestigate={toggleInvestigate}
+            satName={contact.satellite}
+            subsystems={contact.subsystems}
+          />
+          <Assembly />
+          <Mnemonics />
         </div>
       </TTCGRMProvider>
     </div>
