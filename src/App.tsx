@@ -38,7 +38,7 @@ function App() {
       <TTCGRMProvider options={options}>
         <GlobalStatusBar appName={appName} />
         <div className="command-background" data-active={commandPanelActive}>
-          <Alerts />
+          <Alerts handleAppSwap={handleAppSwap} />
           <PassPlan />
           <Subsystems handleAppSwap={handleAppSwap} />
           <LinkStatus />
