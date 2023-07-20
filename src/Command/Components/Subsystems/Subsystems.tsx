@@ -8,7 +8,7 @@ import {
 } from "@astrouxds/react";
 import "./Subsystems.css";
 
-const Subsystems = ({handleAppSwap}: { handleAppSwap: () => void }) => {
+const Subsystems = ({ handleAppSwap }: { handleAppSwap: () => void }) => {
   return (
     <RuxContainer className="subsystems">
       <div slot="header">Subsystems</div>

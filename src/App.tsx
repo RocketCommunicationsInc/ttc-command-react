@@ -21,17 +21,19 @@ const options = {
 };
 
 function App() {
-  const [commandPanelActive, setCommandPanelActive] = useState<boolean>(true)
-  const [investigatePanelActive, setInvestigatePanelActive] = useState<boolean>(false)
-  const [appName, setAppName] = useState<string>('COMMAND')
+  const [commandPanelActive, setCommandPanelActive] = useState<boolean>(true);
+  const [investigatePanelActive, setInvestigatePanelActive] =
+    useState<boolean>(false);
+  const [appName, setAppName] = useState<string>("COMMAND");
 
   const handleAppSwap = () => {
-    setInvestigatePanelActive(() => !investigatePanelActive)
-    setCommandPanelActive(() => !commandPanelActive)
+    setInvestigatePanelActive(() => !investigatePanelActive);
+    setCommandPanelActive(() => !commandPanelActive);
 
-    appName === 'COMMAND' ? setAppName(() => 'INVESTIGATE') : setAppName(() => 'COMMAND')
-    
-  }
+    appName === "COMMAND"
+      ? setAppName(() => "INVESTIGATE")
+      : setAppName(() => "COMMAND");
+  };
 
   return (
     <div className="app-container">
@@ -44,7 +46,10 @@ function App() {
           <LinkStatus />
           <Watcher />
         </div>
-        <div className="investigate-background" data-active={investigatePanelActive}>
+        <div
+          className="investigate-background"
+          data-active={investigatePanelActive}
+        >
           <InvestigateSubsystems handleAppSwap={handleAppSwap} />
           <Assembly />
           <Mnemonics />
