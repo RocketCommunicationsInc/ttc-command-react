@@ -7,13 +7,13 @@ import {
 } from "@astrouxds/react";
 import { useTTCGRMActions } from "@astrouxds/mock-data";
 import type { Alert } from "@astrouxds/mock-data";
-import { addToast } from "../../../utils/index";
 
 type PropTypes = {
   alertItem: Alert;
+  handleAppSwap: () => void;
 };
 
-const AlertListItem = ({ alertItem }: PropTypes) => {
+const AlertListItem = ({ alertItem, handleAppSwap }: PropTypes) => {
   const { modifyAlert } = useTTCGRMActions();
   const toggleSelected = (alert: Alert) =>
     modifyAlert({ ...alert, selected: !alertItem.selected });
@@ -26,9 +26,7 @@ const AlertListItem = ({ alertItem }: PropTypes) => {
             <div>{alertItem.message}</div>
             <RuxButton
               icon="launch"
-              onClick={() =>
-                addToast("This feature has not been implemented", false, 3000)
-              }
+              onClick={handleAppSwap}
             >
               Investigate
             </RuxButton>

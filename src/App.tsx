@@ -21,13 +21,6 @@ const options = {
   limit: 45,
 };
 
-function App() {
-  const [showInvestigate, setShowInvestigate] = useState<boolean>(false);
-
-  const toggleInvestigate = () => {
-    setShowInvestigate((prevState) => !prevState);
-  };
-
   const contact: Contact = generateContact(0, {
     desiredSubsystems: [
       "Altitude",
@@ -38,6 +31,13 @@ function App() {
     ],
   });
 
+function App() {
+  const [showInvestigate, setShowInvestigate] = useState<boolean>(false);
+
+  const toggleInvestigate = () => {
+    setShowInvestigate((prevState) => !prevState);
+  };
+
   return (
     <div className="app-container">
       <TTCGRMProvider options={options}>
@@ -45,7 +45,7 @@ function App() {
           appName={showInvestigate ? "INVESTIGATE" : "COMMAND"}
         />
         <div className="command-background" data-active={!showInvestigate}>
-          <Alerts />
+          <Alerts toggleInvestigate={toggleInvestigate}/>
           <PassPlan />
           <Subsystems toggleInvestigate={toggleInvestigate} />
           <LinkStatus />
