@@ -5,32 +5,11 @@ import {
   RuxStatus,
   RuxButton,
 } from "@astrouxds/react";
-import { useState } from "react";
-import "./InvestigateSubsystems.css";
+import './InvestigateSubsystems.css'
 
-const InvestigateSubsystems = () => {
-  const [investigatePanelActive, setInvestigatePanelActive] =
-    useState<boolean>(false);
-  const handleReturnToCommandClick = () => {
-    setInvestigatePanelActive(() => !investigatePanelActive);
-    const investigatePanelElement = document.querySelector(
-      ".investigate-background"
-    )!;
-    const commandPanelElement = document.querySelector(".command-background")!;
-
-    investigatePanelActive
-      ? investigatePanelElement?.setAttribute("data-active", "true")
-      : investigatePanelElement.setAttribute("data-active", "false");
-    !investigatePanelActive
-      ? commandPanelElement?.setAttribute("data-active", "true")
-      : commandPanelElement.setAttribute("data-active", "false");
-  };
-
+const InvestigateSubsystems = ({handleAppSwap}: { handleAppSwap: () => void }) => {
   return (
-    <RuxContainer
-      className="investigate-subsystem"
-      data-active={investigatePanelActive}
-    >
+    <RuxContainer className="investigate-subsystem">
       <div slot="header">Iron 4090 Subsystems</div>
       <RuxTree>
         <RuxTreeNode>
@@ -71,11 +50,7 @@ const InvestigateSubsystems = () => {
         </RuxTreeNode>
       </RuxTree>
       <div className="subsystems_footer" slot="footer">
-        <RuxButton
-          borderless
-          icon="keyboard-arrow-left"
-          onClick={handleReturnToCommandClick}
-        >
+        <RuxButton borderless icon="keyboard-arrow-left" onClick={ handleAppSwap }>
           Return to Command
         </RuxButton>
       </div>

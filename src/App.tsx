@@ -11,6 +11,7 @@ import "@astrouxds/astro-web-components/dist/astro-web-components/astro-web-comp
 import "./App.css";
 import StartTracker from "Investigate/Components/StarTracker/StarTracker";
 import Electronics from "Investigate/Components/Electronics/Electronics";
+import { useState } from "react";
 
 const options = {
   alertsPercentage: 50 as const,
@@ -20,19 +21,27 @@ const options = {
 };
 
 function App() {
+  const [commandPanelActive, setCommandPanelActive] = useState<boolean>(true)
+  const [investigatePanelActive, setInvestigatePanelActive] = useState<boolean>(false)
+  
+  const handleAppSwap = () => {
+    setInvestigatePanelActive(() => !investigatePanelActive)
+    setCommandPanelActive(() => !commandPanelActive)
+  }
+
   return (
     <div className="app-container">
       <TTCGRMProvider options={options}>
         <GlobalStatusBar />
-        <div className="command-background" data-active="true">
+        <div className="command-background" data-active={commandPanelActive}>
           <Alerts />
           <PassPlan />
-          <Subsystems />
+          <Subsystems handleAppSwap={handleAppSwap} />
           <LinkStatus />
           <Watcher />
         </div>
-        <div className="investigate-background" data-active="false">
-          <InvestigateSubsystems />
+        <div className="investigate-background" data-active={investigatePanelActive}>
+          <InvestigateSubsystems handleAppSwap={handleAppSwap} />
           <StartTracker />
           <Electronics />
         </div>

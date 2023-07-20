@@ -8,7 +8,7 @@ import {
 } from "@astrouxds/react";
 import "./Subsystems.css";
 
-const Subsystems = () => {
+const Subsystems = ({handleAppSwap}: { handleAppSwap: () => void }) => {
   return (
     <RuxContainer className="subsystems">
       <div slot="header">Subsystems</div>
@@ -19,7 +19,7 @@ const Subsystems = () => {
             Altitude
           </RuxTableCell>
           <RuxTableCell>
-            <RuxIcon size="1rem" icon="launch" />
+            <RuxIcon size="1rem" icon="launch" onClick={handleAppSwap} />
           </RuxTableCell>
         </RuxTableRow>
         <RuxTableRow>
@@ -28,7 +28,7 @@ const Subsystems = () => {
             Payload
           </RuxTableCell>
           <RuxTableCell>
-            <RuxIcon size="1rem" icon="launch" />
+            <RuxIcon size="1rem" icon="launch" onClick={handleAppSwap} />
           </RuxTableCell>
         </RuxTableRow>
         <RuxTableRow>
@@ -37,7 +37,7 @@ const Subsystems = () => {
             Power
           </RuxTableCell>
           <RuxTableCell>
-            <RuxIcon size="1rem" icon="launch" />
+            <RuxIcon size="1rem" icon="launch" onClick={handleAppSwap} />
           </RuxTableCell>
         </RuxTableRow>
         <RuxTableRow>
@@ -46,7 +46,7 @@ const Subsystems = () => {
             Propulsion
           </RuxTableCell>
           <RuxTableCell>
-            <RuxIcon size="1rem" icon="launch" />
+            <RuxIcon size="1rem" icon="launch" onClick={handleAppSwap} />
           </RuxTableCell>
         </RuxTableRow>
         <RuxTableRow>
@@ -55,7 +55,7 @@ const Subsystems = () => {
             Thermal
           </RuxTableCell>
           <RuxTableCell>
-            <RuxIcon size="1rem" icon="launch" />
+            <RuxIcon size="1rem" icon="launch" onClick={handleAppSwap} />
           </RuxTableCell>
         </RuxTableRow>
       </RuxTable>
