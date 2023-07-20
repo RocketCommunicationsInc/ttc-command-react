@@ -1,5 +1,6 @@
 import { RuxContainer } from "@astrouxds/react";
 import CytoscapeComponent from "react-cytoscapejs";
+import SVG from "./SVG";
 
 const StarTracker = () => {
   const elements = [
@@ -63,12 +64,19 @@ const StarTracker = () => {
     {
       selector: "node",
       style: {
-        "background-color": "#92cbff",
-        width: "label",
-        height: "label",
-        padding: "30px",
-        shape: "rectangle",
+        // "background-image": `(${Test})`,
+        "background-fit": "contain",
+        "background-width": "100%",
+        "background-height": "100%",
       },
+      // "background-color": "#92cbff",
+      //   "background-image":
+      //     "https://duckduckgo.com/?q=dogs&atb=v372-1&iax=images&ia=images&iai=https%3A%2F%2Fwww.thesprucepets.com%2Fthmb%2F9kt-VX_FY7bxJh6w4fqukRaiplU%3D%2F5121x3414%2Ffilters%3Afill(auto%2C1)%2Faustralian-cattle-dog-portrait-523096669-5873e59e5f9b584db35cdf58.jpg",
+      //   width: "label",
+      //   height: "label",
+      //   padding: "30px",
+      //   shape: "rectangle",
+      // },
     },
     //label text
     {
@@ -91,16 +99,43 @@ const StarTracker = () => {
     },
   ] as any;
 
+  //   elements.push({
+  //     data: {
+  //       id: "test",
+  //       label: "svg Background",
+  //       parent: "one",
+  //     },
+  //     position: {x: 20, y: 50},
+  //     group: 'nodes',
+  //     classes: 'background-image',
+  //     style: {
+  //       'background-image' : `(${SVG})`,
+  //       'background-fit': 'contain',
+  //       'background-width': '100%',
+  // 'background-height': '100%'
+  //     }
+  //   })
+
   return (
     <RuxContainer className="star-tracker">
       <div slot="header">Star Tracker Assembly</div>
-      <CytoscapeComponent
+      <SVG />
+      {/* <CytoscapeComponent
         elements={elements}
         style={{ width: "100%", height: "100%" }}
         stylesheet={styles}
         zoomingEnabled={false}
         panningEnabled={false}
-      />
+        // cy={(cy) => {
+        //   cy.add({
+        //     data: {
+        //       id: "test",
+        //       image: "Test",
+        //       label: "Lens",
+        //     },
+        //   });
+        // }}
+      /> */}
     </RuxContainer>
   );
 };
