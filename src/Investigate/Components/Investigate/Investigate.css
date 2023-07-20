@@ -1,0 +1,17 @@
+.investigate-background[data-active="true"] {
+    height: calc(100% - var(--spacing-24));
+    padding: var(--spacing-3);
+    background-color: var(--color-background-base-default);
+    color: var(--color-text-primary);
+    display: grid;
+    gap: var(--spacing-3);
+    grid-template-columns: calc(20% - 12px) calc(80%);
+    grid-template-rows: calc(50% - 12px) calc(50%);
+    grid-template-areas:
+      "investigate-subsystems star-tracker"
+      "investigate-subsystems electronics";
+  }
+  
+  .investigate-background[data-active="false"] {
+    display: none;
+  }

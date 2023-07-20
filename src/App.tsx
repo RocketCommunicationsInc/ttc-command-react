@@ -51,9 +51,7 @@ function App() {
           <LinkStatus />
           <Watcher />
         </div>
-        <div className="investigate-background" data-active={showInvestigate}>
-          <Investigate contact={contact} toggleInvestigate={toggleInvestigate} />
-        </div>
+        <Investigate contact={contact} toggleInvestigate={toggleInvestigate} showInvestigate={showInvestigate} />
       </TTCGRMProvider>
     </div>
   );
