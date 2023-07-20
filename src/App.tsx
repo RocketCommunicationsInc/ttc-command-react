@@ -13,6 +13,9 @@ import Assembly from "Investigate/Components/Assembly/Assembly";
 import Mnemonics from "Investigate/Components/Mnemonics/Mnemonics";
 import { useState } from "react";
 
+import { generateContact } from "@astrouxds/mock-data";
+import type { Contact } from '@astrouxds/mock-data'
+
 const options = {
   alertsPercentage: 50 as const,
   initial: 15,
@@ -26,6 +29,16 @@ function App() {
   const toggleInvestigate = () => {
     setShowInvestigate((prevState) => !prevState);
   };
+
+  const contact: Contact = generateContact(0, {
+    desiredSubsystems: [
+      "Altitude",
+      "Payload",
+      "Power",
+      "Propulsion",
+      "Thermal",
+    ],
+  });
 
   return (
     <div className="app-container">
@@ -42,7 +55,7 @@ function App() {
           className="investigate-background"
           data-active={showInvestigate}
         >
-          <InvestigateSubsystems toggleInvestigate={toggleInvestigate} />
+          <InvestigateSubsystems toggleInvestigate={toggleInvestigate} satName={contact.satellite} subsystems={contact.subsystems} />
           <Assembly />
           <Mnemonics />
         </div>

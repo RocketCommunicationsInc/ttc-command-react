@@ -6,27 +6,24 @@ import {
   RuxButton,
 } from "@astrouxds/react";
 import "./InvestigateSubsystems.css";
-import { generateContact } from "@astrouxds/mock-data";
 import type { Subsystem } from '@astrouxds/mock-data'
+
+
+type PropTypes = {
+  toggleInvestigate: () => void
+  satName: string
+  subsystems: Subsystem[];
+};
 
 const InvestigateSubsystems = ({
   toggleInvestigate,
-}: {
-  toggleInvestigate: () => void;
-}) => {
-  const subsystems: Subsystem[] = generateContact(0, {
-    desiredSubsystems: [
-      "Altitude",
-      "Payload",
-      "Power",
-      "Propulsion",
-      "Thermal",
-    ],
-  }).subsystems;
+  satName,
+  subsystems
+}: PropTypes) => {
 
   return (
     <RuxContainer className="investigate-subsystem">
-      <div slot="header">Iron 4090 Subsystems</div>
+      <div slot="header">{satName} Subsystems</div>
       <RuxTree>
         {subsystems.map(subsystem => (
           <RuxTreeNode>
