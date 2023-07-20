@@ -23,13 +23,6 @@ const options = {
   limit: 45,
 };
 
-function App() {
-  const [showInvestigate, setShowInvestigate] = useState<boolean>(false);
-
-  const toggleInvestigate = () => {
-    setShowInvestigate((prevState) => !prevState);
-  };
-
   const contact: Contact = generateContact(0, {
     desiredSubsystems: [
       "Altitude",
@@ -39,6 +32,13 @@ function App() {
       "Thermal",
     ],
   });
+
+function App() {
+  const [showInvestigate, setShowInvestigate] = useState<boolean>(false);
+
+  const toggleInvestigate = () => {
+    setShowInvestigate((prevState) => !prevState);
+  };
 
   return (
     <div className="app-container">
