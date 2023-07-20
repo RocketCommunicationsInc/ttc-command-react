@@ -12,9 +12,9 @@ import {
   RuxCheckbox,
 } from "@astrouxds/react";
 
-import "./Electronics.css";
+import "./Mnemonics.css";
 
-const Electronics = () => {
+const Mnemonics = () => {
   return (
     <RuxContainer className="electronics">
       <div slot="header">
@@ -60,4 +60,4 @@ const Electronics = () => {
   );
 };
 
-export default Electronics;
+export default Mnemonics;

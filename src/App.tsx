@@ -9,8 +9,8 @@ import { TTCGRMProvider } from "@astrouxds/mock-data";
 
 import "@astrouxds/astro-web-components/dist/astro-web-components/astro-web-components.css";
 import "./App.css";
-import StarTracker from "Investigate/Components/StarTracker/StarTracker";
-import Electronics from "Investigate/Components/Electronics/Electronics";
+import Assembly from "Investigate/Components/Assembly/Assembly";
+import Mnemonics from "Investigate/Components/Mnemonics/Mnemonics";
 import { useState } from "react";
 
 const options = {
@@ -46,8 +46,8 @@ function App() {
         </div>
         <div className="investigate-background" data-active={investigatePanelActive}>
           <InvestigateSubsystems handleAppSwap={handleAppSwap} />
-          <StarTracker />
-          <Electronics />
+          <Assembly />
+          <Mnemonics />
         </div>
       </TTCGRMProvider>
     </div>
