@@ -1,5 +1,6 @@
 import { RuxContainer } from "@astrouxds/react";
 import AssemblySVG from "./AssemblySVG";
+import "./Assembly.css";
 
 const Assembly = () => {
   return (
