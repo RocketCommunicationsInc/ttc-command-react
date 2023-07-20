@@ -10,7 +10,11 @@ type PropTypes = {
   handleAppSwap: () => void;
 };
 
-const AlertsList = ({ severitySelection, categorySelection, handleAppSwap }: PropTypes) => {
+const AlertsList = ({
+  severitySelection,
+  categorySelection,
+  handleAppSwap,
+}: PropTypes) => {
   const { dataById: alerts } = useTTCGRMAlerts();
   const { allAlertsHaveProp, anyAlertsHaveProp, modifyAllAlerts } =
     useTTCGRMActions();
@@ -67,7 +71,11 @@ const AlertsList = ({ severitySelection, categorySelection, handleAppSwap }: Pro
       </div>
       <ul className="alert-list">
         {filteredAlertIds.map((alertId) => (
-          <AlertListItem alertItem={alerts[alertId]} key={alertId} handleAppSwap={handleAppSwap} />
+          <AlertListItem
+            alertItem={alerts[alertId]}
+            key={alertId}
+            handleAppSwap={handleAppSwap}
+          />
         ))}
       </ul>
     </>

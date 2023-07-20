@@ -24,10 +24,7 @@ const AlertListItem = ({ alertItem, handleAppSwap }: PropTypes) => {
         <RuxAccordionItem id={alertItem.id}>
           <div className="accordion-item__content">
             <div>{alertItem.message}</div>
-            <RuxButton
-              icon="launch"
-              onClick={handleAppSwap}
-            >
+            <RuxButton icon="launch" onClick={handleAppSwap}>
               Investigate
             </RuxButton>
           </div>

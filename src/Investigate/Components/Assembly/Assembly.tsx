@@ -1,7 +1,12 @@
 import { RuxContainer } from "@astrouxds/react";
 import CytoscapeComponent from "react-cytoscapejs";
+import type { ChildSubsystem } from "@astrouxds/mock-data";
 
-const Assembly = () => {
+type PropTypes = {
+  childSubsystem: ChildSubsystem;
+};
+
+const Assembly = ({ childSubsystem }: PropTypes) => {
   const elements = [
     { data: { id: "one", label: "Lens" }, position: { x: 100, y: 150 } },
     { data: { id: "two", label: "Baffle" }, position: { x: 250, y: 150 } },
@@ -93,7 +98,7 @@ const Assembly = () => {
 
   return (
     <RuxContainer className="star-tracker">
-      <div slot="header">Star Trackers Assembly</div>
+      <div slot="header">{childSubsystem.name}</div>
       <CytoscapeComponent
         elements={elements}
         style={{ width: "100%", height: "100%" }}
