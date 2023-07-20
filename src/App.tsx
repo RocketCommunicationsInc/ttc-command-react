@@ -47,7 +47,7 @@ function App() {
           appName={showInvestigate ? "INVESTIGATE" : "COMMAND"}
         />
         <div className="command-background" data-active={!showInvestigate}>
-          <Alerts />
+          <Alerts toggleInvestigate={toggleInvestigate}/>
           <PassPlan />
           <Subsystems toggleInvestigate={toggleInvestigate} />
           <LinkStatus />
