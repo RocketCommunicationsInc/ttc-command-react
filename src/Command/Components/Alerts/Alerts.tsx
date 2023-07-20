@@ -10,7 +10,7 @@ import { useTTCGRMActions, useTTCGRMAlerts } from "@astrouxds/mock-data";
 import type { Category, Status } from "@astrouxds/mock-data";
 import "./Alerts.css";
 
-const Alerts = ({toggleInvestigate} : { toggleInvestigate: () => void }) => {
+const Alerts = ({ toggleInvestigate }: { toggleInvestigate: () => void }) => {
   const [severitySelection, setSeveritySelection] = useState<Status | "all">(
     "all"
   );
