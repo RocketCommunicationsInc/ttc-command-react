@@ -1,9 +1,4 @@
-import Alerts from "./Command/Components/Alerts/Alerts";
-import PassPlan from "./Command/Components/PassPlan/PassPlan";
-import Watcher from "./Command/Components/Watcher/Watcher";
 import GlobalStatusBar from "./Command/Components/GlobalStatusBar";
-import LinkStatus from "Command/Components/LinkStatus/LinkStatus";
-import Subsystems from "Command/Components/Subsystems/Subsystems";
 import { TTCGRMProvider } from "@astrouxds/mock-data";
 
 import "@astrouxds/astro-web-components/dist/astro-web-components/astro-web-components.css";
