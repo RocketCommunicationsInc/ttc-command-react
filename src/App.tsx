@@ -13,6 +13,7 @@ import { useState } from "react";
 import { generateContact } from "@astrouxds/mock-data";
 import type { Contact, Subsystem } from "@astrouxds/mock-data";
 import Investigate from "Investigate/Components/Investigate";
+import Command from "Command/Components/Command";
 
 const options = {
   alertsPercentage: 50 as const,
@@ -43,17 +44,12 @@ function App() {
         <GlobalStatusBar
           appName={showInvestigate ? "INVESTIGATE" : "COMMAND"}
         />
-        <div className="command-background" data-active={!showInvestigate}>
-          <Alerts toggleInvestigate={toggleInvestigate} />
-          <PassPlan />
-          <Subsystems
-            subsystems={contact.subsystems}
-            toggleInvestigate={toggleInvestigate}
-            setSelectedSubsystem={setSelectedSubsystem}
-          />
-          <LinkStatus />
-          <Watcher />
-        </div>
+        <Command
+          toggleInvestigate={toggleInvestigate}
+          contact={contact}
+          showInvestigate={showInvestigate}
+          setSelectedSubsystem={setSelectedSubsystem}
+        />
         <Investigate
           contact={contact}
           toggleInvestigate={toggleInvestigate}

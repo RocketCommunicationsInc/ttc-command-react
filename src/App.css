@@ -5,25 +5,6 @@
   overflow: hidden;
 }
 
-.command-background[data-active="true"] {
-  height: calc(100% - var(--spacing-24));
-  padding: var(--spacing-3);
-  background-color: var(--color-background-base-default);
-  color: var(--color-text-primary);
-  display: grid;
-  gap: var(--spacing-3);
-  grid-template-columns: calc(30% - 12px) calc(45% - 12px) calc(25%);
-  grid-template-rows: calc(33% - 12px) calc(28.25% - 12px) calc(39%);
-  grid-template-areas:
-    "alerts pass-plan link-status"
-    "alerts pass-plan subsystems"
-    "alerts pass-plan watcher";
-}
-
-.command-background[data-active="false"] {
-  display: none;
-}
-
 rux-container::part(container) {
   display: flex;
   flex-direction: column;
