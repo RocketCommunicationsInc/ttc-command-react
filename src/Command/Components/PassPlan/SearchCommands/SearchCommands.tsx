@@ -7,9 +7,10 @@ type PropTypes = {
   setCommand: Dispatch<SetStateAction<string>>;
   command: string;
   addToPassQueue: any;
+  pass: string;
 };
 
-const SearchCommands = ({ commands, setCommand, command, addToPassQueue }: PropTypes) => {
+const SearchCommands = ({ commands, setCommand, command, addToPassQueue, pass }: PropTypes) => {
 
     const selectCommand = (e: CustomEvent) => {
         const { detail } = e;
@@ -19,7 +20,7 @@ const SearchCommands = ({ commands, setCommand, command, addToPassQueue }: PropT
   return (
     <>
       <RuxPopUp placement="top-start">
-        <RuxButton slot="trigger" iconOnly icon="unfold-more" />
+        <RuxButton slot="trigger" iconOnly icon="unfold-more" disabled={pass !== 'Pre-Pass' ? false : true} />
         <div className="history-popup">
           <span>Recent Commands:</span>
           <ul>
@@ -53,6 +54,7 @@ const SearchCommands = ({ commands, setCommand, command, addToPassQueue }: PropT
             slot="trigger"
             type="search"
             placeholder="Start typing to search commands..."
+            disabled={pass !== 'Pre-Pass' ? false : true}
             value={command !== '' ? command : ''}
         />
         <RuxMenu className="commands_input-menu" onRuxmenuselected={(e) => selectCommand(e)}>
@@ -69,7 +71,7 @@ const SearchCommands = ({ commands, setCommand, command, addToPassQueue }: PropT
         </RuxMenu>
       </RuxPopUp>
       
-      <RuxButton onClick={() => addToPassQueue(command)}>Add to Queue</RuxButton>
+      <RuxButton disabled={pass !== 'Pre-Pass' ? false : true} onClick={() => addToPassQueue(command)}>Add to Queue</RuxButton>
     </>
   );
 };

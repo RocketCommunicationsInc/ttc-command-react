@@ -10,10 +10,17 @@ import {
 import "./PassPlan.css";
 import commands from '../../../utils/commands.json'
 import SearchCommands from "./SearchCommands/SearchCommands";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PassPlan = () => {
   const [command, setCommand] = useState<string>('');
+  const [pass, setPass] = useState('Pre-Pass');
+
+  useEffect(() => {
+    setTimeout(() => {
+      setPass('Pass')
+    }, 10000)
+  }, [pass])
 
   const addToPassQueue = (commandListItem: string) => {
     if (commandListItem === '') return;
@@ -28,7 +35,7 @@ const PassPlan = () => {
           <RuxOption label="Automatic" value="" />
         </RuxSelect>
       </div>
-      <div className="banner">Pre-Pass</div>
+      <div className={`banner ${pass}`}>{pass}</div>
       <div className="rux-tree-header">
         <span>Step</span>
         <span>Instruction</span>
@@ -83,7 +90,7 @@ const PassPlan = () => {
         </RuxTree>
       </li>
       <div slot="footer">
-        <SearchCommands commands={commands} setCommand={setCommand} command={command} addToPassQueue={addToPassQueue} />
+        <SearchCommands commands={commands} setCommand={setCommand} command={command} addToPassQueue={addToPassQueue} pass={pass} />
       </div>
     </RuxContainer>
   );
