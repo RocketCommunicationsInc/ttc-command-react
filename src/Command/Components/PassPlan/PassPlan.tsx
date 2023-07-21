@@ -6,13 +6,19 @@ import {
   RuxTreeNode,
   RuxCheckbox,
   RuxProgress,
-  RuxInput,
-  RuxButton,
-  RuxPopUp,
 } from "@astrouxds/react";
 import "./PassPlan.css";
+import commands from '../../../utils/commands.json'
+import SearchCommands from "./SearchCommands/SearchCommands";
+import { useState } from "react";
 
-const Constellation = () => {
+const PassPlan = () => {
+  const [command, setCommand] = useState<string>('');
+
+  const addToPassQueue = (commandListItem: string) => {
+    if (commandListItem === '') return;
+    console.log(commandListItem)
+  }
   return (
     <RuxContainer className="pass-plan">
       <div slot="header" className="header">
@@ -77,31 +83,10 @@ const Constellation = () => {
         </RuxTree>
       </li>
       <div slot="footer">
-        <RuxPopUp placement="top-start">
-          <RuxButton slot="trigger" iconOnly icon="unfold-more" />
-          <div className="history-popup">
-            <span>Recent Commands:</span>
-            <ul>
-              <li>80000</li>
-              <li>80010</li>
-              <li>Memory Dump 4</li>
-              <li>QPR Command 3</li>
-              <li>Satellite Command</li>
-            </ul>
-            <span>Quick Response Procedures:</span>
-            <ul>
-              <li>QRP Command</li>
-            </ul>
-          </div>
-        </RuxPopUp>
-        <RuxInput
-          type="search"
-          placeholder="Start typing to search commands..."
-        />
-        <RuxButton>Add to Queue</RuxButton>
+        <SearchCommands commands={commands} setCommand={setCommand} command={command} addToPassQueue={addToPassQueue} />
       </div>
     </RuxContainer>
   );
 };
 
-export default Constellation;
+export default PassPlan;
