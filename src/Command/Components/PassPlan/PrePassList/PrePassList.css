@@ -1,0 +1,16 @@
+.pre-pass-list-table rux-table-header-cell:nth-child(1) {
+    width: var(--spacing-3);
+}
+
+.pre-pass-list-table rux-table-row {
+    display: flex;
+}
+
+.pre-pass-list-table rux-table-cell {
+    display: flex;
+    align-items: center;
+}
+
+.pre-pass-list-table rux-table-cell rux-progress {
+    margin-left: auto;
+}
