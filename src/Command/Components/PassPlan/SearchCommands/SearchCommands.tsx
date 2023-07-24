@@ -11,11 +11,6 @@ type PropTypes = {
 
 const SearchCommands = ({ commands, setCommand, command, addToPassQueue }: PropTypes) => {
 
-    const selectCommand = (e: CustomEvent) => {
-        const { detail } = e;
-        setCommand(detail.value)
-      }
-
   return (
     <>
       <RuxPopUp placement="top-start">
@@ -55,7 +50,7 @@ const SearchCommands = ({ commands, setCommand, command, addToPassQueue }: PropT
             placeholder="Start typing to search commands..."
             value={command !== '' ? command : ''}
         />
-        <RuxMenu className="commands_input-menu" onRuxmenuselected={(e) => selectCommand(e)}>
+        <RuxMenu className="commands_input-menu" onRuxmenuselected={(e) => setCommand(e.detail.value)}>
                 {commands.map(
                 (
                     item: { commandString: string; description: string },

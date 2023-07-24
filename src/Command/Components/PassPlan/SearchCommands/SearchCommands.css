@@ -4,6 +4,6 @@ rux-pop-up.commands_input-pop-up {
 }
 
 rux-menu.commands_input-menu {
-    height: 400px;
+    height: 300px;
     overflow-y: scroll
 }
