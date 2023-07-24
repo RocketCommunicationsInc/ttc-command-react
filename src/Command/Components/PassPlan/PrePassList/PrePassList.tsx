@@ -26,24 +26,31 @@ const PrePassList = ({setPass}: PropTypes) => {
   let [currentListItem, setCurrentListItem] = useState<number>(0)
 
   useEffect(() => {
+    // Grab an array of the state functions for each table row, their progress bars and checkboxes
     const stateFunctionArray = [setAimState, setSarmState, setLockState, setAosState, setVccState, setPassPlanState];
     const ruxProgress: HTMLRuxProgressElement[] = Array.from(document.querySelectorAll('rux-progress.pre-pass_progress'))!;
     const ruxCheckbox: HTMLRuxCheckboxElement[] = Array.from(document.querySelectorAll('rux-checkbox.pre-pass_checkbox'))!;
 
+    // if the current list item is the length of the state function array, set the pass from 'pre-pass' into 'pass'
     if (currentListItem === stateFunctionArray.length) {
       setPass('Pass')
       return;
     }
+
+    // every 7 milliseconds for each progress bar, set the progress value from 0-100 (filling the bar)
     let value: number = 0
       setInterval(() => {
         if (value === 101) return;
         ruxProgress[currentListItem].value = value
         value = value + 1
       }, 7)
+
+      //for each list item, wait the allotted time and then set the checkbox to checked and the text to complete. 
       setTimeout(() =>{
         stateFunctionArray[currentListItem](true)
         ruxCheckbox[currentListItem].checked = true
 
+        // if on the last item, wait a little longer to make sure the user can see the state change to 'complete' before swapping to 'pass'
         if(currentListItem === stateFunctionArray.length - 1) {
           setTimeout(() => {
             setCurrentListItem(currentListItem + 1)
