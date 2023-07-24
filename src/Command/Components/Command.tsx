@@ -8,24 +8,29 @@ import Subsystems from "./Subsystems/Subsystems";
 import Watcher from "./Watcher/Watcher";
 
 type PropTypes = {
-    toggleInvestigate: () => void;
-    showInvestigate: boolean;
-    contact: Contact;
-    setSelectedSubsystem: Dispatch<SetStateAction<Subsystem>>;
+  toggleInvestigate: () => void;
+  showInvestigate: boolean;
+  contact: Contact;
+  setSelectedSubsystem: Dispatch<SetStateAction<Subsystem>>;
 };
 
-const Command = ({showInvestigate, toggleInvestigate, contact, setSelectedSubsystem}: PropTypes) => {
+const Command = ({
+  showInvestigate,
+  toggleInvestigate,
+  contact,
+  setSelectedSubsystem,
+}: PropTypes) => {
   return (
     <div className="command-background" data-active={!showInvestigate}>
-        <Alerts toggleInvestigate={toggleInvestigate} />
-        <PassPlan />
-        <Subsystems
-            subsystems={contact.subsystems}
-            toggleInvestigate={toggleInvestigate}
-            setSelectedSubsystem={setSelectedSubsystem}
-        />
-        <LinkStatus />
-        <Watcher />
+      <Alerts toggleInvestigate={toggleInvestigate} />
+      <PassPlan />
+      <Subsystems
+        subsystems={contact.subsystems}
+        toggleInvestigate={toggleInvestigate}
+        setSelectedSubsystem={setSelectedSubsystem}
+      />
+      <LinkStatus />
+      <Watcher />
     </div>
   );
 };

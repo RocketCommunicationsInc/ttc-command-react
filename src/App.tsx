@@ -29,8 +29,7 @@ function App() {
 
   const toggleInvestigate = () => {
     setShowInvestigate((prevState) => !prevState);
-    if (showInvestigate) setSelectedSubsystem(contact.subsystems[0])
-    
+    if (showInvestigate) setSelectedSubsystem(contact.subsystems[0]);
   };
 
   return (

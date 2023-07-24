@@ -38,5 +38,5 @@ rux-menu-item[value="themeToggle"] span {
 }
 
 .app-icon-pop-up {
-  height: calc(var(--spacing-14, 3.5rem) + var(--spacing-050, .125rem));
+  height: calc(var(--spacing-14, 3.5rem) + var(--spacing-050, 0.125rem));
 }
