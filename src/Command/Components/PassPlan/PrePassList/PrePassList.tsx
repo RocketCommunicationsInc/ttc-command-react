@@ -17,12 +17,12 @@ type PropTypes = {
 };
 
 const PrePassList = ({ setPass }: PropTypes) => {
-  const [aimState, setAimState] = useState<boolean>(false);
-  const [sarmState, setSarmState] = useState<boolean>(false);
-  const [lockState, setLockState] = useState<boolean>(false);
-  const [aosState, setAosState] = useState<boolean>(false);
-  const [vccState, setVccState] = useState<boolean>(false);
-  const [passPlanState, setPassPlanState] = useState<boolean>(false);
+  const [aimState, setAimState] = useState<string>("PENDING");
+  const [sarmState, setSarmState] = useState<string>("PENDING");
+  const [lockState, setLockState] = useState<string>("PENDING");
+  const [aosState, setAosState] = useState<string>("PENDING");
+  const [vccState, setVccState] = useState<string>("PENDING");
+  const [passPlanState, setPassPlanState] = useState<string>("PENDING");
   let [currentListItem, setCurrentListItem] = useState<number>(0);
 
   useEffect(() => {
@@ -51,14 +51,14 @@ const PrePassList = ({ setPass }: PropTypes) => {
     // every 7 milliseconds for each progress bar, set the progress value from 0-100 (filling the bar)
     let value: number = 0;
     setInterval(() => {
-      if (value === 101) return;
+      if (value > 100) return;
       ruxProgress[currentListItem].value = value;
       value = value + 1;
     }, 7);
 
     //for each list item, wait the allotted time and then set the checkbox to checked and the text to complete.
     setTimeout(() => {
-      stateFunctionArray[currentListItem](true);
+      stateFunctionArray[currentListItem]("CONNECTED");
       ruxCheckbox[currentListItem].checked = true;
 
       // if on the last item, wait a little longer to make sure the user can see the state change to 'complete' before swapping to 'pass'
@@ -90,7 +90,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
             <RuxTableCell>
               <div className="pre-pass_cell-wrapper-content">
                 <RuxCheckbox className="pre-pass_checkbox" />
-                AIM = {aimState === false ? "PENDING" : "CONNECTED"}
+                AIM = {aimState}
                 <RuxProgress className="pre-pass_progress" hideLabel={true} />
               </div>
             </RuxTableCell>
@@ -102,7 +102,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
             <RuxTableCell>
               <div className="pre-pass_cell-wrapper-content">
                 <RuxCheckbox className="pre-pass_checkbox" />
-                SARM = {sarmState === false ? "PENDING" : "CONNECTED"}
+                SARM = {sarmState}
                 <RuxProgress className="pre-pass_progress" hideLabel={true} />
               </div>
             </RuxTableCell>
@@ -114,7 +114,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
             <RuxTableCell>
               <div className="pre-pass_cell-wrapper-content">
                 <RuxCheckbox className="pre-pass_checkbox" />
-                LOCK = {lockState === false ? "PENDING" : "CONNECTED"}
+                LOCK = {lockState}
                 <RuxProgress className="pre-pass_progress" hideLabel={true} />
               </div>
             </RuxTableCell>
@@ -126,7 +126,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
             <RuxTableCell>
               <div className="pre-pass_cell-wrapper-content">
                 <RuxCheckbox className="pre-pass_checkbox" />
-                AOS = {aosState === false ? "PENDING" : "CONNECTED"}
+                AOS = {aosState}
                 <RuxProgress className="pre-pass_progress" hideLabel={true} />
               </div>
             </RuxTableCell>
@@ -138,7 +138,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
             <RuxTableCell>
               <div className="pre-pass_cell-wrapper-content">
                 <RuxCheckbox className="pre-pass_checkbox" />
-                VCC = {vccState === false ? "PENDING" : "CONNECTED"}
+                VCC = {vccState}
                 <RuxProgress className="pre-pass_progress" hideLabel={true} />
               </div>
             </RuxTableCell>
@@ -150,7 +150,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
             <RuxTableCell>
               <div className="pre-pass_cell-wrapper-content">
                 <RuxCheckbox className="pre-pass_checkbox" />
-                PASS PLAN = {passPlanState === false ? "PENDING" : "CONNECTED"}
+                PASS PLAN = {passPlanState}
                 <RuxProgress className="pre-pass_progress" hideLabel={true} />
               </div>
             </RuxTableCell>
