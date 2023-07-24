@@ -6,7 +6,7 @@ import {
 import "./PassPlan.css";
 import commands from '../../../utils/commands.json'
 import SearchCommands from "./SearchCommands/SearchCommands";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PrePassList from "./PrePassList/PrePassList";
 import PassList from "./PassList/PassList";
 
@@ -14,11 +14,11 @@ const PassPlan = () => {
   const [command, setCommand] = useState<string>('');
   const [pass, setPass] = useState('Pre-Pass');
 
-  useEffect(() => {
-    setTimeout(() => {
-      setPass('Pass')
-    }, 10000)
-  }, [pass])
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setPass('Pass')
+  //   }, 10000)
+  // }, [pass])
 
   const addToPassQueue = (commandListItem: string) => {
     if (commandListItem === '') return;
@@ -35,7 +35,7 @@ const PassPlan = () => {
       </div>
       <div>
         <div className={`banner ${pass}`}>{pass}</div>
-        {pass === 'Pre-Pass' ? <PrePassList /> : <PassList />}
+        {pass === 'Pre-Pass' ? <PrePassList setPass={setPass} /> : <PassList />}
       </div>
       <div slot="footer">
         <SearchCommands commands={commands} setCommand={setCommand} command={command} addToPassQueue={addToPassQueue} pass={pass} />
