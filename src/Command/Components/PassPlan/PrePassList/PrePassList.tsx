@@ -28,6 +28,8 @@ const PrePassList = ({setPass}: PropTypes) => {
   useEffect(() => {
     const stateFunctionArray = [setAimState, setSarmState, setLockState, setAosState, setVccState, setPassPlanState];
     const ruxProgress: HTMLRuxProgressElement[] = Array.from(document.querySelectorAll('rux-progress.pre-pass_progress'))!;
+    const ruxCheckbox: HTMLRuxCheckboxElement[] = Array.from(document.querySelectorAll('rux-checkbox.pre-pass_checkbox'))!;
+
     if (currentListItem === stateFunctionArray.length) {
       setPass('Pass')
       return;
@@ -35,14 +37,21 @@ const PrePassList = ({setPass}: PropTypes) => {
     let value: number = 0
       setInterval(() => {
         if (value === 101) return;
-        
         ruxProgress[currentListItem].value = value
         value = value + 1
-      }, 5)
+      }, 7)
       setTimeout(() =>{
         stateFunctionArray[currentListItem](true)
-        setCurrentListItem(currentListItem + 1)
-      }, 1000)
+        ruxCheckbox[currentListItem].checked = true
+
+        if(currentListItem === stateFunctionArray.length - 1) {
+          setTimeout(() => {
+            setCurrentListItem(currentListItem + 1)
+          }, 300)
+        } else {
+          setCurrentListItem(currentListItem + 1)
+        }
+      }, 1500)
       return;
   }, [currentListItem, setPass])
 
@@ -68,7 +77,7 @@ const PrePassList = ({setPass}: PropTypes) => {
           </RuxTableCell>
           <RuxTableCell>
             <div className="pre-pass_cell-wrapper-content">
-            <RuxCheckbox />
+            <RuxCheckbox className="pre-pass_checkbox" />
             AIM = { aimState === false ? 'PENDING' : 'CONNECTED' }
             <RuxProgress className="pre-pass_progress" hideLabel={true} />
             </div>
@@ -82,7 +91,7 @@ const PrePassList = ({setPass}: PropTypes) => {
           </RuxTableCell>
           <RuxTableCell>
             <div className="pre-pass_cell-wrapper-content">
-              <RuxCheckbox />
+              <RuxCheckbox className="pre-pass_checkbox" />
               SARM = { sarmState === false ? 'PENDING' : 'CONNECTED' }
               <RuxProgress className="pre-pass_progress" hideLabel={true} />
             </div>
@@ -96,7 +105,7 @@ const PrePassList = ({setPass}: PropTypes) => {
           </RuxTableCell>
           <RuxTableCell>
             <div className="pre-pass_cell-wrapper-content">
-              <RuxCheckbox />
+              <RuxCheckbox className="pre-pass_checkbox" />
               LOCK = { lockState === false ? 'PENDING' : 'CONNECTED' }
               <RuxProgress className="pre-pass_progress" hideLabel={true} />
             </div>
@@ -110,7 +119,7 @@ const PrePassList = ({setPass}: PropTypes) => {
           </RuxTableCell>
           <RuxTableCell>
             <div className="pre-pass_cell-wrapper-content">
-            <RuxCheckbox />
+            <RuxCheckbox className="pre-pass_checkbox" />
             AOS = { aosState === false ? 'PENDING' : 'CONNECTED' }
             <RuxProgress className="pre-pass_progress" hideLabel={true} />
             </div>
@@ -124,7 +133,7 @@ const PrePassList = ({setPass}: PropTypes) => {
           </RuxTableCell>
           <RuxTableCell>
             <div className="pre-pass_cell-wrapper-content">
-            <RuxCheckbox />
+            <RuxCheckbox className="pre-pass_checkbox" />
             VCC = { vccState === false ? 'PENDING' : 'CONNECTED' }
             <RuxProgress className="pre-pass_progress" hideLabel={true} />
             </div>
@@ -138,7 +147,7 @@ const PrePassList = ({setPass}: PropTypes) => {
           </RuxTableCell>
           <RuxTableCell>
             <div className="pre-pass_cell-wrapper-content">
-            <RuxCheckbox />
+            <RuxCheckbox className="pre-pass_checkbox" />
             PASS PLAN = { passPlanState === false ? 'PENDING' : 'CONNECTED' }
             <RuxProgress className="pre-pass_progress" hideLabel={true} />
             </div>
@@ -152,7 +161,7 @@ const PrePassList = ({setPass}: PropTypes) => {
             1
           </div>
           <div className="rux-tree-node_content">
-            <RuxCheckbox />
+            <RuxCheckbox className="pre-pass_checkbox" />
             Verify MNEMONIC = ON
           </div>
         </RuxTreeNode>
@@ -163,7 +172,7 @@ const PrePassList = ({setPass}: PropTypes) => {
             2
           </div>
           <div className="rux-tree-node_content">
-            <RuxCheckbox />
+            <RuxCheckbox className="pre-pass_checkbox" />
             Verify MNEMONIC = ON
           </div>
           <RuxTreeNode slot="node">
@@ -177,7 +186,7 @@ const PrePassList = ({setPass}: PropTypes) => {
             3
           </div>
           <div className="rux-tree-node_content">
-            <RuxCheckbox />
+            <RuxCheckbox className="pre-pass_checkbox" />
             Verify MNEMONIC = ON
           </div>
           <RuxProgress className="pre-pass_progress" slot="suffix" hideLabel={true} value={60} />
