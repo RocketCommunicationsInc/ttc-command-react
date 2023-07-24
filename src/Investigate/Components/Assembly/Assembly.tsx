@@ -8,12 +8,15 @@ import Electronics from "./SVG/Electronics.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 
 import "./Assembly.css";
+import { useState } from "react";
 
 type PropTypes = {
   onSvgClick: (selectedLabel: string) => void;
 };
 
 const Assembly = ({ onSvgClick }: PropTypes) => {
+  const [selectedNode, setSelectedNode] = useState(null);
+
   const elements = [
     {
       data: { id: "one", label: "Lens", backgroundImage: Lens },
@@ -104,17 +107,23 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
         // "background-repeat": "no-repeat",
         "bounds-expansion": "200px 30 17 30",
         "background-clip": "none",
-        shape: "roundrectangle",
+        //shape: "roundrectangle",
+        shape: "",
         "background-color": "#172635",
-        transform: "rotate(50deg)",
+        // rotation: "45deg",
+        // transform: "rotate(45deg)",
         height: "148%",
-        width: "170%",
+        width: "205%",
+        content: "data(label",
+        transform: "rotate(45deg)",
+        rotation: "45deg",
       },
     },
     {
-      selector: "node:hover",
+      selector: "node[label]:hover",
       style: {
         cursor: "pointer",
+        "background-opacity": "0.3",
       },
     },
     //label text
@@ -152,24 +161,39 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
     },
   ] as any;
 
+  const handleHover = (e: any) => {
+    e.target.style("background-color", "white");
+    // e.target.style("cursor", "pointer");
+    setSelectedNode(e.target);
+  };
+
+  const handleMouseLeave = () => {
+    if (selectedNode) {
+      (selectedNode as any).style("background-color", "#172635");
+      setSelectedNode(null);
+    }
+  };
+
   const handleClick = (e: any) => {
-    const selectedLabel = e.target.data("label");
-    onSvgClick(selectedLabel);
+    // e.target.style("background-color", "white");
+    setSelectedNode(e.target);
+    onSvgClick(e.target.data("label"));
   };
 
   return (
     <RuxContainer className="star-tracker">
       <div slot="header">Star Trackers Assembly</div>
       <CytoscapeComponent
+        className="cytoscape"
         elements={elements}
         style={{ width: "100%", height: "100%" }}
         stylesheet={styles}
         zoomingEnabled={false}
         panningEnabled={false}
-        cy={(cy: {
-          on: (arg0: string, arg1: string, arg2: (e: any) => void) => void;
-        }) => {
+        cy={(cy: any) => {
           cy.on("click", "node", handleClick);
+          cy.on("mouseover", "node", handleHover);
+          cy.on("mouseout", "node", handleMouseLeave);
         }}
       />
     </RuxContainer>
