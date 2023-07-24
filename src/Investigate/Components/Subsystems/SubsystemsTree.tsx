@@ -10,11 +10,13 @@ import type { ChildSubsystem, Subsystem } from "@astrouxds/mock-data";
 
 type PropTypes = {
   toggleInvestigate: () => void;
-  setSelectedChildSubsystem: React.Dispatch<React.SetStateAction<ChildSubsystem>>;
+  setSelectedChildSubsystem: React.Dispatch<
+    React.SetStateAction<ChildSubsystem>
+  >;
   satName: string;
   subsystems: Subsystem[];
   selectedSubsystem: Subsystem;
-  selectedChildSubsystem: ChildSubsystem
+  selectedChildSubsystem: ChildSubsystem;
 };
 
 const SubsystemsTree = ({
@@ -23,7 +25,7 @@ const SubsystemsTree = ({
   satName,
   subsystems,
   selectedSubsystem,
-  selectedChildSubsystem
+  selectedChildSubsystem,
 }: PropTypes) => {
   return (
     <RuxContainer className="investigate-subsystem">
