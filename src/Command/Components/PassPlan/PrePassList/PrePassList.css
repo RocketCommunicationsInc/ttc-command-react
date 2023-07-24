@@ -2,15 +2,30 @@
     width: var(--spacing-3);
 }
 
+/* 
 .pre-pass-list-table rux-table-row {
     display: flex;
+} */
+
+.pre-pass_cell-item-number {
+    margin-inline-start: var(--spacing-4);
 }
 
-.pre-pass-list-table rux-table-cell {
+.pre-pass_cell-wrapper-content {
     display: flex;
     align-items: center;
+    margin-inline-end: var(--spacing-4);
 }
 
+.pre-pass_cell-wrapper-content > rux-checkbox {
+    margin-inline-end: var(--spacing-6);
+}
+
+.pre-pass_cell-wrapper-content > rux-progress {
+    margin-inline-start: auto;
+}
+
+/*
 .pre-pass-list-table rux-table-cell rux-progress {
     margin-left: auto;
-}
+} */

@@ -8,8 +8,6 @@ import {
   RuxTableHeaderCell,
   RuxTableHeaderRow,
   RuxTableRow,
-  RuxTree,
-  RuxTreeNode,
 } from "@astrouxds/react";
 import "./PrePassList.css"
 
@@ -30,62 +28,86 @@ const PrePassList = () => {
       <RuxTableBody>
         <RuxTableRow>
           <RuxTableCell>
-            1
+          <div className="pre-pass_cell-item-number">
+              1
+            </div>
           </RuxTableCell>
           <RuxTableCell>
+            <div className="pre-pass_cell-wrapper-content">
             <RuxCheckbox />
             Verify MNEMONIC = ON
             <RuxProgress hideLabel={true} value={60} />
+            </div>
           </RuxTableCell>
         </RuxTableRow>
         <RuxTableRow>
           <RuxTableCell>
-            1
+          <div className="pre-pass_cell-item-number">
+              2
+            </div>
           </RuxTableCell>
           <RuxTableCell>
-            <RuxCheckbox />
-            Verify MNEMONIC = ON
-            <RuxProgress hideLabel={true} value={60} />
-          </RuxTableCell>
-        </RuxTableRow>
-        <RuxTableRow>
-          <RuxTableCell>
-            2
-          </RuxTableCell>
-          <RuxTableCell>
-            <RuxCheckbox />
-            Verify MNEMONIC = ON
-            <RuxProgress hideLabel={true} value={60} />
+            <div className="pre-pass_cell-wrapper-content">
+              <RuxCheckbox />
+              Verify MNEMONIC = ON
+              <RuxProgress hideLabel={true} value={60} />
+            </div>
           </RuxTableCell>
         </RuxTableRow>
         <RuxTableRow>
           <RuxTableCell>
-            3
+          <div className="pre-pass_cell-item-number">
+              3
+            </div>
           </RuxTableCell>
           <RuxTableCell>
-            <RuxCheckbox />
-            Verify MNEMONIC = ON
-            <RuxProgress hideLabel={true} value={60} />
-          </RuxTableCell>
-        </RuxTableRow>
-        <RuxTableRow>
-          <RuxTableCell>
-            4
-          </RuxTableCell>
-          <RuxTableCell>
-            <RuxCheckbox />
-            Verify MNEMONIC = ON
-            <RuxProgress hideLabel={true} value={60} />
+            <div className="pre-pass_cell-wrapper-content">
+              <RuxCheckbox />
+              Verify MNEMONIC = ON
+              <RuxProgress hideLabel={true} value={60} />
+            </div>
           </RuxTableCell>
         </RuxTableRow>
         <RuxTableRow>
           <RuxTableCell>
-            5
+            <div className="pre-pass_cell-item-number">
+              4
+            </div>
           </RuxTableCell>
           <RuxTableCell>
+            <div className="pre-pass_cell-wrapper-content">
             <RuxCheckbox />
             Verify MNEMONIC = ON
             <RuxProgress hideLabel={true} value={60} />
+            </div>
+          </RuxTableCell>
+        </RuxTableRow>
+        <RuxTableRow>
+          <RuxTableCell>
+          <div className="pre-pass_cell-item-number">
+              5
+            </div>
+          </RuxTableCell>
+          <RuxTableCell>
+            <div className="pre-pass_cell-wrapper-content">
+            <RuxCheckbox />
+            Verify MNEMONIC = ON
+            <RuxProgress hideLabel={true} value={60} />
+            </div>
+          </RuxTableCell>
+        </RuxTableRow>
+        <RuxTableRow>
+          <RuxTableCell>
+          <div className="pre-pass_cell-item-number">
+              6
+            </div>
+          </RuxTableCell>
+          <RuxTableCell>
+            <div className="pre-pass_cell-wrapper-content">
+            <RuxCheckbox />
+            Verify MNEMONIC = ON
+            <RuxProgress hideLabel={true} value={60} />
+            </div>
           </RuxTableCell>
         </RuxTableRow>
       </RuxTableBody>
