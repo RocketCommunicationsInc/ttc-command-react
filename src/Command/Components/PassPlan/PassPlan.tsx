@@ -1,24 +1,19 @@
-import {
-  RuxContainer,
-  RuxOption,
-  RuxSelect,
-  RuxTree,
-  RuxTreeNode,
-  RuxCheckbox,
-  RuxProgress,
-} from "@astrouxds/react";
+import { RuxContainer, RuxOption, RuxSelect } from "@astrouxds/react";
 import "./PassPlan.css";
-import commands from '../../../utils/commands.json'
+import commands from "../../../utils/commands.json";
 import SearchCommands from "./SearchCommands/SearchCommands";
 import { useState } from "react";
+import PrePassList from "./PrePassList/PrePassList";
+import PassList from "./PassList/PassList";
 
 const PassPlan = () => {
-  const [command, setCommand] = useState<string>('');
+  const [command, setCommand] = useState<string>("");
+  const [pass, setPass] = useState("Pre-Pass");
 
   const addToPassQueue = (commandListItem: string) => {
-    if (commandListItem === '') return;
-    console.log(commandListItem)
-  }
+    if (commandListItem === "") return;
+    console.log(commandListItem);
+  };
   return (
     <RuxContainer className="pass-plan">
       <div slot="header" className="header">
@@ -28,62 +23,18 @@ const PassPlan = () => {
           <RuxOption label="Automatic" value="" />
         </RuxSelect>
       </div>
-      <div className="banner">Pre-Pass</div>
-      <div className="rux-tree-header">
-        <span>Step</span>
-        <span>Instruction</span>
+      <div>
+        <div className={`banner ${pass}`}>{pass}</div>
+        {pass === "Pre-Pass" ? <PrePassList setPass={setPass} /> : <PassList />}
       </div>
-      <li className="pass-plan-list">
-        <RuxTree>
-          <RuxTreeNode>
-            <div className="rux-tree-node_prefix" slot="prefix">
-              1
-            </div>
-            <div className="rux-tree-node_content">
-              <RuxCheckbox />
-              Verify MNEMONIC = ON
-            </div>
-            <RuxTreeNode slot="node">
-              <div className="rux-tree-content">Children</div>
-            </RuxTreeNode>
-          </RuxTreeNode>
-        </RuxTree>
-      </li>
-      <li className="pass-plan-list">
-        <RuxTree>
-          <RuxTreeNode>
-            <div className="rux-tree-node_prefix" slot="prefix">
-              2
-            </div>
-            <div className="rux-tree-node_content">
-              <RuxCheckbox />
-              Verify MNEMONIC = ON
-            </div>
-            <RuxTreeNode slot="node">
-              <div className="rux-tree-content">Children</div>
-            </RuxTreeNode>
-          </RuxTreeNode>
-        </RuxTree>
-      </li>
-      <li className="pass-plan-list">
-        <RuxTree>
-          <RuxTreeNode>
-            <div className="rux-tree-node_prefix" slot="prefix">
-              3
-            </div>
-            <div className="rux-tree-node_content">
-              <RuxCheckbox />
-              Verify MNEMONIC = ON
-            </div>
-            <RuxProgress slot="suffix" hideLabel={true} value={60} />
-            <RuxTreeNode slot="node">
-              <div className="rux-tree-content">Children</div>
-            </RuxTreeNode>
-          </RuxTreeNode>
-        </RuxTree>
-      </li>
       <div slot="footer">
-        <SearchCommands commands={commands} setCommand={setCommand} command={command} addToPassQueue={addToPassQueue} />
+        <SearchCommands
+          commands={commands}
+          setCommand={setCommand}
+          command={command}
+          addToPassQueue={addToPassQueue}
+          pass={pass}
+        />
       </div>
     </RuxContainer>
   );

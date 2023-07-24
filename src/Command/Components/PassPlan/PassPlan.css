@@ -84,6 +84,10 @@ li {
   text-align: center;
 }
 
+.banner.Pass {
+  background-color: var(--color-background-interactive-muted);
+}
+
 .pass-plan div[slot="footer"] {
   display: flex;
   justify-content: space-between;
