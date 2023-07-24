@@ -50,11 +50,16 @@ const PrePassList = ({ setPass }: PropTypes) => {
 
     // every 7 milliseconds for each progress bar, set the progress value from 0-100 (filling the bar)
     let value: number = 0;
-    setInterval(() => {
-      if (value === 101) return;
-      ruxProgress[currentListItem].value = value;
-      value = value + 1;
-    }, 7);
+    const loadBar = () => {
+      if (value > 100) {
+        clearInterval(progressInterval)
+      } else {
+        ruxProgress[currentListItem].value = value;
+        value = value + 1;
+      }
+    }
+
+    const progressInterval = setInterval(loadBar, 10)
 
     //for each list item, wait the allotted time and then set the checkbox to checked and the text to complete.
     setTimeout(() => {
