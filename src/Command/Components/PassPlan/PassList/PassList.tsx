@@ -1,10 +1,28 @@
-import { RuxCheckbox, RuxProgress, RuxTree, RuxTreeNode } from "@astrouxds/react";
+import {
+  RuxTable,
+  RuxTableBody,
+  RuxTableHeader,
+  RuxTableHeaderCell,
+  RuxTableHeaderRow,
+} from "@astrouxds/react";
+import SelectMenuListItem from "./SelectMenuListItem/SelectMenuListItem";
+import "./PassList.css"
 
 const PassList = () => {
   return (
     <>
-          
-        <RuxTree>
+      <RuxTable className="pre-pass-list-table">
+        <RuxTableHeader>
+          <RuxTableHeaderRow>
+            <RuxTableHeaderCell>Step</RuxTableHeaderCell>
+            <RuxTableHeaderCell>Instruction</RuxTableHeaderCell>
+          </RuxTableHeaderRow>
+        </RuxTableHeader>
+        <RuxTableBody>
+          <SelectMenuListItem stepNumber={1} />
+        </RuxTableBody>
+      </RuxTable>
+      {/* <RuxTree>
           <RuxTreeNode>
             <div className="rux-tree-node_prefix" slot="prefix">
               1
@@ -48,7 +66,7 @@ const PassList = () => {
               <div className="rux-tree-content">Children</div>
             </RuxTreeNode>
           </RuxTreeNode>
-        </RuxTree>
+        </RuxTree> */}
     </>
   );
 };

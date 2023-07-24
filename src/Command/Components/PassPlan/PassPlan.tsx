@@ -18,7 +18,7 @@ const PassPlan = () => {
     <RuxContainer className="pass-plan">
       <div slot="header" className="header">
         <span>IRON 4090 PASS PLAN</span>
-        <RuxSelect size="small" label="Mode">
+        <RuxSelect className="header-select" size="small" label="Mode">
           <RuxOption label="Semi-Auto" value="" />
           <RuxOption label="Automatic" value="" />
         </RuxSelect>

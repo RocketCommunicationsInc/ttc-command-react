@@ -8,7 +8,7 @@ rux-container::part(body) {
   overflow-x: hidden;
 }
 
-.pass-plan rux-select {
+.pass-plan rux-select.header-select {
   display: flex;
 }
 

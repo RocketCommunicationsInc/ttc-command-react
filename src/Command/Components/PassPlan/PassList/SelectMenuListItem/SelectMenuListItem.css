@@ -1,0 +1,9 @@
+.pass_select-wrapper {
+    display: flex;
+    gap: 5%;
+}
+
+.pass_select-wrapper rux-select {
+    display: flex;
+    flex-direction: column;
+}
