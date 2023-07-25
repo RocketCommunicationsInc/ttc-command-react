@@ -8,8 +8,6 @@ import Electronics from "./SVG/Electronics.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
 
-import "./Assembly.css";
-
 type PropTypes = {
   onSvgClick: (label: string) => void;
 };
