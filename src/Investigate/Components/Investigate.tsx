@@ -18,6 +18,7 @@ const Investigate = ({
   contact,
   selectedSubsystem,
 }: PropTypes) => {
+  const [mnemonicTitle, setMnemonicTitle] = useState<string>("");
   const [selectedChildSubsystem, setSelectedChildSubsystem] =
     useState<ChildSubsystem>(selectedSubsystem.childSubsystems[0]);
 
@@ -29,6 +30,10 @@ const Investigate = ({
     };
   }, [contact.subsystems, selectedSubsystem.childSubsystems]);
 
+  const handleClick = (title: string) => {
+    setMnemonicTitle(title);
+  };
+
   return (
     <div className="investigate-background" data-active={showInvestigate}>
       <SubsystemsTree
@@ -39,8 +44,15 @@ const Investigate = ({
         selectedSubsystem={selectedSubsystem}
         selectedChildSubsystem={selectedChildSubsystem}
       />
-      <Assembly childSubsystem={selectedChildSubsystem} />
-      <Mnemonics />
+      <Assembly
+        onSvgClick={handleClick}
+        childSubsystem={selectedChildSubsystem}
+      />
+      {mnemonicTitle !== "" ? (
+        <Mnemonics title={mnemonicTitle} />
+      ) : (
+        <Mnemonics title={"Electronics"} />
+      )}
     </div>
   );
 };
