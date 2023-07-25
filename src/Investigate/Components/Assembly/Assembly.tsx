@@ -10,7 +10,9 @@ import { StylesheetCSS } from "cytoscape";
 import type { ChildSubsystem, AssemblyDevice } from "@astrouxds/mock-data";
 
 type PropTypes = {
-  setSelectedAssemblyDevice: React.Dispatch<React.SetStateAction<AssemblyDevice>>;
+  setSelectedAssemblyDevice: React.Dispatch<
+    React.SetStateAction<AssemblyDevice>
+  >;
   selectedChildSubsystem: ChildSubsystem;
 };
 
@@ -31,12 +33,15 @@ const getColor = ({ status }: StatusColor) => {
   return statusColor[status as keyof typeof statusColor] || statusColor.off;
 };
 
-
-const Assembly = ({ setSelectedAssemblyDevice, selectedChildSubsystem }: PropTypes) => {
+const Assembly = ({
+  setSelectedAssemblyDevice,
+  selectedChildSubsystem,
+}: PropTypes) => {
   const findAssemblyDeviceByName = (name: string) =>
-    selectedChildSubsystem.assemblyDevices.find(device => device.name === name)
+    selectedChildSubsystem.assemblyDevices.find(
+      (device) => device.name === name
+    );
 
-  
   const elements = [
     {
       data: {
@@ -229,7 +234,7 @@ const Assembly = ({ setSelectedAssemblyDevice, selectedChildSubsystem }: PropTyp
   ];
 
   const handleClick = (e: any) => {
-    const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"))
+    const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
     if (assemblyDevice) setSelectedAssemblyDevice(assemblyDevice);
   };
 
@@ -242,8 +247,9 @@ const Assembly = ({ setSelectedAssemblyDevice, selectedChildSubsystem }: PropTyp
         stylesheet={styles}
         zoomingEnabled={false}
         panningEnabled={false}
+        boxSelectionEnabled={false}
         cy={(cy: any) => {
-          cy.on("click", "node", handleClick)
+          cy.on("click", "node", handleClick);
           cy.on("mouseout", "node", function (e: any) {
             e.target.removeClass("hover");
             cy.container().style.cursor = "initial";
