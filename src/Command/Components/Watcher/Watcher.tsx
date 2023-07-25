@@ -9,9 +9,10 @@ import {
   RuxTableBody,
 } from "@astrouxds/react";
 import WatcherListItem from "./WatcherListItem";
-import { generateMnemonics } from "@astrouxds/mock-data";
 import type { Mnemonic } from "@astrouxds/mock-data/dist/types";
 import "./Watcher.css";
+import { useTTCGRMMnemonics, useTTCGRMContacts } from "@astrouxds/mock-data";
+import { useTTCGRMActions } from "@astrouxds/mock-data";
 
 const styles = {
   container: {
@@ -25,20 +26,36 @@ const generateMnemonicValue = () =>
 const generateChartData = () =>
   faker.helpers.multiple(() => generateMnemonicValue(), { count: 9 });
 
-const mnemonicsData = generateMnemonics(10, {});
-const updatedMnemoncicsData = mnemonicsData.map((data) => {
-  return {
-    ...data,
-    previousReadings: generateChartData(),
-  };
-});
-
 const Watcher = () => {
+  const { dataArray: mnemonics } = useTTCGRMMnemonics();
+    const { dataArray: contacts } = useTTCGRMContacts();
+  const { modifyMnemonic } = useTTCGRMActions();
+  console.log(contacts)
+  console.log(mnemonics)
+  useEffect(() => { 
+    mnemonics.slice(0, 10).forEach((mnemonic) =>
+      modifyMnemonic({
+        watched: true,
+        id: mnemonic.id,
+        contactRefId: mnemonic.contactRefId,
+      })
+  );
+  }, [])
+
+  const watchedMnemonics = mnemonics.filter((mnemonic) => mnemonic.watched);
+
+  const updatedMnemoncicsData = watchedMnemonics.map((data) => {
+    return {
+      ...data,
+      previousReadings: generateChartData(),
+    };
+  });
+
   useEffect(() => {
     const watcherDiv = document.querySelector(".watcher");
     const tableRows = watcherDiv?.querySelectorAll("rux-table-row");
     //sets first MNEMONIC as selected on mount
-    tableRows?.[0].setAttribute("selected", "");
+    tableRows?.[0]?.setAttribute("selected", "");
 
     tableRows?.forEach((row) => {
       row.addEventListener("click", (event) => toggleSelected(event));

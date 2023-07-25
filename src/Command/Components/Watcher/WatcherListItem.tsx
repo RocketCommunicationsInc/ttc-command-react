@@ -9,7 +9,7 @@ import {
 } from "@astrouxds/react";
 import MnemonicPopUp from "./MnemonicPopUp";
 import type { Mnemonic, Status } from "@astrouxds/mock-data";
-import { addToast } from "../../../utils";
+import { useTTCGRMActions } from "@astrouxds/mock-data";
 
 type PropTypes = {
   rowData: Mnemonic;
@@ -18,6 +18,8 @@ type PropTypes = {
 };
 
 const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
+  const { modifyMnemonic } = useTTCGRMActions();
+
   return (
     <RuxTableRow key={rowData.mnemonicId} data-index={index}>
       <RuxTableCell>
@@ -43,11 +45,15 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
           <RuxIcon slot="trigger" icon="more-horiz" size="small" />
           <RuxMenu
             onRuxmenuselected={() =>
-              addToast("This feature has not been implemented", false, 3000)
+              modifyMnemonic({
+                watched: false,
+                id: rowData.id,
+                contactRefId: rowData.contactRefId,
+              })
             }
           >
-            <RuxMenuItem>Investigate</RuxMenuItem>
-            <RuxMenuItem>Remove</RuxMenuItem>
+            <RuxMenuItem value="remove">Remove from Watcher</RuxMenuItem>
+            <RuxMenuItem value="investigate">Investigate</RuxMenuItem>
           </RuxMenu>
         </RuxPopUp>
       </RuxTableCell>
