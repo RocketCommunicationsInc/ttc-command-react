@@ -8,3 +8,11 @@
     justify-content: end;
     line-height: var(--font-control-body-1-line-height, calc(20 / 16));
 }
+
+.pass_mnemonic-wrapper {
+    display: flex;
+}
+
+.pass_mnemonic-wrapper rux-checkbox {
+    padding-inline-end: var(--spacing-3);
+}

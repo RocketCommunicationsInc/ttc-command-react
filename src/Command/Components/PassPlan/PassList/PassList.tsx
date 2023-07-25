@@ -7,6 +7,7 @@ import {
 } from "@astrouxds/react";
 import SelectMenuListItem from "./SelectMenuListItem/SelectMenuListItem";
 import "./PassList.css"
+import MnemonicListItem from "./MnemonicListItem/MnemonicListItem";
 
 const PassList = () => {
   return (
@@ -20,6 +21,7 @@ const PassList = () => {
         </RuxTableHeader>
         <RuxTableBody>
           <SelectMenuListItem stepNumber={1} />
+          <MnemonicListItem stepNumber={2} />
         </RuxTableBody>
       </RuxTable>
     </>
