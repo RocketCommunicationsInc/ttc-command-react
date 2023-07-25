@@ -7,21 +7,51 @@ import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
+import type { ChildSubsystem } from "@astrouxds/mock-data";
 
 import "./Assembly.css";
 
 type PropTypes = {
-  onSvgClick: (selectedLabel: string) => void;
+  onSvgClick: (label: string) => void;
+  childSubsystem?: ChildSubsystem;
 };
 
-const Assembly = ({ onSvgClick }: PropTypes) => {
+type StatusColor = {
+  status: string;
+};
+
+const statusColor = {
+  off: "#a4abb6",
+  normal: "#56f000",
+  standby: "#2dccff",
+  caution: "#fce83a",
+  serious: "#ffb302",
+  critical: "#ff3838",
+};
+
+const getColor = ({ status }: StatusColor) => {
+  return statusColor[status as keyof typeof statusColor] || statusColor.off;
+};
+
+const Assembly = ({ onSvgClick, childSubsystem }: PropTypes) => {
+  console.log(childSubsystem);
   const elements = [
     {
-      data: { id: "one", label: "Lens", backgroundImage: Lens },
+      data: {
+        id: "one",
+        label: "Lens",
+        backgroundImage: Lens,
+        status: "normal",
+      },
       position: { x: 120, y: 125 },
     },
     {
-      data: { id: "two", label: "Baffle", backgroundImage: Baffle },
+      data: {
+        id: "two",
+        label: "Baffle",
+        backgroundImage: Baffle,
+        status: "normal",
+      },
       position: { x: 390, y: 125 },
     },
     {
@@ -37,8 +67,9 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
         id: "three",
         label: "Detection Module",
         backgroundImage: DetectionModule,
+        status: "caution",
       },
-      position: { x: 625, y: 225 },
+      position: { x: 625, y: 230 },
     },
     {
       data: {
@@ -49,16 +80,22 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
     },
 
     {
-      data: { id: "four", label: "Detector", backgroundImage: Detector },
-      position: { x: 800, y: 75 },
+      data: {
+        id: "four",
+        label: "Detector",
+        backgroundImage: Detector,
+        status: "serious",
+      },
+      position: { x: 800, y: 85 },
     },
     {
       data: {
         id: "five",
         label: "Thermo-Electric Cooler",
         backgroundImage: ThermoElectric,
+        status: "critical",
       },
-      position: { x: 975, y: 225 },
+      position: { x: 975, y: 230 },
     },
     {
       data: {
@@ -74,9 +111,13 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
         label: "Edge from Detection to Thermo-Electric Cooler",
       },
     },
-
     {
-      data: { id: "six", label: "Electronics", backgroundImage: Electronics },
+      data: {
+        id: "six",
+        label: "Electronics",
+        backgroundImage: Electronics,
+        status: "standby",
+      },
       position: { x: 1285, y: 125 },
     },
     {
@@ -95,6 +136,7 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
     },
   ];
 
+  //These are the styles for the nodes. they contain specific programatic styles for 'status' and for some of the more odd svg backgrounds
   const styles: StylesheetCSS[] = [
     //svg background
     {
@@ -105,35 +147,35 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
         "bounds-expansion": "200px 0 0 0",
         "background-clip": "none",
         shape: "round-diamond",
-        "background-color": "#56f000",
+        "background-color": (node: any) => getColor(node.data()),
+        "border-color": (node: any) => getColor(node.data()),
         "background-image-opacity": 0.85,
         height: "150%",
         width: "230%",
         "background-width-relative-to": "inner",
         "background-height-relative-to": "inner",
         opacity: 0.75,
+        "border-width": "4px",
+      },
+    },
+    //actions
+    {
+      selector: "node.hover",
+      css: {
+        "border-color": "#FFF",
       },
     },
     {
-      selector: "node[label]:active",
+      selector: "node:active",
       css: {
         "overlay-opacity": 0,
         opacity: 1,
       },
     },
     {
-      selector: "node[label].highlight",
-      css: {
-        "border-color": "#FFF",
-        "border-width": "4px",
-      },
-    },
-    //when node is selected
-    {
       selector: "node:selected",
       css: {
         "border-color": "#FFF",
-        "border-width": "4px",
         opacity: 1,
       },
     },
@@ -149,32 +191,37 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
         "text-margin-y": 5,
       },
     },
-    {
-      selector: 'node[label="Thermo-Electric Cooler"]',
-      css: {
-        "background-color": "#fce83a",
-        "background-opacity": 0.75,
-        "background-offset-y": -30,
-      },
-    },
-    {
-      selector: 'node[label="Electronics"]',
-      css: {
-        "background-color": "#ff3838",
-        "background-opacity": 0.75,
-        "background-offset-y": -12,
-        "background-offset-x": 1,
-      },
-    },
     //lines between the squares
     {
       selector: "edge",
       css: {
         "curve-style": "taxi",
         "taxi-turn-min-distance": "10px",
-        "source-distance-from-node": 10,
-        "target-distance-from-node": 10,
+        "source-distance-from-node": 9,
+        "target-distance-from-node": 9,
         width: 1.5,
+      },
+    },
+    //the cooler icon needs location adjustment in the node
+    {
+      selector: 'node[label="Thermo-Electric Cooler"]',
+      css: {
+        "background-offset-y": -30,
+      },
+    },
+    //the electronics icon needs location adjustment in the node
+    {
+      selector: 'node[label="Electronics"]',
+      css: {
+        "background-offset-y": -12,
+        "background-offset-x": 1,
+      },
+    },
+    //the detector icon needs location adjustment in the node
+    {
+      selector: 'node[label="Detector"]',
+      css: {
+        "background-offset-y": -10,
       },
     },
   ];
@@ -185,7 +232,7 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
 
   return (
     <RuxContainer className="star-tracker">
-      <div slot="header">Star Trackers Assembly</div>
+      <div slot="header">Sar Trackers Assembly</div>
       <CytoscapeComponent
         elements={elements}
         style={{ width: "100%", height: "100%" }}
@@ -195,11 +242,11 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
         cy={(cy: any) => {
           cy.on("click", "node", handleClick);
           cy.on("mouseout", "node", function (e: any) {
-            e.target.removeClass("highlight");
+            e.target.removeClass("hover");
             cy.container().style.cursor = "initial";
           });
           cy.on("mouseover", "node", function (e: any) {
-            e.target.addClass(".highlight");
+            e.target.addClass("hover");
             cy.container().style.cursor = "pointer";
           });
         }}
@@ -207,4 +254,5 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
     </RuxContainer>
   );
 };
+
 export default Assembly;

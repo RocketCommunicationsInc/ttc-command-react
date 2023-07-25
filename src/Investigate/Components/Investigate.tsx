@@ -45,7 +45,10 @@ const Investigate = ({
         selectedSubsystem={selectedSubsystem}
         selectedChildSubsystem={selectedChildSubsystem}
       />
-      <Assembly onSvgClick={handleClick} />
+      <Assembly
+        onSvgClick={handleClick}
+        //childSubsystem={selectedChildSubsystem}
+      />
       {mnemonicTitle !== "" ? (
         <Mnemonics title={mnemonicTitle} />
       ) : (
