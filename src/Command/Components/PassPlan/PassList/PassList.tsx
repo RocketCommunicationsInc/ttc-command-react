@@ -20,8 +20,10 @@ const PassList = () => {
           </RuxTableHeaderRow>
         </RuxTableHeader>
         <RuxTableBody>
-          <SelectMenuListItem stepNumber={1} />
-          <MnemonicListItem stepNumber={2} />
+          <MnemonicListItem stepNumber={1} mnemonicRowAmount={2}/>
+          <SelectMenuListItem stepNumber={2} />
+          <MnemonicListItem stepNumber={3} mnemonicRowAmount={3} />
+          
         </RuxTableBody>
       </RuxTable>
     </>

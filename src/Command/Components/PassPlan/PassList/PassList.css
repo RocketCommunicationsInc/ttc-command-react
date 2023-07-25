@@ -3,14 +3,13 @@
 }
 
 .pre-pass-list-table rux-table-cell:first-of-type > div:first-of-type {
-    height: 100%;
     display: flex;
-    justify-content: end;
-    line-height: var(--font-control-body-1-line-height, calc(20 / 16));
+    justify-content: center;
 }
 
 .pass_mnemonic-wrapper {
     display: flex;
+    align-items: center;
 }
 
 .pass_mnemonic-wrapper rux-checkbox {

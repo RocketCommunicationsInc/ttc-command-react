@@ -18,7 +18,7 @@ const options = {
 };
 
 const contact: Contact = generateContact(0, {
-  desiredSubsystems: ["Altitude", "Payload", "Power", "Propulsion", "Thermal"],
+  desiredSubsystems: ["Attitude", "Payload", "Power", "Propulsion", "Thermal"],
 });
 
 function App() {
