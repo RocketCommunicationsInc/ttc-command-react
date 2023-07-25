@@ -6,25 +6,23 @@ import ThermoElectric from "./SVG/ThermoElectric.svg";
 import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
 import CytoscapeComponent from "react-cytoscapejs";
+import { StylesheetCSS } from "cytoscape";
 
 import "./Assembly.css";
-import { useState } from "react";
 
 type PropTypes = {
   onSvgClick: (selectedLabel: string) => void;
 };
 
 const Assembly = ({ onSvgClick }: PropTypes) => {
-  const [selectedNode, setSelectedNode] = useState(null);
-
   const elements = [
     {
       data: { id: "one", label: "Lens", backgroundImage: Lens },
-      position: { x: 115, y: 125 },
+      position: { x: 120, y: 125 },
     },
     {
       data: { id: "two", label: "Baffle", backgroundImage: Baffle },
-      position: { x: 375, y: 125 },
+      position: { x: 390, y: 125 },
     },
     {
       data: {
@@ -40,7 +38,7 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
         label: "Detection Module",
         backgroundImage: DetectionModule,
       },
-      position: { x: 600, y: 215 },
+      position: { x: 625, y: 225 },
     },
     {
       data: {
@@ -60,7 +58,7 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
         label: "Thermo-Electric Cooler",
         backgroundImage: ThermoElectric,
       },
-      position: { x: 975, y: 215 },
+      position: { x: 975, y: 225 },
     },
     {
       data: {
@@ -79,7 +77,7 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
 
     {
       data: { id: "six", label: "Electronics", backgroundImage: Electronics },
-      position: { x: 1275, y: 125 },
+      position: { x: 1285, y: 125 },
     },
     {
       data: {
@@ -97,86 +95,91 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
     },
   ];
 
-  const styles = [
+  const styles: StylesheetCSS[] = [
     //svg background
     {
       selector: "node",
-      style: {
-        "background-image": (node: any) => node.data("backgroundImage"),
-        "background-size": "contain",
-        // "background-repeat": "no-repeat",
-        "bounds-expansion": "200px 30 17 30",
+      css: {
+        "background-image": "data(backgroundImage)",
+        "background-image-containment": "over",
+        "bounds-expansion": "200px 0 0 0",
         "background-clip": "none",
-        //shape: "roundrectangle",
-        shape: "",
-        "background-color": "#172635",
-        // rotation: "45deg",
-        // transform: "rotate(45deg)",
-        height: "148%",
-        width: "205%",
-        content: "data(label",
-        transform: "rotate(45deg)",
-        rotation: "45deg",
+        shape: "round-diamond",
+        "background-color": "#56f000",
+        "background-image-opacity": 0.85,
+        height: "150%",
+        width: "230%",
+        "background-width-relative-to": "inner",
+        "background-height-relative-to": "inner",
+        opacity: 0.75,
       },
     },
     {
-      selector: "node[label]:hover",
-      style: {
-        cursor: "pointer",
-        "background-opacity": "0.3",
+      selector: "node[label]:active",
+      css: {
+        "overlay-opacity": 0,
+        opacity: 1,
+      },
+    },
+    {
+      selector: "node[label].highlight",
+      css: {
+        "border-color": "#FFF",
+        "border-width": "4px",
+      },
+    },
+    //when node is selected
+    {
+      selector: "node:selected",
+      css: {
+        "border-color": "#FFF",
+        "border-width": "4px",
+        opacity: 1,
       },
     },
     //label text
     {
       selector: "node[label]",
-      style: {
+      css: {
         label: "data(label)",
         "font-size": "16",
         color: "white",
         "text-halign": "center",
         "text-valign": "bottom",
-        // "text-margin-y": "2px",
-        // "border-width": "3px",
-        // "border-color": "white",
-        margin: "-2px",
-        transform: "rotate(90deg)",
+        "text-margin-y": 5,
       },
     },
     {
       selector: 'node[label="Thermo-Electric Cooler"]',
-      style: {
-        "text-margin-y": "25px",
+      css: {
+        "background-color": "#fce83a",
+        "background-opacity": 0.75,
+        "background-offset-y": -30,
+      },
+    },
+    {
+      selector: 'node[label="Electronics"]',
+      css: {
+        "background-color": "#ff3838",
+        "background-opacity": 0.75,
+        "background-offset-y": -12,
+        "background-offset-x": 1,
       },
     },
     //lines between the squares
     {
       selector: "edge",
-      style: {
+      css: {
         "curve-style": "taxi",
-        "edge-distances": "10px",
-        //"taxi-turn-min-distance": "35px",
-        // "control-point-distance": "5px",
+        "taxi-turn-min-distance": "10px",
+        "source-distance-from-node": 10,
+        "target-distance-from-node": 10,
         width: 1.5,
       },
     },
-  ] as any;
-
-  const handleHover = (e: any) => {
-    e.target.style("background-color", "white");
-    // e.target.style("cursor", "pointer");
-    setSelectedNode(e.target);
-  };
-
-  const handleMouseLeave = () => {
-    if (selectedNode) {
-      (selectedNode as any).style("background-color", "#172635");
-      setSelectedNode(null);
-    }
-  };
+  ];
 
   const handleClick = (e: any) => {
-    // e.target.style("background-color", "white");
-    setSelectedNode(e.target);
     onSvgClick(e.target.data("label"));
   };
 
@@ -184,7 +187,6 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
     <RuxContainer className="star-tracker">
       <div slot="header">Star Trackers Assembly</div>
       <CytoscapeComponent
-        className="cytoscape"
         elements={elements}
         style={{ width: "100%", height: "100%" }}
         stylesheet={styles}
@@ -192,8 +194,14 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
         panningEnabled={false}
         cy={(cy: any) => {
           cy.on("click", "node", handleClick);
-          cy.on("mouseover", "node", handleHover);
-          cy.on("mouseout", "node", handleMouseLeave);
+          cy.on("mouseout", "node", function (e: any) {
+            e.target.removeClass("highlight");
+            cy.container().style.cursor = "initial";
+          });
+          cy.on("mouseover", "node", function (e: any) {
+            e.target.addClass(".highlight");
+            cy.container().style.cursor = "pointer";
+          });
         }}
       />
     </RuxContainer>
