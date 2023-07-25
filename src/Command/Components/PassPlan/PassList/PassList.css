@@ -15,3 +15,14 @@
 .pass_mnemonic-wrapper rux-checkbox {
     padding-inline-end: var(--spacing-3);
 }
+
+.pass_mnemonic-watching {
+    display: flex;
+    align-items: center;
+    margin-inline-start: auto;
+}
+
+.pass_mnemonic-watching rux-icon {
+    padding-inline: var(--spacing-1);
+    color: var(--color-text-primary);
+}
