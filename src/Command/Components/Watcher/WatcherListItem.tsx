@@ -20,6 +20,16 @@ type PropTypes = {
 const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
   const { modifyMnemonic } = useTTCGRMActions();
 
+  const handleRuxMenuSelected = (e: any) => { 
+    if (e.detail.value === "remove"){
+      modifyMnemonic({
+        ...rowData,
+        watched: false,
+      }) else { 
+
+      }
+    }
+    
   return (
     <RuxTableRow key={rowData.mnemonicId} data-index={index}>
       <RuxTableCell>
@@ -44,13 +54,7 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
         <RuxPopUp placement="left" closeOnSelect>
           <RuxIcon slot="trigger" icon="more-horiz" size="small" />
           <RuxMenu
-            onRuxmenuselected={() =>
-              modifyMnemonic({
-                watched: false,
-                id: rowData.id,
-                contactRefId: rowData.contactRefId,
-              })
-            }
+            onRuxmenuselected={handleRuxMenuSelected}      
           >
             <RuxMenuItem value="remove">Remove from Watcher</RuxMenuItem>
             <RuxMenuItem value="investigate">Investigate</RuxMenuItem>
