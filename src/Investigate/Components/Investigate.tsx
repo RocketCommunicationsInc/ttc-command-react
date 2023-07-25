@@ -18,19 +18,16 @@ const Investigate = ({
   contact,
   selectedSubsystem,
 }: PropTypes) => {
-  const [selectedChildSubsystem, setSelectedChildSubsystem] = useState<ChildSubsystem>(
-    selectedSubsystem.childSubsystems[0]
-  );
+  const [selectedChildSubsystem, setSelectedChildSubsystem] =
+    useState<ChildSubsystem>(selectedSubsystem.childSubsystems[0]);
 
   useEffect(() => {
-    setSelectedChildSubsystem(selectedSubsystem.childSubsystems[0])
-  
-    return () => {
-      setSelectedChildSubsystem(contact.subsystems[0].childSubsystems[0])
-    }
-  }, [contact.subsystems, selectedSubsystem.childSubsystems])
-  
+    setSelectedChildSubsystem(selectedSubsystem.childSubsystems[0]);
 
+    return () => {
+      setSelectedChildSubsystem(contact.subsystems[0].childSubsystems[0]);
+    };
+  }, [contact.subsystems, selectedSubsystem.childSubsystems]);
 
   return (
     <div className="investigate-background" data-active={showInvestigate}>

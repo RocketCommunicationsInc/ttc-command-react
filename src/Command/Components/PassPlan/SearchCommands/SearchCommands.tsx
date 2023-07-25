@@ -1,6 +1,12 @@
-import { RuxButton, RuxInput, RuxMenu, RuxMenuItem, RuxPopUp } from "@astrouxds/react";
+import {
+  RuxButton,
+  RuxInput,
+  RuxMenu,
+  RuxMenuItem,
+  RuxPopUp,
+} from "@astrouxds/react";
 import { Dispatch, SetStateAction } from "react";
-import './SearchCommands.css'
+import "./SearchCommands.css";
 
 type PropTypes = {
   commands: { commandString: string; description: string; commandId: number }[];
@@ -10,12 +16,24 @@ type PropTypes = {
   pass: string;
 };
 
-const SearchCommands = ({ commands, setCommand, command, addToPassQueue, pass }: PropTypes) => {
+const SearchCommands = ({
+  commands,
+  setCommand,
+  command = "",
+  addToPassQueue,
+  pass,
+}: PropTypes) => {
+  const isDisabled = pass === "Pre-Pass";
 
   return (
     <>
       <RuxPopUp placement="top-start">
-        <RuxButton slot="trigger" iconOnly icon="unfold-more" disabled={pass !== 'Pre-Pass' ? false : true} />
+        <RuxButton
+          slot="trigger"
+          iconOnly
+          icon="unfold-more"
+          disabled={isDisabled}
+        />
         <div className="history-popup">
           <span>Recent Commands:</span>
           <ul>
@@ -31,42 +49,41 @@ const SearchCommands = ({ commands, setCommand, command, addToPassQueue, pass }:
           </ul>
           <span>All Commands:</span>
           <ul>
-            {commands.map(
-              (
-                item: { commandString: string; description: string },
-                index: number
-              ) => (
-                <li key={index}>
-                  {item.commandString}, <i>({item.description})</i>
-                </li>
-              )
-            )}
+            {commands.map((item, index) => (
+              <li key={index}>
+                {item.commandString}, <i>({item.description})</i>
+              </li>
+            ))}
           </ul>
         </div>
       </RuxPopUp>
-      <RuxPopUp className="commands_input-pop-up" placement="top-start" closeOnSelect={true}>
+      <RuxPopUp
+        className="commands_input-pop-up"
+        placement="top-start"
+        closeOnSelect={true}
+      >
         <RuxInput
-            slot="trigger"
-            type="search"
-            placeholder="Start typing to search commands..."
-            disabled={pass !== 'Pre-Pass' ? false : true}
-            value={command !== '' ? command : ''}
+          slot="trigger"
+          type="search"
+          placeholder="Start typing to search commands..."
+          disabled={isDisabled}
+          value={command}
         />
-        <RuxMenu className="commands_input-menu" onRuxmenuselected={(e) => setCommand(e.detail.value)}>
-                {commands.map(
-                (
-                    item: { commandString: string; description: string },
-                    index: number
-                ) => (
-                    <RuxMenuItem key={index} value={item.commandString}>
-                        {item.commandString}, <i>({item.description})</i>
-                    </RuxMenuItem>
-                )
-                )}
+        <RuxMenu
+          className="commands_input-menu"
+          onRuxmenuselected={(e) => setCommand(e.detail.value)}
+        >
+          {commands.map((item, index) => (
+            <RuxMenuItem key={index} value={item.commandString}>
+              {item.commandString}, <i>({item.description})</i>
+            </RuxMenuItem>
+          ))}
         </RuxMenu>
       </RuxPopUp>
-      
-      <RuxButton disabled={pass !== 'Pre-Pass' ? false : true} onClick={() => addToPassQueue(command)}>Add to Queue</RuxButton>
+
+      <RuxButton disabled={isDisabled} onClick={() => addToPassQueue(command)}>
+        Add to Queue
+      </RuxButton>
     </>
   );
 };

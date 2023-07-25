@@ -20,7 +20,6 @@ const Subsystems = ({
   toggleInvestigate,
   setSelectedSubsystem,
 }: PropTypes) => {
-
   const handleInvestigate = (subsystem: Subsystem) => {
     toggleInvestigate();
     setSelectedSubsystem(subsystem);
