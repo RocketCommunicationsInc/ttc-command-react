@@ -11,8 +11,6 @@ import {
 import WatcherListItem from "./WatcherListItem";
 import type { Mnemonic } from "@astrouxds/mock-data/dist/types";
 import "./Watcher.css";
-import { useTTCGRMMnemonics, useTTCGRMContacts } from "@astrouxds/mock-data";
-import { useTTCGRMActions } from "@astrouxds/mock-data";
 
 const styles = {
   container: {
@@ -26,22 +24,10 @@ const generateMnemonicValue = () =>
 const generateChartData = () =>
   faker.helpers.multiple(() => generateMnemonicValue(), { count: 9 });
 
-const Watcher = () => {
-  const { dataArray: mnemonics } = useTTCGRMMnemonics();
-    const { dataArray: contacts } = useTTCGRMContacts();
-  const { modifyMnemonic } = useTTCGRMActions();
-  console.log(contacts)
-  console.log(mnemonics)
-  useEffect(() => { 
-    mnemonics.slice(0, 10).forEach((mnemonic) =>
-      modifyMnemonic({
-        watched: true,
-        id: mnemonic.id,
-        contactRefId: mnemonic.contactRefId,
-      })
-  );
-  }, [])
-
+type PropTypes = {
+  mnemonics: Mnemonic[];
+};
+const Watcher = ({ mnemonics }: PropTypes) => {
   const watchedMnemonics = mnemonics.filter((mnemonic) => mnemonic.watched);
 
   const updatedMnemoncicsData = watchedMnemonics.map((data) => {

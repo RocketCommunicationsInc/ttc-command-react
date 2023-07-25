@@ -30,7 +30,7 @@ const Command = ({
         setSelectedSubsystem={setSelectedSubsystem}
       />
       <LinkStatus />
-      <Watcher />
+      <Watcher mnemonics={contact.mnemonics} />
     </div>
   );
 };

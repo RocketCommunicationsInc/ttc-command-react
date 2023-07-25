@@ -32,11 +32,15 @@ const SubsystemsTree = ({
       <div slot="header">{satName} Subsystems</div>
       <RuxTree>
         {subsystems.map((subsystem, index) => (
-          <RuxTreeNode expanded={selectedSubsystem.name === subsystem.name}>
+          <RuxTreeNode
+            expanded={selectedSubsystem.name === subsystem.name}
+            key={index}
+          >
             <RuxStatus slot="prefix" status={subsystem.status} />
             {subsystem.name}
             {subsystem.childSubsystems.map((child, index) => (
               <RuxTreeNode
+                key={index}
                 slot="node"
                 selected={child === selectedChildSubsystem}
                 onRuxtreenodeselected={() => setSelectedChildSubsystem(child)}

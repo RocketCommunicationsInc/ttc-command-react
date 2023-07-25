@@ -29,8 +29,8 @@ const Subsystems = ({
     <RuxContainer className="subsystems">
       <div slot="header">Subsystems</div>
       <RuxTable>
-        {subsystems.map((subsystem) => (
-          <RuxTableRow>
+        {subsystems.map((subsystem, index) => (
+          <RuxTableRow key={index}>
             <RuxTableCell>
               <RuxStatus status={subsystem.status} />
               {subsystem.name}
