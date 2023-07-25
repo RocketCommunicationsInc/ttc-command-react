@@ -7,9 +7,11 @@ import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
+import type { ChildSubsystem, AssemblyDevice } from "@astrouxds/mock-data";
 
 type PropTypes = {
-  onSvgClick: (label: string) => void;
+  setSelectedAssemblyDevice: React.Dispatch<React.SetStateAction<AssemblyDevice>>;
+  selectedChildSubsystem: ChildSubsystem;
 };
 
 type StatusColor = {
@@ -29,7 +31,12 @@ const getColor = ({ status }: StatusColor) => {
   return statusColor[status as keyof typeof statusColor] || statusColor.off;
 };
 
-const Assembly = ({ onSvgClick }: PropTypes) => {
+
+const Assembly = ({ setSelectedAssemblyDevice, selectedChildSubsystem }: PropTypes) => {
+  const findAssemblyDeviceByName = (name: string) =>
+    selectedChildSubsystem.assemblyDevices.find(device => device.name === name)
+
+  
   const elements = [
     {
       data: {
@@ -222,12 +229,13 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
   ];
 
   const handleClick = (e: any) => {
-    onSvgClick(e.target.data("label"));
+    const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"))
+    if (assemblyDevice) setSelectedAssemblyDevice(assemblyDevice);
   };
 
   return (
     <RuxContainer className="star-tracker">
-      <div slot="header">Sar Trackers Assembly</div>
+      <div slot="header">{selectedChildSubsystem.name}</div>
       <CytoscapeComponent
         elements={elements}
         style={{ width: "100%", height: "100%" }}
@@ -235,7 +243,7 @@ const Assembly = ({ onSvgClick }: PropTypes) => {
         zoomingEnabled={false}
         panningEnabled={false}
         cy={(cy: any) => {
-          cy.on("click", "node", handleClick);
+          cy.on("click", "node", handleClick)
           cy.on("mouseout", "node", function (e: any) {
             e.target.removeClass("hover");
             cy.container().style.cursor = "initial";

@@ -1,0 +1,872 @@
+[
+  {
+    "commandString": "NOOPTYPE",
+    "description": "No Operation, Executive",
+    "commandId": 1
+  },
+  {
+    "commandString": "NOOPTYPE",
+    "description": "No Operation, Executive, Delayed",
+    "commandId": 2
+  },
+  {
+    "commandString": "WAIT_TYPE",
+    "description": "Wait",
+    "commandId": 3
+  },
+  {
+    "commandString": "OPENCOVRTYPE",
+    "description": "Open Cover",
+    "commandId": 4
+  },
+  {
+    "commandString": "OPENCOVRTYPE",
+    "description": "Open Cover, delayed",
+    "commandId": 5
+  },
+  {
+    "commandString": "DBLPARAMTYPE",
+    "description": "Set the number of seconds since the vernal equinox",
+    "commandId": 6
+  },
+  {
+    "commandString": "DBLPARAMTYPE",
+    "description": "Set the number of seconds since the vernal equinox, delayed",
+    "commandId": 7
+  },
+  {
+    "commandString": "GNCMODECMDTYPE",
+    "description": "Enable SSA Mode",
+    "commandId": 8
+  },
+  {
+    "commandString": "GNCMODECMDTYPE",
+    "description": "Enable SSA Mode, delayed",
+    "commandId": 9
+  },
+  {
+    "commandString": "DETUMBLE_TYPE",
+    "description": "Detumble Enable",
+    "commandId": 10
+  },
+  {
+    "commandString": "DETUMBLE_TYPE",
+    "description": "Detumble Enable",
+    "commandId": 11
+  },
+  {
+    "commandString": "DETUMBLE_TYPE",
+    "description": "Detumble Disable",
+    "commandId": 12
+  },
+  {
+    "commandString": "DETUMBLE_TYPE",
+    "description": "Detumble Disable, delayed",
+    "commandId": 13
+  },
+  {
+    "commandString": "REQ_HIST_TYPE",
+    "description": "Request Command History",
+    "commandId": 14
+  },
+  {
+    "commandString": "CTRL_MODE_TYPE",
+    "description": "Manual Control Mode",
+    "commandId": 15
+  },
+  {
+    "commandString": "CTRL_MODE_TYPE",
+    "description": "Increase Timeout, on manual control mode",
+    "commandId": 16
+  },
+  {
+    "commandString": "CTRL_MODE_TYPE",
+    "description": "Increase Timeout, on manual control mode, delayed",
+    "commandId": 17
+  },
+  {
+    "commandString": "REQ_HIST_TYPE",
+    "description": "Read command queue",
+    "commandId": 18
+  },
+  {
+    "commandString": "CNG_STATE_TYPE",
+    "description": "Go to State",
+    "commandId": 19
+  },
+  {
+    "commandString": "CNG_STATE_TYPE",
+    "description": "Go to State, delayed",
+    "commandId": 20
+  },
+  {
+    "commandString": "UPD_DBPARAM_TYPE",
+    "description": "Update GNC Parameter",
+    "commandId": 21
+  },
+  {
+    "commandString": "UPD_DBPARAM_TYPE",
+    "description": "Update GNC Parameter, delayed",
+    "commandId": 22
+  },
+  {
+    "commandString": "UPD_RWKICK_TYPE",
+    "description": "Reaction Wheel X Kick",
+    "commandId": 23
+  },
+  {
+    "commandString": "UPD_RWKICK_TYPE",
+    "description": "Reaction Wheel Y Kick",
+    "commandId": 24
+  },
+  {
+    "commandString": "UPD_RWKICK_TYPE",
+    "description": "Reaction Wheel Z Kick",
+    "commandId": 25
+  },
+  {
+    "commandString": "UPD_FLTPARAM_TYPE",
+    "description": "Reaction Wheel X Kick, delayed",
+    "commandId": 26
+  },
+  {
+    "commandString": "UPD_FLTPARAM_TYPE",
+    "description": "Reaction Wheel Y Kick, delayed",
+    "commandId": 27
+  },
+  {
+    "commandString": "UPD_FLTPARAM_TYPE",
+    "description": "Reaction Wheel Z Kick, delayed",
+    "commandId": 28
+  },
+  {
+    "commandString": "UPD_FLTPARAM_TYPE",
+    "description": "Command RWA",
+    "commandId": 29
+  },
+  {
+    "commandString": "UPD_FLTPARAM_TYPE",
+    "description": "Command RWA, delayed",
+    "commandId": 30
+  },
+  {
+    "commandString": "UPD_INTPARAM_TYPE",
+    "description": "Command Torque Rod",
+    "commandId": 31
+  },
+  {
+    "commandString": "UPD_INTPARAM_TYPE",
+    "description": "Command Torque Rod, delayed",
+    "commandId": 32
+  },
+  {
+    "commandString": "SFLIP_TYPE",
+    "description": "Seasonal Flip",
+    "commandId": 33
+  },
+  {
+    "commandString": "SFLIP_TYPE",
+    "description": "Seasonal Flip, delayed",
+    "commandId": 34
+  },
+  {
+    "commandString": "SEND_DECADJ_TYPE",
+    "description": "Declination Adjust",
+    "commandId": 35
+  },
+  {
+    "commandString": "SEND_DECADJ_TYPE",
+    "description": "Declination Adjust, delayed",
+    "commandId": 36
+  },
+  {
+    "commandString": "EOL_EN_TYPE",
+    "description": "End of Life Enable",
+    "commandId": 37
+  },
+  {
+    "commandString": "EOL_TYPE",
+    "description": "End of Life Recover",
+    "commandId": 38
+  },
+  {
+    "commandString": "EOL_TYPE",
+    "description": "End of Life Fire",
+    "commandId": 39
+  },
+  {
+    "commandString": "EOL_TYPE",
+    "description": "End of Life Disable",
+    "commandId": 40
+  },
+  {
+    "commandString": "SELFTEST_TYPE",
+    "description": "Execute IPF Self-Test",
+    "commandId": 41
+  },
+  {
+    "commandString": "REBOOT_TYPE",
+    "description": "Reset Via Watchdog",
+    "commandId": 42
+  },
+  {
+    "commandString": "REBOOT_TYPE",
+    "description": "Reset Via Watchdog, delayed",
+    "commandId": 43
+  },
+  {
+    "commandString": "DETUMBLE_TYPE",
+    "description": "GPS Hard Reset",
+    "commandId": 44
+  },
+  {
+    "commandString": "DETUMBLE_TYPE",
+    "description": "GPS Hard Reset, delayed",
+    "commandId": 45
+  },
+  {
+    "commandString": "DETUMBLE_TYPE",
+    "description": "Radio On",
+    "commandId": 46
+  },
+  {
+    "commandString": "DETUMBLE_TYPE",
+    "description": "Radio On, delayed",
+    "commandId": 47
+  },
+  {
+    "commandString": "DETUMBLE_TYPE",
+    "description": "Radio Reset",
+    "commandId": 48
+  },
+  {
+    "commandString": "DETUMBLE_TYPE",
+    "description": "Radio Reset, delayed",
+    "commandId": 49
+  },
+  {
+    "commandString": "NXT_BOOT_TYPE",
+    "description": "Set next image to boot",
+    "commandId": 50
+  },
+  {
+    "commandString": "NXT_BOOT_TYPE",
+    "description": "Set next image to boot, delayed",
+    "commandId": 51
+  },
+  {
+    "commandString": "NXT_BOOT_TYPE",
+    "description": "Set next image to boot to index 0",
+    "commandId": 52
+  },
+  {
+    "commandString": "NXT_BOOT_TYPE",
+    "description": "Set next image to boot  to index 1",
+    "commandId": 53
+  },
+  {
+    "commandString": "NXT_BOOT_TYPE",
+    "description": "Set next image to boot to index 2",
+    "commandId": 54
+  },
+  {
+    "commandString": "NXT_BOOT_TYPE",
+    "description": "Set next image to boot to index 0, delayed",
+    "commandId": 55
+  },
+  {
+    "commandString": "NXT_BOOT_TYPE",
+    "description": "Set next image to boot  to index 1, delayed",
+    "commandId": 56
+  },
+  {
+    "commandString": "NXT_BOOT_TYPE",
+    "description": "Set next image to boot  to index 2, delayed",
+    "commandId": 57
+  },
+  {
+    "commandString": "SELFTEST_TYPE",
+    "description": "Execute Flash Self-Test",
+    "commandId": 58
+  },
+  {
+    "commandString": "SELFTEST_TYPE",
+    "description": "Execute Flash Self-Test, delayed",
+    "commandId": 59
+  },
+  {
+    "commandString": "REBOOT_TYPE",
+    "description": "Reset Avionics via PPT reset",
+    "commandId": 60
+  },
+  {
+    "commandString": "REBOOT_TYPE",
+    "description": "Reset Avionics via PPT reset, delayed",
+    "commandId": 61
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Component",
+    "commandId": 62
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On GPS",
+    "commandId": 63
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Magnetometer",
+    "commandId": 64
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Reaction Wheel X",
+    "commandId": 65
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Reaction Wheel Y",
+    "commandId": 66
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Reaction Wheel Z",
+    "commandId": 67
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Star Tracker",
+    "commandId": 68
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On HOPA 1",
+    "commandId": 69
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On HOPA 2",
+    "commandId": 70
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Heater 1",
+    "commandId": 71
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Heater 2",
+    "commandId": 72
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Heater 3",
+    "commandId": 73
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Torque Rods",
+    "commandId": 74
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Camera",
+    "commandId": 75
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On GPS Delayed",
+    "commandId": 76
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Magnetometer Delayed",
+    "commandId": 77
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Reaction Wheel X Delayed",
+    "commandId": 78
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Reaction Wheel Y Delayed",
+    "commandId": 79
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Reaction Wheel Z Delayed",
+    "commandId": 80
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Star Tracker Delayed",
+    "commandId": 81
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On HOPA 1 Delayed",
+    "commandId": 82
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On HOPA 2 Delayed",
+    "commandId": 83
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Heater 1 Delayed",
+    "commandId": 84
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Heater 2 Delayed",
+    "commandId": 85
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Heater 3 Delayed",
+    "commandId": 86
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Torque Rods Delayed",
+    "commandId": 87
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn On Camera Delayed",
+    "commandId": 88
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off GPS",
+    "commandId": 89
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Magnetometer",
+    "commandId": 90
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off ReactiOff Wheel X",
+    "commandId": 91
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off ReactiOff Wheel Y",
+    "commandId": 92
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off ReactiOff Wheel Z",
+    "commandId": 93
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Star Tracker",
+    "commandId": 94
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off HOPA 1",
+    "commandId": 95
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off HOPA 2",
+    "commandId": 96
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Heater 1",
+    "commandId": 97
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Heater 2",
+    "commandId": 98
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Heater 3",
+    "commandId": 99
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Torque Rods",
+    "commandId": 100
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Camera",
+    "commandId": 101
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off GPS Delayed",
+    "commandId": 102
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Magnetometer Delayed",
+    "commandId": 103
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off ReactiOff Wheel X Delayed",
+    "commandId": 104
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off ReactiOFF Wheel Y Delayed",
+    "commandId": 105
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off ReactiOff Wheel Z Delayed",
+    "commandId": 106
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Star Tracker Delayed",
+    "commandId": 107
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off HOPA 1 Delayed",
+    "commandId": 108
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off HOPA 2 Delayed",
+    "commandId": 109
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Heater 1 Delayed",
+    "commandId": 110
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Heater 2 Delayed",
+    "commandId": 111
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Heater 3 Delayed",
+    "commandId": 112
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Torque Rods Delayed",
+    "commandId": 113
+  },
+  {
+    "commandString": "POWER_SEL_TYPE",
+    "description": "Turn Off Camera Delayed",
+    "commandId": 114
+  },
+  {
+    "commandString": "SELFTEST_TYPE",
+    "description": "Star Tracker Self-Test",
+    "commandId": 115
+  },
+  {
+    "commandString": "SELFTEST_TYPE",
+    "description": "Star Tracker Self-Test, delayed",
+    "commandId": 116
+  },
+  {
+    "commandString": "POWER_TYPE",
+    "description": "Turn on transmitter only",
+    "commandId": 117
+  },
+  {
+    "commandString": "POWER_TYPE",
+    "description": "Turn on transmitter only, delayed",
+    "commandId": 118
+  },
+  {
+    "commandString": "POWER_TYPE",
+    "description": "Turn off transmitter only",
+    "commandId": 119
+  },
+  {
+    "commandString": "POWER_TYPE",
+    "description": "Turn off transmitter only, delayed",
+    "commandId": 120
+  },
+  {
+    "commandString": "SELFTEST_TYPE",
+    "description": "Execute GPS Self-Test",
+    "commandId": 121
+  },
+  {
+    "commandString": "SELFTEST_TYPE",
+    "description": "Execute GPS Self-Test, delayed",
+    "commandId": 122
+  },
+  {
+    "commandString": "RESET_TYPE",
+    "description": "Reset the Gryphon",
+    "commandId": 123
+  },
+  {
+    "commandString": "RESET_TYPE",
+    "description": "Reset the Gryphon, delayed",
+    "commandId": 124
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Turn On Torque Rod Blanking",
+    "commandId": 125
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Turn On Torque Rod Blanking, delayed",
+    "commandId": 126
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Turn Off Torque Rod Blanking",
+    "commandId": 127
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Turn Off Torque Rod Blanking, delayed",
+    "commandId": 128
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Enable IPF",
+    "commandId": 129
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Enable IPF, delayed",
+    "commandId": 130
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Disable IPF",
+    "commandId": 131
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Disable IPF, delayed",
+    "commandId": 132
+  },
+  {
+    "commandString": "SEL_TYPE",
+    "description": "Set CEB Test Pattern Mode",
+    "commandId": 133
+  },
+  {
+    "commandString": "SEL_TYPE",
+    "description": "Set CEB Test Pattern Mode, delayed",
+    "commandId": 134
+  },
+  {
+    "commandString": "IPF_TYPE",
+    "description": "Read an image from Flash",
+    "commandId": 135
+  },
+  {
+    "commandString": "IPF_TYPE",
+    "description": "Read an image from Flash, delayed",
+    "commandId": 136
+  },
+  {
+    "commandString": "POKE_TYPE",
+    "description": "Poke Register",
+    "commandId": 137
+  },
+  {
+    "commandString": "POKE_TYPE",
+    "description": "Poke Register, delayed",
+    "commandId": 138
+  },
+  {
+    "commandString": "PEEK_TYPE",
+    "description": "Peek Register",
+    "commandId": 139
+  },
+  {
+    "commandString": "PEEK_TYPE",
+    "description": "Peek Register, delayed",
+    "commandId": 140
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Enable Survival Heaters",
+    "commandId": 141
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Enable Survival Heaters, delayed",
+    "commandId": 142
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Disable Survival Heaters",
+    "commandId": 143
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Disable Survival Heaters, delayed",
+    "commandId": 144
+  },
+  {
+    "commandString": "CMD_TYPE",
+    "description": "Pause the Command Queue",
+    "commandId": 145
+  },
+  {
+    "commandString": "CMD_TYPE",
+    "description": "Unpause the Command Queue",
+    "commandId": 146
+  },
+  {
+    "commandString": "CMD_TYPE",
+    "description": "Clear the Command Queue",
+    "commandId": 147
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Enable Battery Balance",
+    "commandId": 148
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Enable Battery Balance, delayed",
+    "commandId": 149
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Disable Battery Balance",
+    "commandId": 150
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Enable Battery Balance, delayed",
+    "commandId": 151
+  },
+  {
+    "commandString": "UPD_SYNC_TYPE",
+    "description": "Update Crypto Sync Period",
+    "commandId": 152
+  },
+  {
+    "commandString": "UPD_SYNC_TYPE",
+    "description": "Update Crypto Sync Period, delayed",
+    "commandId": 153
+  },
+  {
+    "commandString": "UPD_DL_TYPE",
+    "description": "Update Downlink Rate",
+    "commandId": 154
+  },
+  {
+    "commandString": "UPD_DL_TYPE",
+    "description": "Update Downlink Rate, delayed",
+    "commandId": 155
+  },
+  {
+    "commandString": "UPD_ECC_TYPE",
+    "description": "Set Error Correcting Mode",
+    "commandId": 156
+  },
+  {
+    "commandString": "UPD_ECC_TYPE",
+    "description": "Set Error Correcting Mode, delayed",
+    "commandId": 157
+  },
+  {
+    "commandString": "UPD_KEY_TYPE",
+    "description": "Rekey the Crypto Uplink, through FSW",
+    "commandId": 158
+  },
+  {
+    "commandString": "UPD_KEY_TYPE",
+    "description": "Rekey the Crypto Uplink, through FSW",
+    "commandId": 159
+  },
+  {
+    "commandString": "UPD_KEY_TYPE",
+    "description": "Rekey the Crypto Downlink, through FSW",
+    "commandId": 160
+  },
+  {
+    "commandString": "UPD_KEY_TYPE",
+    "description": "Rekey the Crypto Downlink, through FSW",
+    "commandId": 161
+  },
+  {
+    "commandString": "INC_TIMEOUT_TYPE_USHORT",
+    "description": "Increase the radio transmitter timeout",
+    "commandId": 162
+  },
+  {
+    "commandString": "INC_TIMEOUT_TYPE_USHORT",
+    "description": "Increase the radio transmitter timeout, delayed",
+    "commandId": 163
+  },
+  {
+    "commandString": "WAIT_UNTIL_TYPE_U64",
+    "description": "Wait Until Given GPS Time",
+    "commandId": 164
+  },
+  {
+    "commandString": "MRAM_RD_TYPE",
+    "description": "Read from MRAM address",
+    "commandId": 165
+  },
+  {
+    "commandString": "MRAM_RD_TYPE",
+    "description": "Read from MRAM address, delayed",
+    "commandId": 166
+  },
+  {
+    "commandString": "MRAM_WR_TYPE",
+    "description": "Write to MRAM address",
+    "commandId": 167
+  },
+  {
+    "commandString": "MRAM_WR_TYPE",
+    "description": "Write to MRAM address, delayed",
+    "commandId": 168
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Enable End of Life fault handling",
+    "commandId": 169
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Enable End of Life fault handling, delayed",
+    "commandId": 170
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Disable End of Life fault handling",
+    "commandId": 171
+  },
+  {
+    "commandString": "ONOFF_TYPE",
+    "description": "Disable End of Life fault handling, delayed",
+    "commandId": 172
+  },
+  {
+    "commandString": "CAMPORT_U8",
+    "description": "Change the camera port",
+    "commandId": 173
+  },
+  {
+    "commandString": "CAMPORT_U8",
+    "description": "Change the camera port, delayed",
+    "commandId": 174
+  }
+]

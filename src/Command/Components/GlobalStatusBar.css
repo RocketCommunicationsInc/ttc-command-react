@@ -36,3 +36,7 @@ rux-menu-item[value="themeToggle"] span {
   padding-left: var(--spacing-2);
   margin-block: var(--spacing-2);
 }
+
+.app-icon-pop-up {
+  height: calc(var(--spacing-14, 3.5rem) + var(--spacing-050, 0.125rem));
+}
