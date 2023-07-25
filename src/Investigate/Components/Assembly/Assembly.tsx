@@ -7,13 +7,11 @@ import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
-import type { ChildSubsystem } from "@astrouxds/mock-data";
 
 import "./Assembly.css";
 
 type PropTypes = {
   onSvgClick: (label: string) => void;
-  childSubsystem?: ChildSubsystem;
 };
 
 type StatusColor = {
@@ -33,8 +31,7 @@ const getColor = ({ status }: StatusColor) => {
   return statusColor[status as keyof typeof statusColor] || statusColor.off;
 };
 
-const Assembly = ({ onSvgClick, childSubsystem }: PropTypes) => {
-  console.log(childSubsystem);
+const Assembly = ({ onSvgClick }: PropTypes) => {
   const elements = [
     {
       data: {
