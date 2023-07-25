@@ -14,3 +14,8 @@
 .subsystems rux-status {
   padding-right: var(--spacing-2);
 }
+
+.subsystem-wrapper {
+  height: 100%;
+  overflow: auto;
+}
