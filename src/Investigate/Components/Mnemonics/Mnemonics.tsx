@@ -14,11 +14,15 @@ import {
 
 import "./Mnemonics.css";
 
-const Mnemonics = () => {
+type PropTypes = {
+  title: string | any;
+};
+
+const Mnemonics = ({ title }: PropTypes) => {
   return (
     <RuxContainer className="electronics">
       <div slot="header">
-        <span>Electronics</span>
+        <span>{title}</span>
         <RuxInput type="search" placeholder="Filter by name" />
         <RuxSegmentedButton
           data={[
