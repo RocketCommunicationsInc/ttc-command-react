@@ -14,6 +14,7 @@ import {
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
 
 import "./Mnemonics.css";
+import { useState } from "react";
 
 type PropTypes = {
   title: string | any;
@@ -21,12 +22,34 @@ type PropTypes = {
 
 const Mnemonics = ({ title }: PropTypes) => {
   const { selectedAssemblyDevice }: ContextType = useAppContext();
+  const [watched, setWatched] = useState(selectedAssemblyDevice.mnemonics);
+  const [searchValue, setSearchValue] = useState("");
+
+  const filteredMnemonics = selectedAssemblyDevice.mnemonics.filter((value) =>
+    Object.values(value).some((value) =>
+      value.toString().toLowerCase().includes(searchValue.toLowerCase())
+    )
+  );
+
+  const handleWatching = (id: string) => {
+    setWatched((prevData) =>
+      prevData.map((device) =>
+        device.id === id ? { ...device, watched: !device.watched } : device
+      )
+    );
+  };
+
+  const watchedDevices = watched.filter((device) => device.watched).length;
 
   return (
     <RuxContainer className="electronics">
       <div slot="header">
         <span>{title}</span>
-        <RuxInput type="search" placeholder="Filter by name" />
+        <RuxInput
+          onRuxinput={(e) => setSearchValue(e.target.value)}
+          type="search"
+          placeholder="Filter by name"
+        />
         <RuxSegmentedButton
           data={[
             { label: "All" },
@@ -43,11 +66,11 @@ const Mnemonics = ({ title }: PropTypes) => {
             <RuxTableHeaderCell>Measurment</RuxTableHeaderCell>
             <RuxTableHeaderCell>Value</RuxTableHeaderCell>
             <RuxTableHeaderCell>Unit</RuxTableHeaderCell>
-            <RuxTableHeaderCell>Watching (2)</RuxTableHeaderCell>
+            <RuxTableHeaderCell>Watching ({watchedDevices})</RuxTableHeaderCell>
           </RuxTableHeaderRow>
           <RuxTableBody>
-            {selectedAssemblyDevice.mnemonics.map((device) => (
-              <RuxTableRow>
+            {filteredMnemonics.map((device, index) => (
+              <RuxTableRow key={index}>
                 <RuxTableCell>
                   <RuxStatus status={device.status} />
                 </RuxTableCell>
@@ -56,10 +79,13 @@ const Mnemonics = ({ title }: PropTypes) => {
                 <RuxTableCell>{device.currentValue}</RuxTableCell>
                 <RuxTableCell>{device.unit}</RuxTableCell>
                 <RuxTableCell>
-                  <RuxCheckbox
-                    checked={device.watched === true ? true : false}
-                    label="Watching"
-                  />
+                  {watched.map((watched) => (
+                    <RuxCheckbox
+                      checked={watched.watched}
+                      label="Watching"
+                      onRuxchange={() => handleWatching(watched.id)}
+                    />
+                  ))}
                 </RuxTableCell>
               </RuxTableRow>
             ))}
