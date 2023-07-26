@@ -129,11 +129,11 @@ const AppProvider = ({ children }: PropTypes) => {
 
   useEffect(() => {
     // set 20 random mnemonics to watched
-    // for (let i = 0; i < 20; i++) {
-    //   const mnemonic = contact.mnemonics[getRandomInt(20)];
-    //   modifyMnemonic({ ...mnemonic, watched: true });
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    for (let i = 0; i < 20; i++) {
+      const mnemonic = contact.mnemonics[getRandomInt(20)];
+      modifyMnemonic({ ...mnemonic, watched: true });
+    }
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const value = {
