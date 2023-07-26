@@ -133,7 +133,7 @@ const AppProvider = ({ children }: PropTypes) => {
       const mnemonic = contact.mnemonics[getRandomInt(20)];
       modifyMnemonic({ ...mnemonic, watched: true });
     }
-    //eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const value = {
