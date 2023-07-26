@@ -1,8 +1,6 @@
 import {
   RuxOption,
   RuxSelect,
-  RuxTableCell,
-  RuxTableRow,
   RuxTreeNode,
 } from "@astrouxds/react";
 import { useState } from "react";
