@@ -63,12 +63,12 @@ const Assembly = ({
     );
 
   const positionArr: object[] = [
-    { x: 120, y: 130 },
-    { x: 390, y: 130 },
+    { x: 120, y: 190 },
+    { x: 390, y: 140 },
     { x: 625, y: 235 },
-    { x: 800, y: 90 },
-    { x: 975, y: 235 },
-    { x: 1285, y: 130 },
+    { x: 840, y: 126 },
+    { x: 1100, y: 235 },
+    { x: 1285, y: 126 },
   ];
 
   const elementsArr = selectedChildSubsystem.assemblyDevices
@@ -196,8 +196,8 @@ const Assembly = ({
         "curve-style": "taxi",
         "line-style": "solid",
         "taxi-turn-min-distance": "10px",
-        "source-distance-from-node": 9,
-        "target-distance-from-node": 9,
+        "source-distance-from-node": 3,
+        "target-distance-from-node": 3,
         width: 1.5,
       },
     },
