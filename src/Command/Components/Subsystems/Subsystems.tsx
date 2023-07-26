@@ -28,7 +28,6 @@ const Subsystems = ({
   return (
     <RuxContainer className="subsystems">
       <div slot="header">Subsystems</div>
-      <div className="subsystem-wrapper">
         <RuxTable>
           {subsystems.map((subsystem) => (
             <RuxTableRow>
@@ -46,7 +45,6 @@ const Subsystems = ({
             </RuxTableRow>
           ))}
         </RuxTable>
-      </div>
     </RuxContainer>
   );
 };
