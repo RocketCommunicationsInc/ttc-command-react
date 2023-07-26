@@ -1,5 +1,20 @@
-.pre-pass-list-table rux-table-cell {
-    padding: var(--spacing-2);
+.pass_header-wrapper {
+    display: flex;
+    background: var(--color-background-surface-header);
+    padding-block: var(--spacing-2);
+}
+
+.pass_header-step {
+    padding-inline-start: var(--spacing-3);
+}
+
+.pass_header-instruction {
+    padding-inline-start: var(--spacing-20);
+}
+
+rux-tree.pass_body-wrapper rux-tree-node::part(text) {
+    padding-inline-start: var(--spacing-8);
+    width: 100%;
 }
 
 .pre-pass-list-table rux-table-cell:first-of-type > div:first-of-type {
@@ -13,7 +28,7 @@
 }
 
 .pass_mnemonic-wrapper rux-checkbox {
-    padding-inline-end: var(--spacing-3);
+    padding-inline-end: var(--spacing-4);
 }
 
 .pass_mnemonic-watching {
@@ -24,5 +39,30 @@
 
 .pass_mnemonic-watching rux-icon {
     padding-inline: var(--spacing-1);
+    color: var(--color-text-primary);
+}
+
+.pass_executable-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.pass_executable-progress-wrapper {
+    padding-inline: var(--spacing-2);
+    width: 100%;
+}
+
+.pass_executable-wrapper rux-progress {
+    width: 100%;
+    padding-inline-end: var(--spacing-2);
+}
+
+.pass_progress-time {
+    display: flex;
+    align-items: center;
+}
+
+.pass_progress-time rux-icon {
+    padding-inline-end: var(--spacing-1);
     color: var(--color-text-primary);
 }

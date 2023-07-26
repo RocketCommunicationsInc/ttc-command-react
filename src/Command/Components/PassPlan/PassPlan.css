@@ -4,8 +4,9 @@
   align-items: center;
 }
 
-rux-container::part(body) {
+rux-container.pass-plan::part(body) {
   overflow-x: hidden;
+  background: var(--color-background-surface-default);
 }
 
 .pass-plan rux-select.header-select {

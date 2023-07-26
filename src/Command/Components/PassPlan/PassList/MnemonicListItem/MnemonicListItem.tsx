@@ -3,6 +3,7 @@ import {
   RuxIcon,
   RuxTableCell,
   RuxTableRow,
+  RuxTreeNode,
 } from "@astrouxds/react";
 import { generateMnemonics } from "@astrouxds/mock-data";
 import MnemonicPopUp from "../../../Watcher/MnemonicPopUp";
@@ -19,11 +20,8 @@ const MnemonicListItem = ({ stepNumber, mnemonicRowAmount }: PropTypes) => {
     <>
       {mnemonicsData.map((data) => {
         return (
-          <RuxTableRow key={data.id}>
-            <RuxTableCell>
-              <div className="pass_number-wrapper">{stepNumber}</div>
-            </RuxTableCell>
-            <RuxTableCell>
+<RuxTreeNode>
+<div slot="prefix" className="pass_number-wrapper">{stepNumber}</div>
               <div className="pass_mnemonic-wrapper">
                 <RuxCheckbox />
                 {"Verify\u00A0"}
@@ -37,8 +35,8 @@ const MnemonicListItem = ({ stepNumber, mnemonicRowAmount }: PropTypes) => {
                   </div>
                 )}
               </div>
-            </RuxTableCell>
-          </RuxTableRow>
+</RuxTreeNode>
+            
         );
       })}
     </>
