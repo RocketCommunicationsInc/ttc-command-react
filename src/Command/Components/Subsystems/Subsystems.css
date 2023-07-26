@@ -14,3 +14,7 @@
 .subsystems rux-status {
   padding-right: var(--spacing-2);
 }
+
+rux-container.subsystems::part(body) {
+  overflow: auto;
+}

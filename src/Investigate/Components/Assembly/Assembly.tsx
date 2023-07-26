@@ -9,14 +9,7 @@ import Electronics from "./SVG/Electronics.svg";
 import Default from "./SVG/Default.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
-import type { ChildSubsystem, AssemblyDevice } from "@astrouxds/mock-data";
-
-type PropTypes = {
-  setSelectedAssemblyDevice: React.Dispatch<
-    React.SetStateAction<AssemblyDevice>
-  >;
-  selectedChildSubsystem: ChildSubsystem;
-};
+import { useAppContext, ContextType } from "../../../provider/useAppContext";
 
 type ElementObject = {
   status: string;
@@ -49,17 +42,18 @@ const getBackground = ({ label }: ElementObject) => {
   return backgroundImg[label as keyof typeof backgroundImg] || Default;
 };
 
-const Assembly = ({
-  setSelectedAssemblyDevice,
-  selectedChildSubsystem,
-}: PropTypes) => {
-  useEffect(() => {
-    setSelectedAssemblyDevice(selectedChildSubsystem.assemblyDevices[0]);
-  }, [selectedChildSubsystem, setSelectedAssemblyDevice]);
+const Assembly = () => {
+  const {
+    selectAssemblyDevice,
+    selectedChildSubsystem,
+    selectedAssemblyDevice,
+  }: ContextType = useAppContext();
+
+  useEffect(() => {}, [selectedChildSubsystem, selectedAssemblyDevice]);
 
   const findAssemblyDeviceByName = (name: string) =>
     selectedChildSubsystem.assemblyDevices.find(
-      (device) => device.name === name
+      (device) => device?.name === name
     );
 
   const positionArr: object[] = [
@@ -227,12 +221,13 @@ const Assembly = ({
 
   const handleClick = (e: any) => {
     const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
-    if (assemblyDevice) setSelectedAssemblyDevice(assemblyDevice);
+    if (!assemblyDevice) return;
+    selectAssemblyDevice(assemblyDevice);
   };
 
   return (
     <RuxContainer className="star-tracker">
-      <div slot="header">{selectedChildSubsystem.name}</div>
+      <div slot="header">{selectedChildSubsystem?.name}</div>
       <CytoscapeComponent
         elements={cyArr}
         style={{ width: "100%", height: "100%" }}
