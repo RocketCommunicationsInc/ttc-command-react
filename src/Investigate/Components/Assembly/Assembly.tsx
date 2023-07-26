@@ -1,5 +1,4 @@
 import { RuxContainer } from "@astrouxds/react";
-import { useEffect } from "react";
 import Lens from "./SVG/Lens.svg";
 import Baffle from "./SVG/Baffle.svg";
 import DetectionModule from "./SVG/DetectionModule.svg";
@@ -43,13 +42,8 @@ const getBackground = ({ label }: ElementObject) => {
 };
 
 const Assembly = () => {
-  const {
-    selectAssemblyDevice,
-    selectedChildSubsystem,
-    selectedAssemblyDevice,
-  }: ContextType = useAppContext();
-
-  useEffect(() => {}, [selectedChildSubsystem, selectedAssemblyDevice]);
+  const { selectAssemblyDevice, selectedChildSubsystem }: ContextType =
+    useAppContext();
 
   const findAssemblyDeviceByName = (name: string) =>
     selectedChildSubsystem.assemblyDevices.find(
@@ -75,15 +69,6 @@ const Assembly = () => {
       position: positionArr[index] || { x: 0, y: 0 },
     }))
     .filter((el) => el.data.id < 6);
-
-  const usedEdges = () => {
-    const newEdges = edgesArr.filter(
-      (edge) =>
-        edge.data.source < elementsArr.length &&
-        edge.data.target < elementsArr.length
-    );
-    return newEdges;
-  };
 
   const edgesArr = [
     {
@@ -124,7 +109,13 @@ const Assembly = () => {
     },
   ];
 
-  const cyArr: any[] = [...elementsArr, ...usedEdges()];
+  const newEdges = edgesArr.filter(
+    (edge) =>
+      edge.data.source < elementsArr.length &&
+      edge.data.target < elementsArr.length
+  );
+
+  const cyArr: any[] = [...elementsArr, ...newEdges];
 
   //Programatic styles for nodes
   const styles: StylesheetCSS[] = [
