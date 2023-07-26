@@ -10,8 +10,8 @@ import "./SearchCommands.css";
 
 type PropTypes = {
   commands: { commandString: string; description: string; commandId: number }[];
-  setCommand: Dispatch<SetStateAction<string>>;
-  command: string;
+  setCommand: Dispatch<SetStateAction<object>>;
+  command: object;
   addToPassQueue: any;
   pass: string;
 };
@@ -19,15 +19,16 @@ type PropTypes = {
 const SearchCommands = ({
   commands,
   setCommand,
-  command = "",
+  command,
   addToPassQueue,
   pass,
 }: PropTypes) => {
-  const [inputValue, setInputValue] = useState(command);
+  const [inputValue, setInputValue] = useState<string>("");
+  const [currentCommand, setCurrentCommand] = useState<object>({});
+  const [error, setError] = useState<string | null>(null);
   const isDisabled = pass === "Pre-Pass";
 
   const filteredCommands = commands.filter((command) => {
-    console.log(inputValue);
     return (
       command.commandString.toLowerCase().includes(inputValue.toLowerCase()) ||
       command.description.toLowerCase().includes(inputValue.toLowerCase())
@@ -35,11 +36,24 @@ const SearchCommands = ({
   });
 
   const handleSubmit = () => {
-    console.log("submitted with input value of", inputValue, command);
-    //make sure that submitted value matches a command
-    // commands.find();
+    //check to see if there is a current command (if so the user clicked their choice)
+    if (Object.keys(currentCommand).length !== 0) {
+      setCommand(currentCommand);
+      addToPassQueue(currentCommand);
+      setCurrentCommand({});
+      setInputValue("");
 
-    addToPassQueue(command);
+      //if not see if there is only one filteredCommand, if so, thats the one they mean
+    } else if (filteredCommands.length === 1) {
+      setCommand(filteredCommands[0]);
+      addToPassQueue(filteredCommands[0]);
+      setCurrentCommand({});
+      setInputValue("");
+
+      //otherwise the current input isn't a specific command
+    } else {
+      setError("please select a specific command");
+    }
   };
 
   return (
@@ -85,7 +99,11 @@ const SearchCommands = ({
           placeholder="Start typing to search commands..."
           disabled={isDisabled}
           value={inputValue}
+          invalid={error ? true : undefined}
+          error-text={error || null}
           onRuxinput={(e) => {
+            setError(null);
+            setCurrentCommand({});
             setInputValue(e.target.value);
           }}
         />
@@ -96,6 +114,8 @@ const SearchCommands = ({
               const command = commands.find(
                 (command) => command.commandId.toString() === e.detail.value
               );
+              setError(null);
+              setCurrentCommand(command || {});
               setInputValue(command!.commandString);
             }}
           >
