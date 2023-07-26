@@ -11,6 +11,7 @@ import {
   RuxStatus,
   RuxCheckbox,
 } from "@astrouxds/react";
+import { useAppContext, ContextType } from "../../../provider/useAppContext";
 
 import "./Mnemonics.css";
 
@@ -19,6 +20,8 @@ type PropTypes = {
 };
 
 const Mnemonics = ({ title }: PropTypes) => {
+  const { selectedAssemblyDevice }: ContextType = useAppContext();
+
   return (
     <RuxContainer className="electronics">
       <div slot="header">
@@ -43,20 +46,23 @@ const Mnemonics = ({ title }: PropTypes) => {
             <RuxTableHeaderCell>Watching (2)</RuxTableHeaderCell>
           </RuxTableHeaderRow>
           <RuxTableBody>
-            <RuxTableRow>
-              <RuxTableCell>
-                <RuxStatus status="critical" />
-              </RuxTableCell>
-              <RuxTableCell>PWST21A</RuxTableCell>
-              <RuxTableCell>
-                Start Tracker 1 Heater 8P Voltage Monitor
-              </RuxTableCell>
-              <RuxTableCell>74.2</RuxTableCell>
-              <RuxTableCell>Volts</RuxTableCell>
-              <RuxTableCell>
-                <RuxCheckbox checked label="Watching" />
-              </RuxTableCell>
-            </RuxTableRow>
+            {selectedAssemblyDevice.mnemonics.map((device) => (
+              <RuxTableRow>
+                <RuxTableCell>
+                  <RuxStatus status={device.status} />
+                </RuxTableCell>
+                <RuxTableCell>{device.mnemonicId}</RuxTableCell>
+                <RuxTableCell>{device.measurement}</RuxTableCell>
+                <RuxTableCell>{device.currentValue}</RuxTableCell>
+                <RuxTableCell>{device.unit}</RuxTableCell>
+                <RuxTableCell>
+                  <RuxCheckbox
+                    checked={device.watched === true ? true : false}
+                    label="Watching"
+                  />
+                </RuxTableCell>
+              </RuxTableRow>
+            ))}
           </RuxTableBody>
         </RuxTable>
       </div>
