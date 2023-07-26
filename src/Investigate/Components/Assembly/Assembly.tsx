@@ -7,7 +7,7 @@ import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
-import { useAppContext, ContextType } from "../../../provider/useAppContext"
+import { useAppContext, ContextType } from "../../../provider/useAppContext";
 
 type StatusColor = {
   status: string;
@@ -27,8 +27,9 @@ const getColor = ({ status }: StatusColor) => {
 };
 
 const Assembly = () => {
-  const { selectAssemblyDevice, selectedChildSubsystem }: ContextType = useAppContext();
-  console.log(selectedChildSubsystem)
+  const { selectAssemblyDevice, selectedChildSubsystem }: ContextType =
+    useAppContext();
+
   const findAssemblyDeviceByName = (name: string) =>
     selectedChildSubsystem.assemblyDevices.find(
       (device) => device?.name === name
@@ -227,8 +228,8 @@ const Assembly = () => {
 
   const handleClick = (e: any) => {
     const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
-    if (!assemblyDevice) return
-    selectAssemblyDevice(assemblyDevice)
+    if (!assemblyDevice) return;
+    selectAssemblyDevice(assemblyDevice);
   };
 
   return (

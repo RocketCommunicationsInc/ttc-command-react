@@ -6,11 +6,8 @@ import "./Investigate.css";
 import { useAppContext, ContextType } from "provider/useAppContext";
 
 const Investigate = () => {
-  const {
-    showInvestigate,
-    selectedAssemblyDevice,
-  }: ContextType = useAppContext();
-
+  const { showInvestigate, selectedAssemblyDevice }: ContextType =
+    useAppContext();
 
   return (
     <div className="investigate-background" data-active={showInvestigate}>

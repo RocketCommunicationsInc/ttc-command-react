@@ -12,18 +12,15 @@ import type { Subsystem } from "@astrouxds/mock-data";
 import { useAppContext, ContextType } from "provider/useAppContext";
 
 const Subsystems = () => {
-  const {
-    contact,
-    toggleInvestigate,
-    selectSubsystem
-  }: ContextType = useAppContext();
+  const { contact, toggleInvestigate, selectSubsystem }: ContextType =
+    useAppContext();
 
   const subsystems = contact.subsystems;
 
-  const handleSubsystemClick = (subsystem: Subsystem) => { 
+  const handleSubsystemClick = (subsystem: Subsystem) => {
     toggleInvestigate();
-    selectSubsystem(subsystem)
-  }
+    selectSubsystem(subsystem);
+  };
 
   return (
     <RuxContainer className="subsystems">

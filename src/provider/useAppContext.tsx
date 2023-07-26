@@ -4,7 +4,7 @@ import type {
   Subsystem,
   ChildSubsystem,
   AssemblyDevice,
-  Mnemonic
+  Mnemonic,
 } from "@astrouxds/mock-data";
 import { useTTCGRMActions, useTTCGRMContacts } from "@astrouxds/mock-data";
 import { getRandomInt } from "../utils/index";
@@ -42,20 +42,19 @@ const AppProvider = ({ children }: PropTypes) => {
 
   const [showInvestigate, setShowInvestigate] = useState<boolean>(false);
 
-  const [selectedSubsystem, setSelectedSubsystem] = useState<Subsystem>(
-    firstSubsystem
-  );
+  const [selectedSubsystem, setSelectedSubsystem] =
+    useState<Subsystem>(firstSubsystem);
   const [selectedChildSubsystem, setSelectedChildSubsystem] =
     useState<ChildSubsystem>(firstChildSubsystem);
   const [selectedAssemblyDevice, setSelectedAssemblyDevice] =
     useState<AssemblyDevice>(firstAssemblyDevice);
-  
+
   const findSubsystemByName = (name?: string) =>
-    contact.subsystems.find((subsystem) => subsystem.name === name)
+    contact.subsystems.find((subsystem) => subsystem.name === name);
   const findChildSubsystemByName = (subsystem: Subsystem, name?: string) =>
     subsystem.childSubsystems.find(
       (childSubsystem) => childSubsystem.name === name
-    )
+    );
   const findAssemblyDeviceByName = (
     childSubsystem: ChildSubsystem,
     name?: string
@@ -68,42 +67,46 @@ const AppProvider = ({ children }: PropTypes) => {
     if (showInvestigate) resetSelected();
   };
 
-  const resetSelected = () => { 
-    setSelectedSubsystem(firstSubsystem)
-    setSelectedChildSubsystem(firstChildSubsystem)
-    setSelectedAssemblyDevice(firstAssemblyDevice)
-  }
+  const resetSelected = () => {
+    setSelectedSubsystem(firstSubsystem);
+    setSelectedChildSubsystem(firstChildSubsystem);
+    setSelectedAssemblyDevice(firstAssemblyDevice);
+  };
 
-  const selectSubsystem = (subsystem: Subsystem) => { 
-    setSelectedSubsystem(subsystem)
-    setSelectedChildSubsystem(subsystem.childSubsystems[0])
-    setSelectedAssemblyDevice(subsystem.childSubsystems[0].assemblyDevices[0])
-  }
+  const selectSubsystem = (subsystem: Subsystem) => {
+    setSelectedSubsystem(subsystem);
+    setSelectedChildSubsystem(subsystem.childSubsystems[0]);
+    setSelectedAssemblyDevice(subsystem.childSubsystems[0].assemblyDevices[0]);
+  };
 
-  const selectChildSubsystem = (childSubsystem: ChildSubsystem) => { 
-    const subsystem = findSubsystemByName(childSubsystem.subsystemParent)
-    setSelectedSubsystem(subsystem || firstSubsystem)
-    setSelectedChildSubsystem(childSubsystem)
-    setSelectedAssemblyDevice(childSubsystem.assemblyDevices[0])
-  }
+  const selectChildSubsystem = (childSubsystem: ChildSubsystem) => {
+    const subsystem = findSubsystemByName(childSubsystem.subsystemParent);
+    setSelectedSubsystem(subsystem || firstSubsystem);
+    setSelectedChildSubsystem(childSubsystem);
+    setSelectedAssemblyDevice(childSubsystem.assemblyDevices[0]);
+  };
 
-  const selectAssemblyDevice = (assemblyDevice: AssemblyDevice) => { 
-    setSelectedAssemblyDevice(assemblyDevice)
-  }
+  const selectAssemblyDevice = (assemblyDevice: AssemblyDevice) => {
+    setSelectedAssemblyDevice(assemblyDevice);
+  };
 
-  const selectSubsystemsFromMnemonic = (mnemonic: Mnemonic) => { 
-    const subsystem = findSubsystemByName(mnemonic.subsystem)
-    if (!subsystem) return
-    const childSubsystem = findChildSubsystemByName(subsystem, mnemonic.childSubsystem)
-    if (!childSubsystem) return
-    const assemblyDevices = findAssemblyDeviceByName(childSubsystem, mnemonic.assemblyDevice)
-    
-    setSelectedSubsystem(subsystem)
-    setSelectedChildSubsystem(childSubsystem)
-    setSelectedAssemblyDevice(assemblyDevices)
-  
-  }
+  const selectSubsystemsFromMnemonic = (mnemonic: Mnemonic) => {
+    const subsystem = findSubsystemByName(mnemonic.subsystem);
+    if (!subsystem) return;
+    const childSubsystem = findChildSubsystemByName(
+      subsystem,
+      mnemonic.childSubsystem
+    );
+    if (!childSubsystem) return;
+    const assemblyDevices = findAssemblyDeviceByName(
+      childSubsystem,
+      mnemonic.assemblyDevice
+    );
 
+    setSelectedSubsystem(subsystem);
+    setSelectedChildSubsystem(childSubsystem);
+    setSelectedAssemblyDevice(assemblyDevices);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -134,8 +137,7 @@ const AppProvider = ({ children }: PropTypes) => {
     selectSubsystem,
     selectChildSubsystem,
     selectAssemblyDevice,
-    selectSubsystemsFromMnemonic
-    
+    selectSubsystemsFromMnemonic,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

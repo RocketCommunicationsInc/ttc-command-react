@@ -16,16 +16,16 @@ const SubsystemsTree = () => {
     selectedChildSubsystem,
     selectChildSubsystem,
     resetSelected,
-    selectedSubsystem
+    selectedSubsystem,
   }: ContextType = useAppContext();
 
   const subsystems = contact.subsystems;
   const satName = contact.satellite;
 
-  const handleReturnToCommand = () => { 
-    toggleInvestigate()
-    resetSelected()
-  }
+  const handleReturnToCommand = () => {
+    toggleInvestigate();
+    resetSelected();
+  };
 
   return (
     <RuxContainer className="investigate-subsystem">
