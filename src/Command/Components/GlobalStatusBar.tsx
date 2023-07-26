@@ -23,6 +23,8 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
   const [notifications2, setNotifications2] = useState(2);
   const [notifications3, setNotifications3] = useState(4);
   const [lightTheme, setLightTheme] = useState(false);
+  const [aosTime, setAosTime] = useState(new Date());
+  const [losTime, setLosTime] = useState(new Date());
 
   const statusValuesArr = [
     "off",
@@ -66,6 +68,14 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
     addToast("This feature has not been implemented", false, 3000);
   }
 
+  useEffect(() => {
+    const currentTime = new Date();
+    const aos = new Date(currentTime.getTime() + 1 * 60000);
+    const los = new Date(aos.getTime() + 30 * 60000);
+    setAosTime(aos);
+    setLosTime(los);
+  }, []);
+
   return (
     <>
       <RuxToastStack />
@@ -94,10 +104,7 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
           </RuxMenu>
         </RuxPopUp>
         <div>
-          <RuxClock
-            aos="1988-04-22T14:11:59.000Z"
-            los="1988-04-22T15:24:12.000Z"
-          />
+          <RuxClock aos={aosTime.toISOString()} los={losTime.toISOString()} />
         </div>
 
         <div className="status-indicators" slot="right-side">
