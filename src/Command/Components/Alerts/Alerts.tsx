@@ -9,8 +9,11 @@ import AlertsList from "./AlertsList";
 import { useTTCGRMActions, useTTCGRMAlerts } from "@astrouxds/mock-data";
 import type { Category, Status } from "@astrouxds/mock-data";
 import "./Alerts.css";
+import { useAppContext, ContextType } from "provider/useAppContext";
 
-const Alerts = ({ toggleInvestigate }: { toggleInvestigate: () => void }) => {
+const Alerts = () => {
+  const { toggleInvestigate }: ContextType = useAppContext();
+
   const [severitySelection, setSeveritySelection] = useState<Status | "all">(
     "all"
   );
@@ -81,7 +84,7 @@ const Alerts = ({ toggleInvestigate }: { toggleInvestigate: () => void }) => {
       <AlertsList
         severitySelection={severitySelection}
         categorySelection={categorySelection}
-        handleAppSwap={toggleInvestigate}
+        toggleInvestigate={toggleInvestigate}
       />
       <div slot="footer">
         <RuxButton
