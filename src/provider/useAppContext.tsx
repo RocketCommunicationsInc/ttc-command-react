@@ -33,7 +33,7 @@ type PropTypes = {
 
 const AppProvider = ({ children }: PropTypes) => {
   const { dataArray: contacts } = useTTCGRMContacts();
-  const { addAlert, modifyMnemonic } = useTTCGRMActions();
+  const { addAlert, modifyMnemonic, modifyContact } = useTTCGRMActions();
   const contact = contacts[0];
   const firstSubsystem = contact.subsystems[0];
   const firstChildSubsystem = contact.subsystems[0].childSubsystems[0];
@@ -63,7 +63,6 @@ const AppProvider = ({ children }: PropTypes) => {
     childSubsystem.assemblyDevices.find((device) => device.name === name) ||
     firstAssemblyDevice;
 
-  
   // Exported state setters
   const toggleInvestigate = () => {
     setShowInvestigate((prevState) => !prevState);
@@ -113,6 +112,14 @@ const AppProvider = ({ children }: PropTypes) => {
 
   // Creates the initaial mock data functionality
   useEffect(() => {
+    // set contact aos and los in relation to current time
+    const newAos = new Date().getTime() + 1 * 60000;
+    const newLos = new Date(newAos).getTime() + 30 * 60000;
+    modifyContact({ ...contact, aos: newAos, los: newLos });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     const interval = setInterval(() => {
       if (contact.alerts.length < 25) addAlert(contact.id);
     }, 3000);
@@ -128,6 +135,7 @@ const AppProvider = ({ children }: PropTypes) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   const value = {
     contact,
