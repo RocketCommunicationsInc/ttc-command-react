@@ -12,6 +12,7 @@ import {
 } from "@astrouxds/react";
 import type { Status } from "@astrouxds/mock-data";
 import { addToast } from "../../utils";
+import { useAppContext, ContextType } from "provider/useAppContext";
 import "./GlobalStatusBar.css";
 
 const GlobalStatusBar = ({ appName }: { appName: string }) => {
@@ -23,9 +24,7 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
   const [notifications2, setNotifications2] = useState(2);
   const [notifications3, setNotifications3] = useState(4);
   const [lightTheme, setLightTheme] = useState(false);
-
-  const newAos = new Date(new Date().getTime() + 1 * 60000);
-  const newLos = new Date(newAos.getTime() + 30 * 60000);
+  const { contact }: ContextType = useAppContext();
 
   const statusValuesArr = [
     "off",
@@ -97,7 +96,10 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
           </RuxMenu>
         </RuxPopUp>
         <div>
-          <RuxClock aos={newAos.toISOString()} los={newLos.toISOString()} />
+          <RuxClock
+            aos={new Date(contact.aos).toISOString()}
+            los={new Date(contact.los).toISOString()}
+          />
         </div>
 
         <div className="status-indicators" slot="right-side">
