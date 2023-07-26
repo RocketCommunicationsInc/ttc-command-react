@@ -66,3 +66,7 @@ rux-tree.pass_body-wrapper rux-tree-node::part(text) {
     padding-inline-end: var(--spacing-1);
     color: var(--color-text-primary);
 }
+
+rux-tree-node:nth-child(odd)::part(node) {
+    background-color: var(--color-background-base-hover);
+}

@@ -1,12 +1,10 @@
 import {
   RuxButton,
-  RuxCheckbox,
   RuxProgress,
   RuxIcon,
   RuxTreeNode,
 } from "@astrouxds/react";
-import { generateMnemonics } from "@astrouxds/mock-data";
-import MnemonicPopUp from "../../../Watcher/MnemonicPopUp";
+import MnemonicListItem from "../MnemonicListItem/MnemonicListItem";
 
 type PropTypes = {
   stepNumber: number;
@@ -14,10 +12,9 @@ type PropTypes = {
 };
 
 const ExecutableListItem = ({ stepNumber, mnemonicRowAmount }: PropTypes) => {
-  const mnemonicsData = generateMnemonics(mnemonicRowAmount, {});
 
   return (
-        <RuxTreeNode>
+        <RuxTreeNode expanded>
           <div slot="prefix" className="pass_number-wrapper">{stepNumber}</div>
           <div className="pass_executable-wrapper">
             <RuxButton iconOnly icon="play-arrow" />
@@ -31,27 +28,7 @@ const ExecutableListItem = ({ stepNumber, mnemonicRowAmount }: PropTypes) => {
                 </div>
             </div>
           </div>
-
-          {mnemonicsData.map((data) => {
-            return (
-              <RuxTreeNode slot="node" key={data.id}>
-                <div slot="prefix" className="pass_number-wrapper">{`${stepNumber}.1`}</div>
-                <div className="pass_mnemonic-wrapper">
-                  <RuxCheckbox />
-                  {"Verify\u00A0"}
-                  <MnemonicPopUp triggerValue={data.mnemonicId} data={data} />
-                  {"\u00A0 = \u00A0"}
-                  {data.currentValue}
-                  {data.watched && (
-                    <div className="pass_mnemonic-watching">
-                      <RuxIcon icon="visibility" size="extra-small" />
-                      <i>Watcing</i>
-                    </div>
-                  )}
-                </div>
-              </RuxTreeNode>
-            );
-          })}
+        <MnemonicListItem stepNumber={stepNumber} mnemonicRowAmount={mnemonicRowAmount} slotNode={true} />
         </RuxTreeNode>
   );
 };
