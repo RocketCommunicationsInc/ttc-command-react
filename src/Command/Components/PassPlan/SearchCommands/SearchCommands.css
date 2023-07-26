@@ -7,3 +7,13 @@ rux-menu.commands_input-menu {
   height: 300px;
   overflow-y: scroll;
 }
+
+.commands_no-match {
+  height: 300px;
+  overflow-y: scroll;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-inline: 2rem;
+}

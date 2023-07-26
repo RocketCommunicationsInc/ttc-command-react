@@ -5,7 +5,7 @@ import {
   RuxMenuItem,
   RuxPopUp,
 } from "@astrouxds/react";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import "./SearchCommands.css";
 
 type PropTypes = {
@@ -23,7 +23,24 @@ const SearchCommands = ({
   addToPassQueue,
   pass,
 }: PropTypes) => {
+  const [inputValue, setInputValue] = useState(command);
   const isDisabled = pass === "Pre-Pass";
+
+  const filteredCommands = commands.filter((command) => {
+    console.log(inputValue);
+    return (
+      command.commandString.toLowerCase().includes(inputValue.toLowerCase()) ||
+      command.description.toLowerCase().includes(inputValue.toLowerCase())
+    );
+  });
+
+  const handleSubmit = () => {
+    console.log("submitted with input value of", inputValue, command);
+    //make sure that submitted value matches a command
+    // commands.find();
+
+    addToPassQueue(command);
+  };
 
   return (
     <>
@@ -67,21 +84,35 @@ const SearchCommands = ({
           type="search"
           placeholder="Start typing to search commands..."
           disabled={isDisabled}
-          value={command}
+          value={inputValue}
+          onRuxinput={(e) => {
+            setInputValue(e.target.value);
+          }}
         />
-        <RuxMenu
-          className="commands_input-menu"
-          onRuxmenuselected={(e) => setCommand(e.detail.value)}
-        >
-          {commands.map((item, index) => (
-            <RuxMenuItem key={index} value={item.commandString}>
-              {item.commandString}, <i>({item.description})</i>
-            </RuxMenuItem>
-          ))}
-        </RuxMenu>
+        {filteredCommands.length >= 1 ? (
+          <RuxMenu
+            className="commands_input-menu"
+            onRuxmenuselected={(e) => {
+              const command = commands.find(
+                (command) => command.commandId.toString() === e.detail.value
+              );
+              setInputValue(command!.commandString);
+            }}
+          >
+            {filteredCommands.map((item, index) => (
+              <RuxMenuItem key={index} value={item.commandId.toString()}>
+                {item.commandString}, <i>({item.description})</i>
+              </RuxMenuItem>
+            ))}
+          </RuxMenu>
+        ) : (
+          <span className="commands_no-match">
+            No commands match the given search parameters.
+          </span>
+        )}
       </RuxPopUp>
 
-      <RuxButton disabled={isDisabled} onClick={() => addToPassQueue(command)}>
+      <RuxButton disabled={isDisabled} onClick={() => handleSubmit()}>
         Add to Queue
       </RuxButton>
     </>
