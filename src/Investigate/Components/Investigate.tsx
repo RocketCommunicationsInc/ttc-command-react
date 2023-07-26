@@ -26,22 +26,21 @@ const Investigate = ({
   const [selectedChildSubsystem, setSelectedChildSubsystem] =
     useState<ChildSubsystem>(selectedSubsystem.childSubsystems[0]);
   const [selectedAssemblyDevice, setSelectedAssemblyDevice] =
-    useState<AssemblyDevice>(
-      selectedChildSubsystem.assemblyDevices[0]
-    );
-  
-  
+    useState<AssemblyDevice>(selectedChildSubsystem.assemblyDevices[0]);
+
   useEffect(() => {
     setSelectedChildSubsystem(selectedSubsystem.childSubsystems[0]);
-    setSelectedAssemblyDevice(selectedSubsystem.childSubsystems[0].assemblyDevices[0]);
-
+    setSelectedAssemblyDevice(
+      selectedSubsystem.childSubsystems[0].assemblyDevices[0]
+    );
 
     return () => {
       setSelectedChildSubsystem(contact.subsystems[0].childSubsystems[0]);
-      setSelectedAssemblyDevice(contact.subsystems[0].childSubsystems[0].assemblyDevices[0]);
+      setSelectedAssemblyDevice(
+        contact.subsystems[0].childSubsystems[0].assemblyDevices[0]
+      );
     };
   }, [contact.subsystems, selectedSubsystem.childSubsystems]);
-
 
   return (
     <div className="investigate-background" data-active={showInvestigate}>

@@ -28,23 +28,23 @@ const Subsystems = ({
   return (
     <RuxContainer className="subsystems">
       <div slot="header">Subsystems</div>
-        <RuxTable>
-          {subsystems.map((subsystem) => (
-            <RuxTableRow>
-              <RuxTableCell>
-                <RuxStatus status={subsystem.status} />
-                {subsystem.name}
-              </RuxTableCell>
-              <RuxTableCell>
-                <RuxIcon
-                  size="1rem"
-                  icon="launch"
-                  onClick={() => handleInvestigate(subsystem)}
-                />
-              </RuxTableCell>
-            </RuxTableRow>
-          ))}
-        </RuxTable>
+      <RuxTable>
+        {subsystems.map((subsystem) => (
+          <RuxTableRow>
+            <RuxTableCell>
+              <RuxStatus status={subsystem.status} />
+              {subsystem.name}
+            </RuxTableCell>
+            <RuxTableCell>
+              <RuxIcon
+                size="1rem"
+                icon="launch"
+                onClick={() => handleInvestigate(subsystem)}
+              />
+            </RuxTableCell>
+          </RuxTableRow>
+        ))}
+      </RuxTable>
     </RuxContainer>
   );
 };
