@@ -10,10 +10,10 @@ import type { Alert } from "@astrouxds/mock-data";
 
 type PropTypes = {
   alertItem: Alert;
-  handleAppSwap: () => void;
+  handleButtonClick: () => void;
 };
 
-const AlertListItem = ({ alertItem, handleAppSwap }: PropTypes) => {
+const AlertListItem = ({ alertItem, handleButtonClick }: PropTypes) => {
   const { modifyAlert } = useTTCGRMActions();
   const toggleSelected = (alert: Alert) =>
     modifyAlert({ ...alert, selected: !alertItem.selected });
@@ -24,7 +24,7 @@ const AlertListItem = ({ alertItem, handleAppSwap }: PropTypes) => {
         <RuxAccordionItem id={alertItem.id}>
           <div className="accordion-item__content">
             <div>{alertItem.message}</div>
-            <RuxButton icon="launch" onClick={handleAppSwap}>
+            <RuxButton icon="launch" onClick={handleButtonClick}>
               Investigate
             </RuxButton>
           </div>

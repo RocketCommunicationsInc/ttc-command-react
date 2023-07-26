@@ -9,9 +9,10 @@ import {
   RuxTableBody,
 } from "@astrouxds/react";
 import WatcherListItem from "./WatcherListItem";
-import { generateMnemonics } from "@astrouxds/mock-data";
 import type { Mnemonic } from "@astrouxds/mock-data/dist/types";
 import "./Watcher.css";
+
+import { useAppContext, ContextType } from "../../../provider/useAppContext";
 
 const styles = {
   container: {
@@ -25,20 +26,22 @@ const generateMnemonicValue = () =>
 const generateChartData = () =>
   faker.helpers.multiple(() => generateMnemonicValue(), { count: 9 });
 
-const mnemonicsData = generateMnemonics(10, {});
-const updatedMnemoncicsData = mnemonicsData.map((data) => {
-  return {
-    ...data,
-    previousReadings: generateChartData(),
-  };
-});
-
 const Watcher = () => {
+  const { contact }: ContextType = useAppContext();
+  const watchedMnemonics = contact.mnemonics.filter((mnemonic) => mnemonic.watched);
+
+  const updatedMnemoncicsData = watchedMnemonics.map((data) => {
+    return {
+      ...data,
+      previousReadings: generateChartData(),
+    };
+  });
+
   useEffect(() => {
     const watcherDiv = document.querySelector(".watcher");
     const tableRows = watcherDiv?.querySelectorAll("rux-table-row");
     //sets first MNEMONIC as selected on mount
-    tableRows?.[0].setAttribute("selected", "");
+    tableRows?.[0]?.setAttribute("selected", "");
 
     tableRows?.forEach((row) => {
       row.addEventListener("click", (event) => toggleSelected(event));

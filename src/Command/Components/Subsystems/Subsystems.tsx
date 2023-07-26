@@ -9,28 +9,25 @@ import {
 import "./Subsystems.css";
 import type { Subsystem } from "@astrouxds/mock-data";
 
-type PropTypes = {
-  subsystems: Subsystem[];
-  toggleInvestigate: () => void;
-  setSelectedSubsystem: React.Dispatch<React.SetStateAction<Subsystem>>;
-};
+import { useAppContext, ContextType } from "provider/useAppContext";
 
-const Subsystems = ({
-  subsystems,
-  toggleInvestigate,
-  setSelectedSubsystem,
-}: PropTypes) => {
-  const handleInvestigate = (subsystem: Subsystem) => {
+const Subsystems = () => {
+  const { contact, toggleInvestigate, selectSubsystem }: ContextType =
+    useAppContext();
+
+  const subsystems = contact.subsystems;
+
+  const handleSubsystemClick = (subsystem: Subsystem) => {
     toggleInvestigate();
-    setSelectedSubsystem(subsystem);
+    selectSubsystem(subsystem);
   };
 
   return (
     <RuxContainer className="subsystems">
       <div slot="header">Subsystems</div>
       <RuxTable>
-        {subsystems.map((subsystem) => (
-          <RuxTableRow>
+        {subsystems.map((subsystem, index) => (
+          <RuxTableRow key={index}>
             <RuxTableCell>
               <RuxStatus status={subsystem.status} />
               {subsystem.name}
@@ -39,7 +36,7 @@ const Subsystems = ({
               <RuxIcon
                 size="1rem"
                 icon="launch"
-                onClick={() => handleInvestigate(subsystem)}
+                onClick={() => handleSubsystemClick(subsystem)}
               />
             </RuxTableCell>
           </RuxTableRow>
