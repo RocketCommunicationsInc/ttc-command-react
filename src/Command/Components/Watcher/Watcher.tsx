@@ -12,6 +12,8 @@ import WatcherListItem from "./WatcherListItem";
 import type { Mnemonic } from "@astrouxds/mock-data/dist/types";
 import "./Watcher.css";
 
+import { useAppContext, ContextType } from "../../../provider/useAppContext";
+
 const styles = {
   container: {
     display: "flex",
@@ -24,10 +26,9 @@ const generateMnemonicValue = () =>
 const generateChartData = () =>
   faker.helpers.multiple(() => generateMnemonicValue(), { count: 9 });
 
-type PropTypes = {
-  mnemonics: Mnemonic[];
-};
-const Watcher = ({ mnemonics }: PropTypes) => {
+const Watcher = () => {
+  const { contact }: ContextType = useAppContext();
+  const mnemonics = contact.mnemonics;
   const watchedMnemonics = mnemonics.filter((mnemonic) => mnemonic.watched);
 
   const updatedMnemoncicsData = watchedMnemonics.map((data) => {

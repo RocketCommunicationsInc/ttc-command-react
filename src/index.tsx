@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { TTCGRMProvider } from "@astrouxds/mock-data";
+import AppProvider from "provider/useAppContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -18,7 +19,9 @@ const options = {
 root.render(
   <React.StrictMode>
     <TTCGRMProvider options={options}>
-      <App />
+      <AppProvider>
+        <App />
+      </AppProvider>
     </TTCGRMProvider>
   </React.StrictMode>
 );

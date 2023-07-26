@@ -7,14 +7,7 @@ import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
-import type { ChildSubsystem, AssemblyDevice } from "@astrouxds/mock-data";
-
-type PropTypes = {
-  setSelectedAssemblyDevice: React.Dispatch<
-    React.SetStateAction<AssemblyDevice>
-  >;
-  selectedChildSubsystem: ChildSubsystem;
-};
+import { useAppContext, ContextType } from "../../../provider/useAppContext"
 
 type StatusColor = {
   status: string;
@@ -33,13 +26,12 @@ const getColor = ({ status }: StatusColor) => {
   return statusColor[status as keyof typeof statusColor] || statusColor.off;
 };
 
-const Assembly = ({
-  setSelectedAssemblyDevice,
-  selectedChildSubsystem,
-}: PropTypes) => {
+const Assembly = () => {
+  const { selectAssemblyDevice, selectedChildSubsystem }: ContextType = useAppContext();
+  console.log(selectedChildSubsystem)
   const findAssemblyDeviceByName = (name: string) =>
     selectedChildSubsystem.assemblyDevices.find(
-      (device) => device.name === name
+      (device) => device?.name === name
     );
 
   const elements = [
@@ -235,12 +227,13 @@ const Assembly = ({
 
   const handleClick = (e: any) => {
     const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
-    if (assemblyDevice) setSelectedAssemblyDevice(assemblyDevice);
+    if (!assemblyDevice) return
+    selectAssemblyDevice(assemblyDevice)
   };
 
   return (
     <RuxContainer className="star-tracker">
-      <div slot="header">{selectedChildSubsystem.name}</div>
+      <div slot="header">{selectedChildSubsystem?.name}</div>
       <CytoscapeComponent
         elements={elements}
         style={{ width: "100%", height: "100%" }}
