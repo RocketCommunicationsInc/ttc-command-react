@@ -49,6 +49,7 @@ const AppProvider = ({ children }: PropTypes) => {
   const [selectedAssemblyDevice, setSelectedAssemblyDevice] =
     useState<AssemblyDevice>(firstAssemblyDevice);
 
+  //Utility finder functions
   const findSubsystemByName = (name?: string) =>
     contact.subsystems.find((subsystem) => subsystem.name === name);
   const findChildSubsystemByName = (subsystem: Subsystem, name?: string) =>
@@ -62,6 +63,8 @@ const AppProvider = ({ children }: PropTypes) => {
     childSubsystem.assemblyDevices.find((device) => device.name === name) ||
     firstAssemblyDevice;
 
+  
+  // Exported state setters
   const toggleInvestigate = () => {
     setShowInvestigate((prevState) => !prevState);
     if (showInvestigate) resetSelected();
@@ -108,6 +111,7 @@ const AppProvider = ({ children }: PropTypes) => {
     setSelectedAssemblyDevice(assemblyDevices);
   };
 
+  // Creates the initaial mock data functionality
   useEffect(() => {
     const interval = setInterval(() => {
       if (contact.alerts.length < 25) addAlert(contact.id);
