@@ -7,13 +7,13 @@ import { useTTCGRMActions, useTTCGRMAlerts } from "@astrouxds/mock-data";
 type PropTypes = {
   severitySelection: Status | "all";
   categorySelection: Category | "all";
-  handleAppSwap: () => void;
+  toggleInvestigate: () => void;
 };
 
 const AlertsList = ({
   severitySelection,
   categorySelection,
-  handleAppSwap,
+  toggleInvestigate,
 }: PropTypes) => {
   const { dataById: alerts } = useTTCGRMAlerts();
   const { allAlertsHaveProp, anyAlertsHaveProp, modifyAllAlerts } =
@@ -74,7 +74,7 @@ const AlertsList = ({
           <AlertListItem
             alertItem={alerts[alertId]}
             key={alertId}
-            handleAppSwap={handleAppSwap}
+            handleButtonClick={toggleInvestigate}
           />
         ))}
       </ul>
