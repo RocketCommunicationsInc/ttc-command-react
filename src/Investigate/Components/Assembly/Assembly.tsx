@@ -51,12 +51,12 @@ const Assembly = () => {
     );
 
   const positionArr: object[] = [
-    { x: 120, y: 190 },
-    { x: 390, y: 140 },
-    { x: 625, y: 235 },
-    { x: 840, y: 126 },
-    { x: 1100, y: 235 },
-    { x: 1285, y: 126 },
+    { x: 120, y: 195 },
+    { x: 390, y: 150 },
+    { x: 625, y: 250 },
+    { x: 830, y: 120 },
+    { x: 1020, y: 250 },
+    { x: 1285, y: 165 },
   ];
 
   const elementsArr = selectedChildSubsystem.assemblyDevices
@@ -131,8 +131,8 @@ const Assembly = () => {
         "background-color": (node: any) => getColor(node.data()),
         "border-color": (node: any) => getColor(node.data()),
         "background-image-opacity": 0.85,
-        height: "150%",
-        width: "230%",
+        height: "130%",
+        width: "210%",
         "background-width-relative-to": "inner",
         "background-height-relative-to": "inner",
         opacity: 0.75,
@@ -174,13 +174,13 @@ const Assembly = () => {
         "text-margin-y": 7,
       },
     },
-    //lines between the squares
+    //lines between the nodes
     {
       selector: "edge",
       css: {
         "curve-style": "taxi",
         "line-style": "solid",
-        "taxi-turn-min-distance": "10px",
+        "taxi-turn-min-distance": "15px",
         "source-distance-from-node": 3,
         "target-distance-from-node": 3,
         width: 1.5,
