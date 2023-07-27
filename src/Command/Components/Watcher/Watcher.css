@@ -74,7 +74,7 @@ rux-pop-up.mnemonic-pop-up span[slot="trigger"] {
 }
 
 rux-pop-up.mnemonic-pop-up span[slot="trigger"]:hover {
-  border-bottom: 1px solid var(--color-text-interactive-default);
+  box-shadow: inset 0 -1px 0 0 var(--color-text-interactive-default);
 }
 
 rux-pop-up.mnemonic-pop-up rux-card::part(container) {
