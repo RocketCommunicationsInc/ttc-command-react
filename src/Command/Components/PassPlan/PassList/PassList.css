@@ -67,6 +67,8 @@ rux-tree.pass_body-wrapper rux-tree-node::part(text) {
     color: var(--color-text-primary);
 }
 
-rux-tree-node:nth-child(odd)::part(node) {
-    background-color: var(--color-background-base-hover);
+rux-tree-node::part(node) {
+    padding-block: var(--spacing-2, 0.5rem);
+    background-color: var(--color-background-surface-header);
+    box-shadow: 0 -1px 0 0 var(--color-background-base-default, #101923) inset;
 }
