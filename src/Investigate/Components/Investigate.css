@@ -6,7 +6,7 @@
   display: grid;
   gap: var(--spacing-3);
   grid-template-columns: calc(20% - 12px) calc(80%);
-  grid-template-rows: calc(50% - 12px) calc(50%);
+  grid-template-rows: calc(55% - 12px) calc(45%);
   grid-template-areas:
     "investigate-subsystems star-tracker"
     "investigate-subsystems electronics";
