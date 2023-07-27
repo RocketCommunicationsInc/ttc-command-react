@@ -89,7 +89,6 @@ const Watcher = () => {
                 const lastDataPoint = dataObj.previousReadings.at(-1) || 0;
                 const chartDataSlope =
                   lastDataPoint - dataObj.previousReadings[0];
-                console.log(dataObj);
                 return (
                   <WatcherListItem
                     key={dataObj.id}
