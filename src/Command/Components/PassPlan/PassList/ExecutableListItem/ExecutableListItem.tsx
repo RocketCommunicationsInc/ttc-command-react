@@ -8,10 +8,9 @@ import MnemonicListItem from "../MnemonicListItem/MnemonicListItem";
 
 type PropTypes = {
   stepNumber: number;
-  mnemonicRowAmount: number;
 };
 
-const ExecutableListItem = ({ stepNumber, mnemonicRowAmount }: PropTypes) => {
+const ExecutableListItem = ({ stepNumber }: PropTypes) => {
 
   return (
         <RuxTreeNode expanded>
@@ -28,7 +27,7 @@ const ExecutableListItem = ({ stepNumber, mnemonicRowAmount }: PropTypes) => {
                 </div>
             </div>
           </div>
-        <MnemonicListItem stepNumber={stepNumber} mnemonicRowAmount={mnemonicRowAmount} slotNode={true} />
+        <MnemonicListItem stepNumber={stepNumber} slotNode={true} />
         </RuxTreeNode>
   );
 };

@@ -8,13 +8,12 @@ import MnemonicPopUp from "../../../Watcher/MnemonicPopUp";
 
 type PropTypes = {
   stepNumber: number;
-  mnemonicRowAmount: number;
   slotNode: boolean;
 };
 
-const MnemonicListItem = ({ stepNumber, mnemonicRowAmount, slotNode }: PropTypes) => {
-  const mnemonicsData = generateMnemonics(mnemonicRowAmount, {});
+const mnemonicsData = generateMnemonics(4, {});
 
+const MnemonicListItem = ({ stepNumber, slotNode }: PropTypes) => {
   return (
     <>
       {mnemonicsData.map((data) => {

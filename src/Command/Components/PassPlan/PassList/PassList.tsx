@@ -12,10 +12,10 @@ const PassList = () => {
         <div className="pass_header-instruction">Instruction</div>
       </div>
       <RuxTree className="pass_body-wrapper">
-        <MnemonicListItem stepNumber={1} mnemonicRowAmount={2} slotNode={false} />
+        <MnemonicListItem stepNumber={1} slotNode={false} />
         <SelectMenuListItem stepNumber={2} />
-        <ExecutableListItem stepNumber={3} mnemonicRowAmount={4} />
-        <MnemonicListItem stepNumber={4} mnemonicRowAmount={3} slotNode={false} />
+        <ExecutableListItem stepNumber={3} />
+        <MnemonicListItem stepNumber={4} slotNode={false} />
       </RuxTree>
     </>
   );
