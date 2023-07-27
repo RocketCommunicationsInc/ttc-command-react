@@ -7,6 +7,13 @@ rux-pop-up.commands_input-pop-up::part(arrow) {
 
 rux-pop-up.commands_input-pop-up::part(popup-content) {
   margin-block-start: var(--spacing-1);
+  /* the containing div - the button on the right */
+  width: calc(100% - 9.375rem);
+}
+
+/*needed so that the absolutely positioned search div has something to be contained by*/
+.pass-plan div[slot="footer"] {
+  position: relative;
 }
 
 rux-menu.commands_input-menu {

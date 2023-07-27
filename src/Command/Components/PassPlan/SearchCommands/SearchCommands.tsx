@@ -79,7 +79,6 @@ const SearchCommands = ({
       <RuxPopUp
         className="commands_input-pop-up"
         placement="top-start"
-        strategy="fixed"
         closeOnSelect={true}
         ref={searchPopup}
       >
