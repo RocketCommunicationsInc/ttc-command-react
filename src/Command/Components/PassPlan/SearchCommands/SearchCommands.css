@@ -1,6 +1,13 @@
 rux-pop-up.commands_input-pop-up {
   margin-inline: var(--spacing-2);
 }
+rux-pop-up.commands_input-pop-up::part(arrow) {
+  display: none;
+}
+
+rux-pop-up.commands_input-pop-up::part(popup-content) {
+  margin-block-start: var(--spacing-1);
+}
 
 rux-menu.commands_input-menu {
   height: 300px;

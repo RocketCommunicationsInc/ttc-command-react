@@ -62,10 +62,15 @@ const SearchCommands = ({
 
     //deal with recentCommands
     setRecentCommands((prevCommands) => {
-      if (prevCommands.length >= 5) {
-        prevCommands.pop();
+      //filter out any item(s) that match the current command
+      const filteredPrevCommands = prevCommands.filter(
+        (command) => command !== current
+      );
+      console.log(filteredPrevCommands, prevCommands);
+      if (filteredPrevCommands.length >= 5) {
+        filteredPrevCommands.pop();
       }
-      return [current, ...prevCommands];
+      return [current, ...filteredPrevCommands];
     });
   };
 
@@ -74,6 +79,7 @@ const SearchCommands = ({
       <RuxPopUp
         className="commands_input-pop-up"
         placement="top-start"
+        strategy="fixed"
         closeOnSelect={true}
         ref={searchPopup}
       >
