@@ -57,6 +57,10 @@ rux-tree.pass_body-wrapper rux-tree-node::part(text) {
     padding-inline-end: var(--spacing-2);
 }
 
+.pass_executable-wrapper rux-icon {
+    color: var(--color-text-primary);
+}
+
 .pass_progress-time {
     display: flex;
     align-items: center;
