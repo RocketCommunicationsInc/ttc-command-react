@@ -4,7 +4,7 @@ import MnemonicPopUp from "../../../Watcher/MnemonicPopUp";
 import { useMemo } from "react";
 
 type PropTypes = {
-  stepNumber: number;
+  stepNumber: number | string;
   slotNode: boolean;
 };
 
