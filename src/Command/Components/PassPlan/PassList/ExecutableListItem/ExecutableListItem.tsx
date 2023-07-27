@@ -12,7 +12,9 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
   };
 
   const progressBar = useRef<HTMLRuxProgressElement>(null);
-  const [progress, setProgress] = useState<string>('waiting');
+  const [inProgress, setInProgress] = useState<boolean>(false);
+  const [progressComplete, setProgressComplete] = useState<boolean>(false);
+
 
   const mnemonicItems = useMemo(() => {
     const randomNumber = getRandomInt(2, 5);
@@ -30,26 +32,38 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
   }, [stepNumber]);
 
   const handleExecuteButtonClick = () => {
-    setProgress('in-progress')
+    if (progressComplete) return
+    if (inProgress === false) {
+        setInProgress(prevState => !prevState)
+    } else {
+        setInProgress(prevState => !prevState)
+    }
+    console.log(inProgress)
     let value = 0;
-    const progressInterval = setInterval(() => {
+    const makeProgress = () => {
         if (value > 100) {
             //timeout to make the icon swap on the state change look smooth. Without the timeout it seems to happen too fast.
             setTimeout(() => {
-                setProgress('completed')
+                setProgressComplete(prevState => !prevState)
             }, 400)
             clearInterval(progressInterval)
+            return;
+        }
+        if (inProgress === false) {
+            clearInterval(progressInterval)
+            return;
         }
         value = value + 1
         progressBar.current!.value = value
-    },10)
+    }
+    const progressInterval = setInterval(makeProgress,10)
   }
 
   return (
     <div className="pass_executable-parent">
         
         {
-            progress !== 'completed' && <RuxButton className="pass_execute-button" iconOnly icon={progress === 'in-progress' ? 'pause' : 'play-arrow'} onClick={handleExecuteButtonClick} />
+            !progressComplete && <RuxButton className="pass_execute-button" iconOnly icon={inProgress ? 'pause' : 'play-arrow'} onClick={handleExecuteButtonClick} />
         }
     <RuxTreeNode expanded>
       <div slot="prefix" className="pass_number-wrapper">
@@ -57,7 +71,7 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
       </div>
       <div className="pass_executable-wrapper">
         {
-            progress !== 'completed' ? <RuxButton iconOnly icon={progress === 'in-progress' ? 'pause' : 'play-arrow'} onClick={handleExecuteButtonClick} /> : <RuxIcon icon="check-circle-outline" size="small" />
+            !progressComplete ? <RuxButton iconOnly icon={inProgress ? 'pause' : 'play-arrow'} onClick={handleExecuteButtonClick} /> : <RuxIcon icon="check-circle-outline" size="small" />
         }
         
         <div className="pass_executable-progress-wrapper">
