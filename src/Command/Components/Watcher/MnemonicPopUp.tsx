@@ -1,9 +1,21 @@
-import { RuxCheckbox, RuxIcon, RuxPopUp, RuxCard } from "@astrouxds/react";
-import type { Mnemonic } from "@astrouxds/mock-data";
+import {
+  RuxCheckbox,
+  RuxIcon,
+  RuxPopUp,
+  RuxCard,
+  RuxButton,
+} from "@astrouxds/react";
+import { type Mnemonic } from "@astrouxds/mock-data";
+import LineChart from "./LineChart";
+import { getRandomInt } from "utils";
+import { useAppContext, ContextType } from "provider/useAppContext";
+import type { Subsystem } from "@astrouxds/mock-data";
+import { useState } from "react";
 
 type PropTypes = {
   triggerValue: string | number;
   data: Mnemonic;
+  isPassPlan: boolean;
 };
 
 const styles = {
@@ -17,7 +29,36 @@ const styles = {
   },
 };
 
-const MnemonicPopUp = ({ triggerValue, data }: PropTypes) => {
+const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
+  const { contact, toggleInvestigate, selectSubsystem }: ContextType =
+    useAppContext();
+
+  const handleSubsystemClick = (subsystem: Subsystem) => {
+    toggleInvestigate();
+    selectSubsystem(subsystem);
+  };
+
+  const menmonicData = [
+    getRandomInt(110),
+    getRandomInt(110),
+    getRandomInt(110),
+    data.currentValue,
+    getRandomInt(110),
+    getRandomInt(110),
+    getRandomInt(110),
+  ];
+
+  const attitudeSubsystem = contact.subsystems.filter(
+    (subsystem) => subsystem.name === "Attitude"
+  );
+
+  console.log(data.subsystem, "data");
+
+  const handleSubsystemPassPlanClick = () => {
+    toggleInvestigate();
+    // selectSubsystem(data.subsystem);
+  };
+
   return (
     <RuxPopUp
       placement="right-end"
@@ -26,25 +67,34 @@ const MnemonicPopUp = ({ triggerValue, data }: PropTypes) => {
     >
       <RuxCard>
         <span slot="header">{data.mnemonicId}</span>
+        {isPassPlan ? <LineChart chartData={menmonicData} /> : null}
         <div>
           <span>Value</span>
           <span>{data.currentValue}</span>
         </div>
         <div>
           <span>Subsystem</span>
-          <a
-            href="https://ttc-investigate.astrouxds.com/?system=Attitude"
-            target="_blank"
-            rel="noreferrer"
+          <RuxButton
+            size="small"
+            borderless
+            onClick={() =>
+              handleSubsystemClick(
+                attitudeSubsystem[0]
+                  ? attitudeSubsystem[0]
+                  : contact.subsystems[0]
+              )
+            }
             style={styles.linkStyles}
           >
             Attitude
             <RuxIcon style={styles.iconStyles} size="1rem" icon="launch" />
-          </a>
+          </RuxButton>
         </div>
-        <div slot="footer">
-          <RuxCheckbox>Add to Watcher</RuxCheckbox>
-        </div>
+        {isPassPlan ? (
+          <div slot="footer">
+            <RuxCheckbox>Add to Watcher</RuxCheckbox>
+          </div>
+        ) : null}
       </RuxCard>
       <span slot="trigger">{triggerValue}</span>
     </RuxPopUp>
