@@ -4,20 +4,21 @@
   align-items: center;
 }
 
-rux-container::part(body) {
+rux-container.pass-plan::part(body) {
   overflow-x: hidden;
+  background: var(--color-background-surface-default);
 }
 
-.pass-plan rux-select {
+.pass-plan rux-select.header-select {
   display: flex;
 }
 
-.pass-plan rux-select::part(select) {
+.pass-plan rux-select.header-select::part(select) {
   flex-direction: row;
   width: 8rem;
 }
 
-.pass-plan rux-select::part(label) {
+.pass-plan rux-select.header-select::part(label) {
   margin-right: var(--spacing-3);
   margin-top: 0.5rem;
 }

@@ -1,0 +1,19 @@
+.pass_select-wrapper {
+    display: flex;
+    gap: 5%;
+}
+
+/* .pass_number-wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+} */
+
+.pass_select-wrapper rux-select {
+    display: flex;
+    flex-direction: column;
+}
+
+.pass-plan_select-wrapper rux-select::part(label) {
+    margin-top: 0;
+}

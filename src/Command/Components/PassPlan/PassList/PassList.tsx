@@ -1,56 +1,21 @@
-import {
-  RuxCheckbox,
-  RuxProgress,
-  RuxTree,
-  RuxTreeNode,
-} from "@astrouxds/react";
+import { RuxTree } from "@astrouxds/react";
+import SelectMenuListItem from "./SelectMenuListItem/SelectMenuListItem";
+import "./PassList.css";
+import MnemonicListItem from "./MnemonicListItem/MnemonicListItem";
+import ExecutableListItem from "./ExecutableListItem/ExecutableListItem";
 
 const PassList = () => {
   return (
     <>
-      <RuxTree>
-        <RuxTreeNode>
-          <div className="rux-tree-node_prefix" slot="prefix">
-            1
-          </div>
-          <div className="rux-tree-node_content">
-            <RuxCheckbox />A nice hat
-          </div>
-          <RuxTreeNode slot="node">
-            <div className="rux-tree-content">Children</div>
-          </RuxTreeNode>
-        </RuxTreeNode>
-      </RuxTree>
-
-      <RuxTree>
-        <RuxTreeNode>
-          <div className="rux-tree-node_prefix" slot="prefix">
-            2
-          </div>
-          <div className="rux-tree-node_content">
-            <RuxCheckbox />
-            Verify MNEMONIC = ON
-          </div>
-          <RuxTreeNode slot="node">
-            <div className="rux-tree-content">Children</div>
-          </RuxTreeNode>
-        </RuxTreeNode>
-      </RuxTree>
-
-      <RuxTree>
-        <RuxTreeNode>
-          <div className="rux-tree-node_prefix" slot="prefix">
-            3
-          </div>
-          <div className="rux-tree-node_content">
-            <RuxCheckbox />
-            Verify MNEMONIC = ON
-          </div>
-          <RuxProgress slot="suffix" hideLabel={true} value={60} />
-          <RuxTreeNode slot="node">
-            <div className="rux-tree-content">Children</div>
-          </RuxTreeNode>
-        </RuxTreeNode>
+      <div className="pass_header-wrapper">
+        <div className="pass_header-step">Step</div>
+        <div className="pass_header-instruction">Instruction</div>
+      </div>
+      <RuxTree className="pass_body-wrapper">
+        <MnemonicListItem stepNumber={1} mnemonicRowAmount={2} slotNode={false} />
+        <SelectMenuListItem stepNumber={2} />
+        <ExecutableListItem stepNumber={3} mnemonicRowAmount={4} />
+        <MnemonicListItem stepNumber={4} mnemonicRowAmount={3} slotNode={false} />
       </RuxTree>
     </>
   );

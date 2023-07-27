@@ -38,7 +38,7 @@ const MnemonicPopUp = ({ triggerValue, data }: PropTypes) => {
             rel="noreferrer"
             style={styles.linkStyles}
           >
-            Altitude
+            Attitude
             <RuxIcon style={styles.iconStyles} size="1rem" icon="launch" />
           </a>
         </div>
