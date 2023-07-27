@@ -93,14 +93,9 @@ li {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding-bottom: 1rem;
 }
 
 .pass-plan rux-input {
   width: 100%;
   margin-right: var(--spacing-2);
-}
-
-.pass-plan rux-input::part(error-text) {
-  margin-block-end: -1.75rem;
 }
