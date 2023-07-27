@@ -22,7 +22,6 @@ type PropTypes = {
 
 const Mnemonics = ({ title }: PropTypes) => {
   const { selectedAssemblyDevice }: ContextType = useAppContext();
-  const [watched, setWatched] = useState(selectedAssemblyDevice.mnemonics);
   const [searchValue, setSearchValue] = useState("");
 
   const filteredMnemonics = selectedAssemblyDevice.mnemonics.filter((value) =>
@@ -30,6 +29,7 @@ const Mnemonics = ({ title }: PropTypes) => {
       value.toString().toLowerCase().includes(searchValue.toLowerCase())
     )
   );
+  const [watched, setWatched] = useState(filteredMnemonics);
 
   const handleWatching = (id: string) => {
     setWatched((prevData) =>
@@ -79,11 +79,11 @@ const Mnemonics = ({ title }: PropTypes) => {
                 <RuxTableCell>{device.currentValue}</RuxTableCell>
                 <RuxTableCell>{device.unit}</RuxTableCell>
                 <RuxTableCell>
-                  {watched.map((watched) => (
+                  {watched.map((device) => (
                     <RuxCheckbox
-                      checked={watched.watched}
+                      checked={device.watched}
                       label="Watching"
-                      onRuxchange={() => handleWatching(watched.id)}
+                      onRuxchange={() => handleWatching(device.id)}
                     />
                   ))}
                 </RuxTableCell>
