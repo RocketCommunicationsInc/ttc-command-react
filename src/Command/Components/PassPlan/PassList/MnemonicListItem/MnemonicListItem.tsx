@@ -1,7 +1,6 @@
 import { RuxCheckbox, RuxIcon, RuxTreeNode } from "@astrouxds/react";
 import { generateMnemonics } from "@astrouxds/mock-data";
 import MnemonicPopUp from "../../../Watcher/MnemonicPopUp";
-import { useAppContext, ContextType } from "provider/useAppContext";
 
 type PropTypes = {
   stepNumber: number;
@@ -14,11 +13,8 @@ const MnemonicListItem = ({
   mnemonicRowAmount,
   slotNode,
 }: PropTypes) => {
-  const { contact }: ContextType = useAppContext();
-
   const mnemonicsData = generateMnemonics(mnemonicRowAmount, {});
-  console.log(mnemonicsData, "porque?");
-  console.log(contact.mnemonics, "mme");
+
   return (
     <>
       {mnemonicsData.map((data) => {

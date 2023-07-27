@@ -10,7 +10,6 @@ import LineChart from "./LineChart";
 import { getRandomInt } from "utils";
 import { useAppContext, ContextType } from "provider/useAppContext";
 import type { Subsystem } from "@astrouxds/mock-data";
-import { useState } from "react";
 
 type PropTypes = {
   triggerValue: string | number;
@@ -20,8 +19,8 @@ type PropTypes = {
 
 const styles = {
   iconStyles: {
+    marginTop: "var(--spacing-1)",
     marginLeft: "var(--spacing-1)",
-    marginBottom: "var(--spacing-1)",
   },
   linkStyles: {
     display: "flex",
@@ -30,8 +29,12 @@ const styles = {
 };
 
 const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
-  const { contact, toggleInvestigate, selectSubsystem }: ContextType =
-    useAppContext();
+  const {
+    contact,
+    toggleInvestigate,
+    selectSubsystem,
+    selectSubsystemsFromMnemonic,
+  }: ContextType = useAppContext();
 
   const handleSubsystemClick = (subsystem: Subsystem) => {
     toggleInvestigate();
@@ -52,11 +55,9 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
     (subsystem) => subsystem.name === "Attitude"
   );
 
-  console.log(data.subsystem, "data");
-
   const handleSubsystemPassPlanClick = () => {
+    selectSubsystemsFromMnemonic(data);
     toggleInvestigate();
-    // selectSubsystem(data.subsystem);
   };
 
   return (
@@ -74,21 +75,33 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
         </div>
         <div>
           <span>Subsystem</span>
-          <RuxButton
-            size="small"
-            borderless
-            onClick={() =>
-              handleSubsystemClick(
-                attitudeSubsystem[0]
-                  ? attitudeSubsystem[0]
-                  : contact.subsystems[0]
-              )
-            }
-            style={styles.linkStyles}
-          >
-            Attitude
-            <RuxIcon style={styles.iconStyles} size="1rem" icon="launch" />
-          </RuxButton>
+          {isPassPlan ? (
+            <RuxButton
+              size="small"
+              borderless
+              onClick={() => handleSubsystemPassPlanClick()}
+              style={styles.linkStyles}
+            >
+              Attitude
+              <RuxIcon style={styles.iconStyles} size="1rem" icon="launch" />
+            </RuxButton>
+          ) : (
+            <RuxButton
+              size="small"
+              borderless
+              onClick={() =>
+                handleSubsystemClick(
+                  attitudeSubsystem[0]
+                    ? attitudeSubsystem[0]
+                    : contact.subsystems[0]
+                )
+              }
+              style={styles.linkStyles}
+            >
+              Attitude
+              <RuxIcon style={styles.iconStyles} size="1rem" icon="launch" />
+            </RuxButton>
+          )}
         </div>
         {isPassPlan ? (
           <div slot="footer">
