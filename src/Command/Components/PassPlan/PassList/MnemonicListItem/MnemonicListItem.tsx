@@ -1,24 +1,23 @@
-import {
-  RuxCheckbox,
-  RuxIcon,
-  RuxTreeNode,
-} from "@astrouxds/react";
+import { RuxCheckbox, RuxIcon, RuxTreeNode } from "@astrouxds/react";
 import { generateMnemonics } from "@astrouxds/mock-data";
 import MnemonicPopUp from "../../../Watcher/MnemonicPopUp";
+import { useMemo } from "react";
 
 type PropTypes = {
   stepNumber: number;
   slotNode: boolean;
 };
 
-const mnemonicsData = generateMnemonics(4, {});
-
 const MnemonicListItem = ({ stepNumber, slotNode }: PropTypes) => {
+  const mnemonicsData = useMemo(() => {
+    return generateMnemonics(1, {});
+  }, []);
+
   return (
     <>
       {mnemonicsData.map((data) => {
         return (
-          <RuxTreeNode slot={ slotNode ? "node" : "" } key={data.id}>
+          <RuxTreeNode slot={slotNode ? "node" : ""} key={data.id}>
             <div slot="prefix" className="pass_number-wrapper">
               {stepNumber}
             </div>
