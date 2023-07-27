@@ -41,10 +41,6 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
     getRandomInt(110),
   ];
 
-  const attitudeSubsystem = contact.subsystems.filter(
-    (subsystem) => subsystem.name === "Attitude"
-  );
-
   const handleSubsystemPassPlanClick = () => {
     selectSubsystemsFromMnemonic(data);
     toggleInvestigate();
@@ -71,22 +67,16 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
               borderless
               onClick={() => handleSubsystemPassPlanClick()}
             >
-              Attitude
+              {data.subsystem}
               <RuxIcon size="1rem" icon="launch" />
             </RuxButton>
           ) : (
             <RuxButton
               size="small"
               borderless
-              onClick={() =>
-                handleSubsystemClick(
-                  attitudeSubsystem[0]
-                    ? attitudeSubsystem[0]
-                    : contact.subsystems[0]
-                )
-              }
+              onClick={() => handleSubsystemClick(contact.subsystems[0])}
             >
-              Attitude
+              {data.subsystem}
               <RuxIcon size="1rem" icon="launch" />
             </RuxButton>
           )}
