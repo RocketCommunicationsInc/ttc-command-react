@@ -72,3 +72,18 @@ rux-tree-node::part(node) {
     background-color: var(--color-background-surface-header);
     box-shadow: 0 -1px 0 0 var(--color-background-base-default, #101923) inset;
 }
+
+.pass_executable-parent {
+    position: relative;
+}
+
+.pass_execute-button {
+    position: absolute;
+    z-index: 10000;
+    top: 12px;
+    left: 82px;
+}
+
+.pass_executable-parent rux-tree-node rux-tree-node::part(node) {
+    padding-inline-start: var(--spacing-20);
+}
