@@ -10,22 +10,12 @@ import LineChart from "./LineChart";
 import { getRandomInt } from "utils";
 import { useAppContext, ContextType } from "provider/useAppContext";
 import type { Subsystem } from "@astrouxds/mock-data";
+import "./MnemonicPopUp.css";
 
 type PropTypes = {
   triggerValue: string | number;
   data: Mnemonic;
   isPassPlan: boolean;
-};
-
-const styles = {
-  iconStyles: {
-    marginTop: "var(--spacing-1)",
-    marginLeft: "var(--spacing-1)",
-  },
-  linkStyles: {
-    display: "flex",
-    alignItems: "center",
-  },
 };
 
 const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
@@ -74,16 +64,15 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
           <span>{data.currentValue}</span>
         </div>
         <div>
-          <span>Subsystem</span>
+          <span className="subsystem">Subsystem</span>
           {isPassPlan ? (
             <RuxButton
               size="small"
               borderless
               onClick={() => handleSubsystemPassPlanClick()}
-              style={styles.linkStyles}
             >
               Attitude
-              <RuxIcon style={styles.iconStyles} size="1rem" icon="launch" />
+              <RuxIcon size="1rem" icon="launch" />
             </RuxButton>
           ) : (
             <RuxButton
@@ -96,10 +85,9 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
                     : contact.subsystems[0]
                 )
               }
-              style={styles.linkStyles}
             >
               Attitude
-              <RuxIcon style={styles.iconStyles} size="1rem" icon="launch" />
+              <RuxIcon size="1rem" icon="launch" />
             </RuxButton>
           )}
         </div>

@@ -21,7 +21,6 @@ const Subsystems = () => {
     toggleInvestigate();
     selectSubsystem(subsystem);
   };
-  console.log(subsystems);
 
   return (
     <RuxContainer className="subsystems">
