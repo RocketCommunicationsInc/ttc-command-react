@@ -6,7 +6,7 @@ import {
   RuxMenuItemDivider,
   RuxPopUp,
 } from "@astrouxds/react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useRef } from "react";
 import "./SearchCommands.css";
 
 type PropTypes = {
@@ -34,6 +34,7 @@ const SearchCommands = ({
     null
   );
   const [recentCommands, setRecentCommands] = useState<CommandType[]>([]);
+  const searchPopup = useRef() as React.RefObject<HTMLRuxPopUpElement>;
   const isDisabled = pass === "Pre-Pass";
 
   const filteredCommands = commands.filter((command) =>
@@ -74,27 +75,14 @@ const SearchCommands = ({
         className="commands_input-pop-up"
         placement="top-start"
         closeOnSelect={true}
+        ref={searchPopup}
       >
-        <span slot="trigger">
-          <RuxButton
-            iconOnly
-            icon="unfold-more"
-            disabled={isDisabled}
-            onClick={(e) => {
-              e.preventDefault();
-            }}
-          />
-          <RuxInput
-            type="search"
-            placeholder="Start typing to search commands..."
-            disabled={isDisabled}
-            value={inputValue}
-            onRuxinput={(e) => {
-              setCurrentCommand(null);
-              setInputValue(e.target.value);
-            }}
-          />
-        </span>
+        <RuxButton
+          slot="trigger"
+          iconOnly
+          icon="unfold-more"
+          disabled={isDisabled}
+        />
         {filteredCommands.length >= 1 ? (
           <RuxMenu
             className="commands_input-menu"
@@ -147,7 +135,22 @@ const SearchCommands = ({
           </span>
         )}
       </RuxPopUp>
-
+      <RuxInput
+        type="search"
+        placeholder="Start typing to search commands..."
+        disabled={isDisabled}
+        value={inputValue}
+        onRuxinput={(e) => {
+          setCurrentCommand(null);
+          setInputValue(e.target.value);
+        }}
+        onClick={() => {
+          searchPopup.current!.show();
+        }}
+        onRuxfocus={() => {
+          searchPopup.current!.show();
+        }}
+      />
       <RuxButton
         disabled={isDisabled || !currentCommand}
         onClick={() => {

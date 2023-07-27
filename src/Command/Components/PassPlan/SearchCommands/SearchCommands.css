@@ -1,11 +1,5 @@
 rux-pop-up.commands_input-pop-up {
-  width: 100%;
   margin-inline: var(--spacing-2);
-}
-
-rux-pop-up.commands_input-pop-up span[slot="trigger"] {
-  display: flex;
-  gap: var(--spacing-2);
 }
 
 rux-menu.commands_input-menu {
