@@ -5,19 +5,14 @@ import DetectionModule from "./SVG/DetectionModule.svg";
 import ThermoElectric from "./SVG/ThermoElectric.svg";
 import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
+import Default from "./SVG/Default.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
-import type { ChildSubsystem, AssemblyDevice } from "@astrouxds/mock-data";
+import { useAppContext, ContextType } from "../../../provider/useAppContext";
 
-type PropTypes = {
-  setSelectedAssemblyDevice: React.Dispatch<
-    React.SetStateAction<AssemblyDevice>
-  >;
-  selectedChildSubsystem: ChildSubsystem;
-};
-
-type StatusColor = {
+type ElementObject = {
   status: string;
+  label: string;
 };
 
 const statusColor = {
@@ -29,127 +24,106 @@ const statusColor = {
   critical: "#ff3838",
 };
 
-const getColor = ({ status }: StatusColor) => {
+const backgroundImg = {
+  Lens,
+  Baffle,
+  "Detection Module": DetectionModule,
+  "Thermo-Electric Cooler": ThermoElectric,
+  Detector,
+  Electronics,
+};
+
+const getColor = ({ status }: ElementObject) => {
   return statusColor[status as keyof typeof statusColor] || statusColor.off;
 };
 
-const Assembly = ({
-  setSelectedAssemblyDevice,
-  selectedChildSubsystem,
-}: PropTypes) => {
+const getBackground = ({ label }: ElementObject) => {
+  return backgroundImg[label as keyof typeof backgroundImg] || Default;
+};
+
+const Assembly = () => {
+  const { selectAssemblyDevice, selectedChildSubsystem }: ContextType =
+    useAppContext();
+
   const findAssemblyDeviceByName = (name: string) =>
     selectedChildSubsystem.assemblyDevices.find(
-      (device) => device.name === name
+      (device) => device?.name === name
     );
 
-  const elements = [
-    {
-      data: {
-        id: "one",
-        label: "Lens",
-        backgroundImage: Lens,
-        status: "normal",
-      },
-      position: { x: 120, y: 125 },
-    },
-    {
-      data: {
-        id: "two",
-        label: "Baffle",
-        backgroundImage: Baffle,
-        status: "normal",
-      },
-      position: { x: 390, y: 125 },
-    },
-    {
-      data: {
-        source: "one",
-        target: "two",
-        label: "Edge from Lens to Baffle",
-      },
-    },
+  const positionArr: object[] = [
+    { x: 120, y: 190 },
+    { x: 390, y: 140 },
+    { x: 625, y: 235 },
+    { x: 840, y: 126 },
+    { x: 1100, y: 235 },
+    { x: 1285, y: 126 },
+  ];
 
-    {
+  const elementsArr = selectedChildSubsystem.assemblyDevices
+    .map(({ name, status }, index) => ({
       data: {
-        id: "three",
-        label: "Detection Module",
-        backgroundImage: DetectionModule,
-        status: "caution",
+        id: index,
+        label: name,
+        status: status,
       },
-      position: { x: 625, y: 230 },
-    },
-    {
-      data: {
-        source: "two",
-        target: "three",
-        label: "Edge from Baffle to Detection Module",
-      },
-    },
+      position: positionArr[index] || { x: 0, y: 0 },
+    }))
+    .filter((el) => el.data.id < 6);
 
+  const edgesArr = [
     {
       data: {
-        id: "four",
-        label: "Detector",
-        backgroundImage: Detector,
-        status: "serious",
-      },
-      position: { x: 800, y: 85 },
-    },
-    {
-      data: {
-        id: "five",
-        label: "Thermo-Electric Cooler",
-        backgroundImage: ThermoElectric,
-        status: "critical",
-      },
-      position: { x: 975, y: 230 },
-    },
-    {
-      data: {
-        source: "three",
-        target: "four",
-        label: "Edge from Detection to Detector",
+        source: 0,
+        target: 1,
       },
     },
     {
       data: {
-        source: "three",
-        target: "five",
-        label: "Edge from Detection to Thermo-Electric Cooler",
+        source: 1,
+        target: 2,
       },
     },
     {
       data: {
-        id: "six",
-        label: "Electronics",
-        backgroundImage: Electronics,
-        status: "standby",
-      },
-      position: { x: 1285, y: 125 },
-    },
-    {
-      data: {
-        source: "four",
-        target: "six",
-        label: "Edge from Detor to Electronics",
+        source: 2,
+        target: 3,
       },
     },
     {
       data: {
-        source: "five",
-        target: "six",
-        label: "Edge from Thermo-Electric Cooler to Electronics",
+        source: 2,
+        target: 4,
+      },
+    },
+    {
+      data: {
+        source: 3,
+        target: 5,
+      },
+    },
+    {
+      data: {
+        source: 4,
+        target: 5,
       },
     },
   ];
 
-  //These are the styles for the nodes. they contain specific programatic styles for 'status' and for some of the more odd svg backgrounds
+  const newEdges = edgesArr.filter(
+    (edge) =>
+      edge.data.source < elementsArr.length &&
+      edge.data.target < elementsArr.length
+  );
+
+  const cyArr: any[] = [...elementsArr, ...newEdges];
+
+  //Programatic styles for nodes
   const styles: StylesheetCSS[] = [
     //svg background
     {
       selector: "node",
       css: {
-        "background-image": "data(backgroundImage)",
+        "background-image": (node: any) => getBackground(node.data()),
         "background-image-containment": "over",
         "bounds-expansion": "200px 0 0 0",
         "background-clip": "none",
@@ -172,6 +146,7 @@ const Assembly = ({
         "border-color": "#FFF",
       },
     },
+    //remove default overlay
     {
       selector: "node:active",
       css: {
@@ -179,6 +154,7 @@ const Assembly = ({
         opacity: 1,
       },
     },
+    //add hover effect
     {
       selector: "node:selected",
       css: {
@@ -195,7 +171,7 @@ const Assembly = ({
         color: "white",
         "text-halign": "center",
         "text-valign": "bottom",
-        "text-margin-y": 5,
+        "text-margin-y": 7,
       },
     },
     //lines between the squares
@@ -203,9 +179,10 @@ const Assembly = ({
       selector: "edge",
       css: {
         "curve-style": "taxi",
+        "line-style": "solid",
         "taxi-turn-min-distance": "10px",
-        "source-distance-from-node": 9,
-        "target-distance-from-node": 9,
+        "source-distance-from-node": 3,
+        "target-distance-from-node": 3,
         width: 1.5,
       },
     },
@@ -235,14 +212,15 @@ const Assembly = ({
 
   const handleClick = (e: any) => {
     const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
-    if (assemblyDevice) setSelectedAssemblyDevice(assemblyDevice);
+    if (!assemblyDevice) return;
+    selectAssemblyDevice(assemblyDevice);
   };
 
   return (
     <RuxContainer className="star-tracker">
-      <div slot="header">{selectedChildSubsystem.name}</div>
+      <div slot="header">{selectedChildSubsystem?.name}</div>
       <CytoscapeComponent
-        elements={elements}
+        elements={cyArr}
         style={{ width: "100%", height: "100%" }}
         stylesheet={styles}
         zoomingEnabled={false}
@@ -257,6 +235,10 @@ const Assembly = ({
           cy.on("mouseover", "node", function (e: any) {
             e.target.addClass("hover");
             cy.container().style.cursor = "pointer";
+          });
+          cy.on("data", () => {
+            cy.nodes().deselect();
+            cy.nodes()[0].select();
           });
         }}
       />

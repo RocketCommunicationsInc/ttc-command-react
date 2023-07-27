@@ -6,40 +6,46 @@ import {
   RuxButton,
 } from "@astrouxds/react";
 import "./SubsystemsTree.css";
-import type { ChildSubsystem, Subsystem } from "@astrouxds/mock-data";
 
-type PropTypes = {
-  toggleInvestigate: () => void;
-  setSelectedChildSubsystem: React.Dispatch<
-    React.SetStateAction<ChildSubsystem>
-  >;
-  satName: string;
-  subsystems: Subsystem[];
-  selectedSubsystem: Subsystem;
-  selectedChildSubsystem: ChildSubsystem;
-};
+import { useAppContext, ContextType } from "../../../provider/useAppContext";
 
-const SubsystemsTree = ({
-  toggleInvestigate,
-  setSelectedChildSubsystem,
-  satName,
-  subsystems,
-  selectedSubsystem,
-  selectedChildSubsystem,
-}: PropTypes) => {
+const SubsystemsTree = () => {
+  const {
+    contact,
+    toggleInvestigate,
+    selectedChildSubsystem,
+    selectChildSubsystem,
+    resetSelected,
+    selectedSubsystem,
+  }: ContextType = useAppContext();
+
+  const subsystems = contact.subsystems;
+  const satName = contact.satellite;
+
+  const handleReturnToCommand = () => {
+    toggleInvestigate();
+    resetSelected();
+  };
+
   return (
     <RuxContainer className="investigate-subsystem">
       <div slot="header">{satName} Subsystems</div>
       <RuxTree>
         {subsystems.map((subsystem, index) => (
-          <RuxTreeNode expanded={selectedSubsystem.name === subsystem.name}>
+          <RuxTreeNode
+            expanded={selectedSubsystem.name === subsystem.name}
+            id={`subsystem ${subsystem.name}`}
+            key={index}
+          >
             <RuxStatus slot="prefix" status={subsystem.status} />
             {subsystem.name}
             {subsystem.childSubsystems.map((child, index) => (
               <RuxTreeNode
+                id={"childSubsystem" + child.name}
+                key={index}
                 slot="node"
                 selected={child === selectedChildSubsystem}
-                onRuxtreenodeselected={() => setSelectedChildSubsystem(child)}
+                onRuxtreenodeselected={() => selectChildSubsystem(child)}
               >
                 <RuxStatus slot="prefix" status={child.status} />
                 {child.name}
@@ -52,7 +58,7 @@ const SubsystemsTree = ({
         <RuxButton
           borderless
           icon="keyboard-arrow-left"
-          onClick={toggleInvestigate}
+          onClick={() => handleReturnToCommand()}
         >
           Return to Command
         </RuxButton>
