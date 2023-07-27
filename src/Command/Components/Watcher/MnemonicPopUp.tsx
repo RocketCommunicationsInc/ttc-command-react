@@ -26,11 +26,6 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
     selectSubsystemsFromMnemonic,
   }: ContextType = useAppContext();
 
-  const handleSubsystemClick = (subsystem: Subsystem) => {
-    toggleInvestigate();
-    selectSubsystem(subsystem);
-  };
-
   const menmonicData = [
     getRandomInt(110),
     getRandomInt(110),
@@ -40,6 +35,11 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
     getRandomInt(110),
     getRandomInt(110),
   ];
+
+  const handleSubsystemClick = (subsystem: Subsystem) => {
+    toggleInvestigate();
+    selectSubsystem(subsystem);
+  };
 
   const handleSubsystemPassPlanClick = () => {
     selectSubsystemsFromMnemonic(data);
