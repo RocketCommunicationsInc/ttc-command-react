@@ -5,7 +5,7 @@ import {
   RuxMenuItem,
   RuxPopUp,
 } from "@astrouxds/react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState, useRef, useEffect } from "react";
 import "./SearchCommands.css";
 
 type PropTypes = {
@@ -16,55 +16,48 @@ type PropTypes = {
   pass: string;
 };
 
+type Command = {
+  commandId?: number;
+  command?: string;
+  description?: string;
+};
+
 const SearchCommands = ({
   commands,
   setCommand,
-  command,
   addToPassQueue,
   pass,
 }: PropTypes) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [currentCommand, setCurrentCommand] = useState<object>({});
-  const [error, setError] = useState<string | null>(null);
+  const [currentCommand, setCurrentCommand] = useState<Command | null>(null);
   const isDisabled = pass === "Pre-Pass";
+  const searchPopup = useRef() as React.RefObject<HTMLRuxPopUpElement>;
 
-  const filteredCommands = commands.filter((command) => {
-    return (
-      command.commandString.toLowerCase().includes(inputValue.toLowerCase()) ||
-      command.description.toLowerCase().includes(inputValue.toLowerCase())
-    );
-  });
+  const filteredCommands = commands.filter((command) =>
+    `${command.commandString}, (${command.description})`
+      .toLowerCase()
+      .includes(inputValue.toLowerCase())
+  );
 
-  const handleSubmit = () => {
-    //check to see if there is a current command (if so the user clicked their choice)
-    if (Object.keys(currentCommand).length !== 0) {
-      setCommand(currentCommand);
-      addToPassQueue(currentCommand);
-      setCurrentCommand({});
-      setInputValue("");
-
-      //if not see if there is only one filteredCommand, if so, thats the one they mean
-    } else if (filteredCommands.length === 1) {
-      setCommand(filteredCommands[0]);
-      addToPassQueue(filteredCommands[0]);
-      setCurrentCommand({});
-      setInputValue("");
-
-      //otherwise the current input isn't a specific command
+  useEffect(() => {
+    if (filteredCommands.length === 1) {
+      setCurrentCommand(filteredCommands[0]);
     } else {
-      setError("please select a specific command");
+      setCurrentCommand(null);
     }
+  }, [filteredCommands]);
+
+  //send command and reset inputs
+  const sendCommand = (current: object) => {
+    setCommand(current);
+    addToPassQueue(current);
+    setCurrentCommand(null);
+    setInputValue("");
   };
 
   return (
     <>
       <RuxPopUp placement="top-start">
-        <RuxButton
-          slot="trigger"
-          iconOnly
-          icon="unfold-more"
-          disabled={isDisabled}
-        />
         <div className="history-popup">
           <span>Recent Commands:</span>
           <ul>
@@ -92,21 +85,28 @@ const SearchCommands = ({
         className="commands_input-pop-up"
         placement="top-start"
         closeOnSelect={true}
+        ref={searchPopup}
       >
-        <RuxInput
-          slot="trigger"
-          type="search"
-          placeholder="Start typing to search commands..."
-          disabled={isDisabled}
-          value={inputValue}
-          invalid={error ? true : undefined}
-          error-text={error || null}
-          onRuxinput={(e) => {
-            setError(null);
-            setCurrentCommand({});
-            setInputValue(e.target.value);
-          }}
-        />
+        <span slot="trigger">
+          <RuxButton
+            iconOnly
+            icon="unfold-more"
+            disabled={isDisabled}
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          />
+          <RuxInput
+            type="search"
+            placeholder="Start typing to search commands..."
+            disabled={isDisabled}
+            value={inputValue}
+            onRuxinput={(e) => {
+              setCurrentCommand(null);
+              setInputValue(e.target.value);
+            }}
+          />
+        </span>
         {filteredCommands.length >= 1 ? (
           <RuxMenu
             className="commands_input-menu"
@@ -114,13 +114,18 @@ const SearchCommands = ({
               const command = commands.find(
                 (command) => command.commandId.toString() === e.detail.value
               );
-              setError(null);
-              setCurrentCommand(command || {});
-              setInputValue(command!.commandString);
+              setCurrentCommand(command || null);
+              setInputValue(
+                `${command!.commandString}, (${command!.description})`
+              );
             }}
           >
             {filteredCommands.map((item, index) => (
-              <RuxMenuItem key={index} value={item.commandId.toString()}>
+              <RuxMenuItem
+                selected={filteredCommands.length === 1}
+                key={index}
+                value={item.commandId.toString()}
+              >
                 {item.commandString}, <i>({item.description})</i>
               </RuxMenuItem>
             ))}
@@ -132,7 +137,12 @@ const SearchCommands = ({
         )}
       </RuxPopUp>
 
-      <RuxButton disabled={isDisabled} onClick={() => handleSubmit()}>
+      <RuxButton
+        disabled={isDisabled || !currentCommand}
+        onClick={() => {
+          currentCommand && sendCommand(currentCommand);
+        }}
+      >
         Add to Queue
       </RuxButton>
     </>
