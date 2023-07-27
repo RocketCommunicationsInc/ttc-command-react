@@ -20,3 +20,20 @@
   float: left;
   margin-left: var(--spacing-8);
 }
+
+.table-wrapper.electronics rux-table-header-row rux-icon {
+  vertical-align: middle;
+  width: 32px;
+}
+
+.table-wrapper.electronics rux-table-header-cell:has(rux-icon.visible) {
+  color: var(--color-text-interactive-default);
+}
+
+.table-wrapper.electronics rux-table-header-row .hidden {
+  visibility: hidden;
+}
+
+.table-wrapper.electronics rux-table-header-cell[data-sortprop='status'] {
+  text-align: center;
+}
