@@ -7,7 +7,7 @@ import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
 import Default from "./SVG/Default.svg";
 import CytoscapeComponent from "react-cytoscapejs";
-import { StylesheetCSS } from "cytoscape";
+import { Core, StylesheetCSS } from "cytoscape";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
 
 type ElementObject = {
@@ -50,14 +50,14 @@ const Assembly = () => {
       (device) => device?.name === name
     );
 
-  const positionArr: object[] = [
-    { x: 120, y: 195 },
-    { x: 390, y: 150 },
-    { x: 625, y: 250 },
-    { x: 830, y: 120 },
-    { x: 1020, y: 250 },
-    { x: 1285, y: 165 },
-  ];
+  // const positionArr: object[] = [
+  //   { x: 120, y: 195 },
+  //   { x: 390, y: 150 },
+  //   { x: 625, y: 250 },
+  //   { x: 830, y: 120 },
+  //   { x: 1020, y: 250 },
+  //   { x: 1285, y: 165 },
+  // ];
 
   const elementsArr = selectedChildSubsystem.assemblyDevices
     .map(({ name, status }, index) => ({
@@ -66,9 +66,14 @@ const Assembly = () => {
         label: name,
         status: status,
       },
-      position: positionArr[index] || { x: 0, y: 0 },
+      //position: positionArr[index] || { x: 0, y: 0 },
     }))
     .filter((el) => el.data.id < 6);
+
+  const layout = {
+    name: "grid",
+    fit: true,
+  };
 
   const edgesArr = [
     {
@@ -133,8 +138,9 @@ const Assembly = () => {
         "background-image-opacity": 0.85,
         height: "130%",
         width: "210%",
-        "background-width-relative-to": "inner",
-        "background-height-relative-to": "inner",
+        // "background-width-relative-to": "inner",
+        // "background-height-relative-to": "inner",
+        //"background-width": "80%",
         opacity: 0.75,
         "border-width": "4px",
       },
@@ -226,15 +232,18 @@ const Assembly = () => {
         zoomingEnabled={false}
         panningEnabled={false}
         boxSelectionEnabled={false}
-        cy={(cy: any) => {
+        layout={layout}
+        cy={(cy: Core) => {
+          cy.layout({ name: "grid" }).run();
+          cy.fit();
           cy.on("click", "node", handleClick);
           cy.on("mouseout", "node", function (e: any) {
             e.target.removeClass("hover");
-            cy.container().style.cursor = "initial";
+            (cy.container() as any).style.cursor = "initial";
           });
           cy.on("mouseover", "node", function (e: any) {
             e.target.addClass("hover");
-            cy.container().style.cursor = "pointer";
+            (cy.container() as any).style.cursor = "pointer";
           });
           cy.on("data", () => {
             cy.nodes().deselect();
