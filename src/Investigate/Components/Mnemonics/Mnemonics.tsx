@@ -13,12 +13,16 @@ import {
 } from "@astrouxds/react";
 
 import "./Mnemonics.css";
+import { useAppContext } from "provider/useAppContext";
 
 type PropTypes = {
   title: string | any;
 };
 
 const Mnemonics = ({ title }: PropTypes) => {
+  const { contact } = useAppContext()
+  console.log(contact.mnemonics)
+
   return (
     <RuxContainer className="electronics">
       <div slot="header">
