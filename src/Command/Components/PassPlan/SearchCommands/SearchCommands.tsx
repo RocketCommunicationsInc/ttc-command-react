@@ -66,12 +66,17 @@ const SearchCommands = ({
       const filteredPrevCommands = prevCommands.filter(
         (command) => command !== current
       );
-      console.log(filteredPrevCommands, prevCommands);
       if (filteredPrevCommands.length >= 5) {
         filteredPrevCommands.pop();
       }
       return [current, ...filteredPrevCommands];
     });
+  };
+
+  const handleKeyPress = (e: any) => {
+    if (e.code !== "Enter" || !currentCommand) return;
+
+    sendCommand(currentCommand);
   };
 
   return (
@@ -155,6 +160,7 @@ const SearchCommands = ({
         onRuxfocus={() => {
           searchPopup.current!.show();
         }}
+        onKeyDown={(e) => handleKeyPress(e)}
       />
       <RuxButton
         disabled={isDisabled || !currentCommand}
