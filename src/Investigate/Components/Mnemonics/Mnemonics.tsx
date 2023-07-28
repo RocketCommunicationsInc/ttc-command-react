@@ -40,6 +40,7 @@ const Mnemonics = ({ title }: PropTypes) => {
     (filteredMnemonics: Mnemonic[], sortDirection: SortDirection) => {
       const newSortedMnemonics = [...filteredMnemonics].sort((a, b) => {
         if (sortDirection !== "ASC") {
+          console.log(a.status, "status");
           return a.status > b.status ? -1 : 1;
         } else {
           return a.status > b.status ? 1 : -1;
