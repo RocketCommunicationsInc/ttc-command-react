@@ -1,9 +1,45 @@
 rux-pop-up.commands_input-pop-up {
-  width: 100%;
   margin-inline: var(--spacing-2);
+}
+rux-pop-up.commands_input-pop-up::part(arrow) {
+  display: none;
+}
+
+rux-pop-up.commands_input-pop-up::part(popup-content) {
+  margin-block-start: var(--spacing-1);
+  /* the containing div - the button on the right */
+  width: calc(100% - 9.375rem);
+}
+
+/*needed so that the absolutely positioned search div has something to be contained by*/
+.pass-plan div[slot="footer"] {
+  position: relative;
 }
 
 rux-menu.commands_input-menu {
   height: 300px;
   overflow-y: scroll;
+}
+
+rux-menu.commands_input-menu rux-menu-item > * {
+  pointer-events: none;
+}
+
+rux-menu.commands_input-menu h4.menu-title {
+  margin: 0;
+  padding: var(--spacing-2);
+  font-weight: var(--font-weights-regular);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+}
+
+.commands_no-match {
+  height: 300px;
+  overflow-y: scroll;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-inline: 2rem;
 }
