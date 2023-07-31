@@ -7,7 +7,7 @@ import PrePassList from "./PrePassList/PrePassList";
 import PassList from "./PassList/PassList";
 
 const PassPlan = () => {
-  const [command, setCommand] = useState<string>("");
+  const [command, setCommand] = useState({});
   const [pass, setPass] = useState("Pre-Pass");
 
   const addToPassQueue = (commandListItem: string) => {

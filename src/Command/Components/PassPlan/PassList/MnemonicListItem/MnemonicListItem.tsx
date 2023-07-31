@@ -24,13 +24,17 @@ const MnemonicListItem = ({ stepNumber, slotNode }: PropTypes) => {
             <div className="pass_mnemonic-wrapper">
               <RuxCheckbox />
               {"Verify\u00A0"}
-              <MnemonicPopUp triggerValue={data.mnemonicId} data={data} />
+              <MnemonicPopUp
+                isPassPlan
+                triggerValue={data.mnemonicId}
+                data={data}
+              />
               {"\u00A0 = \u00A0"}
               {data.currentValue}
               {data.watched && (
                 <div className="pass_mnemonic-watching">
                   <RuxIcon icon="visibility" size="extra-small" />
-                  <i>Watcing</i>
+                  <i>Watching</i>
                 </div>
               )}
             </div>
