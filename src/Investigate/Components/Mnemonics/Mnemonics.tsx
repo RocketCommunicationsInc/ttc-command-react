@@ -84,6 +84,7 @@ const Mnemonics = ({ title }: PropTypes) => {
                       checked={device.watched}
                       label="Watching"
                       onRuxchange={() => handleWatching(device.id)}
+                      key={device.id}
                     />
                   ))}
                 </RuxTableCell>
