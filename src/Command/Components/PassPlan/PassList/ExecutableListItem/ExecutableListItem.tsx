@@ -12,11 +12,9 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
   };
 
   const progressBar = useRef<HTMLRuxProgressElement>(null);
-  const [inProgress, setInProgress] = useState<boolean>(false);
-  const [progressComplete, setProgressComplete] = useState<boolean>(false);
-  const initialValue = useRef(0)
-  const [value, setValue] = useState<number>(initialValue.current)
-
+  const [value, setValue] = useState<number>(0);
+  const inProgress = value > 0 && value < 100
+  const progressComplete = value <= 100
   const mnemonicItems = useMemo(() => {
     const randomNumber = getRandomInt(2, 5);
     const numberArray = Array.from({ length: randomNumber }, (_, i) => i + 1);
@@ -24,7 +22,7 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
     return Array.from({ length: randomNumber }, (_, index) => {
       return (
         <MnemonicListItem
-        key={index}
+          key={index}
           stepNumber={`${stepNumber}.${numberArray[index]}`}
           slotNode={true}
         />
@@ -33,56 +31,42 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
   }, [stepNumber]);
 
 
-
-  useEffect(() => {
-    if (progressComplete) return;
-    if (value > 100 && !progressComplete) {
-      setProgressComplete(true)
-    }
-    let interval: any
-    //Implementing the setInterval method
-    if(inProgress && !progressComplete){
-      interval = setInterval(() => {
-          setValue(value + 1);
-      }, 50);
-  } else {
-    clearInterval(interval)
-  }
-
-    //Clearing the interval
-    return () => clearInterval(interval);
-}, [value, inProgress, progressComplete]);
-
   const handleExecuteButtonClick = () => {
-    if (progressComplete) return;
-    setInProgress(!inProgress)
-  }
+    const interval = setInterval(() => {
+      if (value >= 100) clearInterval(interval);
+      setValue((prevValue) => prevValue + 1);
+    }, 50);
+    
+  };
 
   return (
     <div className="pass_executable-parent">
-        {
-            !progressComplete && <RuxButton className="pass_execute-button" iconOnly icon={inProgress ? 'pause' : 'play-arrow'} onClick={handleExecuteButtonClick} />
-        }
-    <RuxTreeNode expanded>
-      <div slot="prefix" className="pass_number-wrapper">
-        {stepNumber}
-      </div>
-      <div className="pass_executable-wrapper">
-        {
-            !progressComplete ? <RuxButton iconOnly icon={inProgress ? 'pause' : 'play-arrow'} onClick={handleExecuteButtonClick} /> : <RuxIcon icon="check-circle-outline" size="small" />
-        }
-        
-        <div className="pass_executable-progress-wrapper">
-          <div className="pass_command-name">Command Name Placeholder</div>
-          <div className="pass_progress-time">
-            <RuxProgress ref={progressBar} value={value} hideLabel />
-            <RuxIcon icon="schedule" size="extra-small" />
-            00:00:25
+      <RuxTreeNode expanded>
+        <div slot="prefix" className="pass_number-wrapper">
+          {stepNumber}
+        </div>
+        <div className="pass_executable-wrapper">
+          {progressComplete ? (
+            <RuxButton
+              iconOnly
+              icon={inProgress ? "pause" : "play-arrow"}
+              onClick={handleExecuteButtonClick}
+            />
+          ) : (
+            <RuxIcon icon="check-circle-outline" size="small" />
+          )}
+
+          <div className="pass_executable-progress-wrapper">
+            <div className="pass_command-name">Command Name Placeholder</div>
+            <div className="pass_progress-time">
+              <RuxProgress ref={progressBar} value={value} hideLabel />
+              <RuxIcon icon="schedule" size="extra-small" />
+              00:00:25
+            </div>
           </div>
         </div>
-      </div>
-      {mnemonicItems}
-    </RuxTreeNode>
+        {mnemonicItems}
+      </RuxTreeNode>
     </div>
   );
 };
