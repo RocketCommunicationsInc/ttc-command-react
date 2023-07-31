@@ -1,93 +1,93 @@
 .pass_header-wrapper {
-    display: flex;
-    background: var(--color-background-surface-header);
-    padding-block: var(--spacing-2);
+  display: flex;
+  background: var(--color-background-surface-header);
+  padding-block: var(--spacing-2);
 }
 
 .pass_header-step {
-    padding-inline-start: var(--spacing-3);
+  padding-inline-start: var(--spacing-3);
 }
 
 .pass_header-instruction {
-    padding-inline-start: var(--spacing-20);
+  padding-inline-start: var(--spacing-20);
 }
 
 rux-tree.pass_body-wrapper rux-tree-node::part(text) {
-    padding-inline-start: var(--spacing-8);
-    width: 100%;
+  padding-inline-start: var(--spacing-8);
+  width: 100%;
 }
 
 .pre-pass-list-table rux-table-cell:first-of-type > div:first-of-type {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .pass_mnemonic-wrapper {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .pass_mnemonic-wrapper rux-checkbox {
-    padding-inline-end: var(--spacing-4);
+  padding-inline-end: var(--spacing-4);
 }
 
 .pass_mnemonic-watching {
-    display: flex;
-    align-items: center;
-    margin-inline-start: auto;
+  display: flex;
+  align-items: center;
+  margin-inline-start: auto;
 }
 
 .pass_mnemonic-watching rux-icon {
-    padding-inline: var(--spacing-1);
-    color: var(--color-text-primary);
+  padding-inline: var(--spacing-1);
+  color: var(--color-text-primary);
 }
 
 .pass_executable-wrapper {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .pass_executable-progress-wrapper {
-    padding-inline: var(--spacing-2);
-    width: 100%;
+  padding-inline: var(--spacing-2);
+  width: 100%;
 }
 
 .pass_executable-wrapper rux-progress {
-    width: 100%;
-    padding-inline-end: var(--spacing-2);
+  width: 100%;
+  padding-inline-end: var(--spacing-2);
 }
 
 .pass_executable-wrapper rux-icon {
-    color: var(--color-text-primary);
+  color: var(--color-text-primary);
 }
 
 .pass_progress-time {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .pass_progress-time rux-icon {
-    padding-inline-end: var(--spacing-1);
-    color: var(--color-text-primary);
+  padding-inline-end: var(--spacing-1);
+  color: var(--color-text-primary);
 }
 
 rux-tree-node::part(node) {
-    padding-block: var(--spacing-2, 0.5rem);
-    background-color: var(--color-background-surface-header);
-    box-shadow: 0 -1px 0 0 var(--color-background-base-default, #101923) inset;
+  padding-block: var(--spacing-2, 0.5rem);
+  background-color: var(--color-background-surface-header);
+  box-shadow: 0 -1px 0 0 var(--color-background-base-default, #101923) inset;
 }
 
 .pass_executable-parent {
-    position: relative;
+  position: relative;
 }
 
 .pass_execute-button {
-    position: absolute;
-    z-index: 10000;
-    top: 12px;
-    left: 82px;
+  position: absolute;
+  z-index: 10000;
+  top: 12px;
+  left: 82px;
 }
 
 .pass_executable-parent rux-tree-node rux-tree-node::part(node) {
-    padding-inline-start: var(--spacing-20);
+  padding-inline-start: var(--spacing-20);
 }
