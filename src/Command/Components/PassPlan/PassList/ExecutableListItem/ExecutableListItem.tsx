@@ -12,14 +12,19 @@ const randomNumber = getRandomInt(5, 2);
 const ExecutableListItem = ({ stepNumber }: PropTypes) => {
   const [value, setValue] = useState<number>(0);
   const inProgress = value > 0 && value < 100;
-  const progressComplete = value <= 100;
+  const progressComplete = value >= 100;
 
   const handleExecuteButtonClick = () => {
-    const interval = setInterval(() => {
-      if (value >= 100) clearInterval(interval);
-      setValue((prevValue) => prevValue + 1);
-    }, 50);
+    const interval = setInterval(() => 
+      setValue((prevValue) => {
+        if (prevValue >= 100) {
+          clearInterval(interval);
+        }
+        return prevValue + 1
+      }), 50);
   };
+
+console.count()
 
   return (
     <div className="pass_executable-parent">
@@ -28,7 +33,7 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
           {stepNumber}
         </div>
         <div className="pass_executable-wrapper">
-          {progressComplete ? (
+          {!progressComplete ? (
             <RuxButton
               iconOnly
               icon={inProgress ? "pause" : "play-arrow"}
