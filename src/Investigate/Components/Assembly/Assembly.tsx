@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { debounce } from "@mui/material";
 import { RuxContainer } from "@astrouxds/react";
 import Lens from "./SVG/Lens.svg";
 import Baffle from "./SVG/Baffle.svg";
@@ -6,7 +8,7 @@ import ThermoElectric from "./SVG/ThermoElectric.svg";
 import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
 import Default from "./SVG/Default.svg";
-import CytoscapeComponent from "react-cytoscapejs";
+import Cytoscape from "react-cytoscapejs";
 import { Core, StylesheetCSS } from "cytoscape";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
 
@@ -41,23 +43,24 @@ const getBackground = ({ label }: ElementObject) => {
   return backgroundImg[label as keyof typeof backgroundImg] || Default;
 };
 
+const layout: any = {
+  name: "preset",
+  fit: true,
+};
+
 const Assembly = () => {
+  const [cy, setCy] = useState<Core | null>(null);
   const { selectAssemblyDevice, selectedChildSubsystem }: ContextType =
     useAppContext();
 
-  const findAssemblyDeviceByName = (name: string) =>
-    selectedChildSubsystem.assemblyDevices.find(
-      (device) => device?.name === name
-    );
-
-  // const positionArr: object[] = [
-  //   { x: 120, y: 195 },
-  //   { x: 390, y: 150 },
-  //   { x: 625, y: 250 },
-  //   { x: 830, y: 120 },
-  //   { x: 1020, y: 250 },
-  //   { x: 1285, y: 165 },
-  // ];
+  const positionArr: object[] = [
+    { x: 120, y: 195 },
+    { x: 390, y: 150 },
+    { x: 625, y: 250 },
+    { x: 830, y: 120 },
+    { x: 1020, y: 250 },
+    { x: 1285, y: 165 },
+  ];
 
   const elementsArr = selectedChildSubsystem.assemblyDevices
     .map(({ name, status }, index) => ({
@@ -66,14 +69,9 @@ const Assembly = () => {
         label: name,
         status: status,
       },
-      //position: positionArr[index] || { x: 0, y: 0 },
+      position: positionArr[index] || { x: 0, y: 0 },
     }))
     .filter((el) => el.data.id < 6);
-
-  const layout = {
-    name: "grid",
-    fit: true,
-  };
 
   const edgesArr = [
     {
@@ -122,7 +120,6 @@ const Assembly = () => {
 
   const cyArr: any[] = [...elementsArr, ...newEdges];
 
-  //Programatic styles for nodes
   const styles: StylesheetCSS[] = [
     //svg background
     {
@@ -130,17 +127,14 @@ const Assembly = () => {
       css: {
         "background-image": (node: any) => getBackground(node.data()),
         "background-image-containment": "over",
-        "bounds-expansion": "200px 0 0 0",
         "background-clip": "none",
         shape: "round-diamond",
+        //"bounds-expansion": "200px 0 0 0",
         "background-color": (node: any) => getColor(node.data()),
         "border-color": (node: any) => getColor(node.data()),
         "background-image-opacity": 0.85,
         height: "130%",
         width: "210%",
-        // "background-width-relative-to": "inner",
-        // "background-height-relative-to": "inner",
-        //"background-width": "80%",
         opacity: 0.75,
         "border-width": "4px",
       },
@@ -197,6 +191,7 @@ const Assembly = () => {
       selector: 'node[label="Thermo-Electric Cooler"]',
       css: {
         "background-offset-y": -30,
+        //"bounds-expansion": "200px 0 0 0",
       },
     },
     //the electronics icon needs location adjustment in the node
@@ -216,40 +211,58 @@ const Assembly = () => {
     },
   ];
 
-  const handleClick = (e: any) => {
-    const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
-    if (!assemblyDevice) return;
-    selectAssemblyDevice(assemblyDevice);
-  };
+  useEffect(() => {
+    if (!cy) return;
+    const resize = debounce(() => cy.layout(layout).run(), 100);
+    window.addEventListener("resize", resize);
+
+    const findAssemblyDeviceByName = (name: string) =>
+      selectedChildSubsystem.assemblyDevices.find(
+        (device) => device?.name === name
+      );
+
+    const handleClick = (e: any) => {
+      const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
+      if (!assemblyDevice) return;
+      selectAssemblyDevice(assemblyDevice);
+    };
+
+    cy.on("click", "node", handleClick);
+    cy.on("mouseout", "node", function (e: any) {
+      e.target.removeClass("hover");
+      (cy.container() as any).style.cursor = "initial";
+    });
+    cy.on("mouseover", "node", function (e: any) {
+      e.target.addClass("hover");
+      (cy.container() as any).style.cursor = "pointer";
+    });
+    cy.on("data", () => {
+      cy.nodes().deselect();
+      cy.nodes()[0].select();
+    });
+
+    cy.on("mouseout", "node", () => {
+      const popup = document.querySelector("rux-pop-up");
+      popup?.remove();
+    });
+
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
+  }, [cy, selectAssemblyDevice, selectedChildSubsystem.assemblyDevices]);
 
   return (
     <RuxContainer className="star-tracker">
       <div slot="header">{selectedChildSubsystem?.name}</div>
-      <CytoscapeComponent
+      <Cytoscape
+        autoungrabify
+        userPanningEnabled={false}
+        boxSelectionEnabled={false}
         elements={cyArr}
+        layout={layout}
+        cy={setCy}
         style={{ width: "100%", height: "100%" }}
         stylesheet={styles}
-        zoomingEnabled={false}
-        panningEnabled={false}
-        boxSelectionEnabled={false}
-        layout={layout}
-        cy={(cy: Core) => {
-          cy.layout({ name: "grid" }).run();
-          cy.fit();
-          cy.on("click", "node", handleClick);
-          cy.on("mouseout", "node", function (e: any) {
-            e.target.removeClass("hover");
-            (cy.container() as any).style.cursor = "initial";
-          });
-          cy.on("mouseover", "node", function (e: any) {
-            e.target.addClass("hover");
-            (cy.container() as any).style.cursor = "pointer";
-          });
-          cy.on("data", () => {
-            cy.nodes().deselect();
-            cy.nodes()[0].select();
-          });
-        }}
       />
     </RuxContainer>
   );
