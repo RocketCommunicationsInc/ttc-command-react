@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { debounce } from "@mui/material";
 import { RuxContainer } from "@astrouxds/react";
 import Lens from "./SVG/Lens.svg";
 import Baffle from "./SVG/Baffle.svg";
@@ -41,11 +40,6 @@ const getColor = ({ status }: ElementObject) => {
 
 const getBackground = ({ label }: ElementObject) => {
   return backgroundImg[label as keyof typeof backgroundImg] || Default;
-};
-
-const layout: any = {
-  name: "preset",
-  fit: true,
 };
 
 const Assembly = () => {
@@ -212,7 +206,12 @@ const Assembly = () => {
 
   useEffect(() => {
     if (!cy) return;
-    const resize = debounce(() => cy.layout(layout).run(), 100);
+
+    const resize = () => {
+      cy.nodes().style({ css: { "bounds-expansion": "" } });
+      cy.layout({ name: "preset", fit: true }).run();
+    };
+
     window.addEventListener("resize", resize);
 
     const findAssemblyDeviceByName = (name: string) =>
@@ -258,7 +257,7 @@ const Assembly = () => {
         userPanningEnabled={false}
         boxSelectionEnabled={false}
         elements={cyArr}
-        layout={layout}
+        layout={{ name: "preset", fit: true }}
         cy={setCy}
         style={{ width: "100%", height: "100%" }}
         stylesheet={styles}
