@@ -15,16 +15,17 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
   const progressComplete = value >= 100;
 
   const handleExecuteButtonClick = () => {
-    const interval = setInterval(() => 
-      setValue((prevValue) => {
-        if (prevValue >= 100) {
-          clearInterval(interval);
-        }
-        return prevValue + 1
-      }), 50);
+    const interval = setInterval(
+      () =>
+        setValue((prevValue) => {
+          if (prevValue >= 100) {
+            clearInterval(interval);
+          }
+          return prevValue + 1;
+        }),
+      50
+    );
   };
-
-console.count()
 
   return (
     <div className="pass_executable-parent">
