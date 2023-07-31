@@ -129,7 +129,7 @@ const Assembly = () => {
         "background-image-containment": "over",
         "background-clip": "none",
         shape: "round-diamond",
-        //"bounds-expansion": "200px 0 0 0",
+        "bounds-expansion": "48.5px 0 0 0",
         "background-color": (node: any) => getColor(node.data()),
         "border-color": (node: any) => getColor(node.data()),
         "background-image-opacity": 0.85,
@@ -191,7 +191,6 @@ const Assembly = () => {
       selector: 'node[label="Thermo-Electric Cooler"]',
       css: {
         "background-offset-y": -30,
-        //"bounds-expansion": "200px 0 0 0",
       },
     },
     //the electronics icon needs location adjustment in the node
