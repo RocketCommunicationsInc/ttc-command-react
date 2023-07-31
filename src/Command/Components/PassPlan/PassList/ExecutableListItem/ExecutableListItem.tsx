@@ -1,5 +1,5 @@
 import { RuxButton, RuxProgress, RuxIcon, RuxTreeNode } from "@astrouxds/react";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
 import MnemonicListItem from "../MnemonicListItem/MnemonicListItem";
 
 type PropTypes = {
@@ -14,6 +14,10 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
   const progressBar = useRef<HTMLRuxProgressElement>(null);
   const [inProgress, setInProgress] = useState<boolean>(false);
   const [progressComplete, setProgressComplete] = useState<boolean>(false);
+  const initialValue = useRef(0)
+  const [value, setValue] = useState<number>(initialValue.current)
+
+  // const currentValue = useRef()
 
 
   const mnemonicItems = useMemo(() => {
@@ -31,32 +35,30 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
     });
   }, [stepNumber]);
 
+
+
+  useEffect(() => {
+    if (progressComplete) return;
+    if (value > 100 && !progressComplete) {
+      setProgressComplete(true)
+    }
+    let interval: any
+    //Implementing the setInterval method
+    if(inProgress && !progressComplete){
+      interval = setInterval(() => {
+          setValue(value + 1);
+      }, 50);
+  } else {
+    clearInterval(interval)
+  }
+
+    //Clearing the interval
+    return () => clearInterval(interval);
+}, [value, inProgress, progressComplete]);
+
   const handleExecuteButtonClick = () => {
-    if (progressComplete) return
-    if (inProgress === false) {
-        setInProgress(prevState => !prevState)
-    } else {
-        setInProgress(prevState => !prevState)
-    }
-    console.log(inProgress)
-    let value = 0;
-    const makeProgress = () => {
-        if (value > 100) {
-            //timeout to make the icon swap on the state change look smooth. Without the timeout it seems to happen too fast.
-            setTimeout(() => {
-                setProgressComplete(prevState => !prevState)
-            }, 400)
-            clearInterval(progressInterval)
-            return;
-        }
-        if (inProgress === false) {
-            clearInterval(progressInterval)
-            return;
-        }
-        value = value + 1
-        progressBar.current!.value = value
-    }
-    const progressInterval = setInterval(makeProgress,10)
+    if (progressComplete) return;
+    setInProgress(!inProgress)
   }
 
   return (
@@ -77,7 +79,7 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
         <div className="pass_executable-progress-wrapper">
           <div className="pass_command-name">Command Name Placeholder</div>
           <div className="pass_progress-time">
-            <RuxProgress ref={progressBar} hideLabel />
+            <RuxProgress ref={progressBar} value={value} hideLabel />
             <RuxIcon icon="schedule" size="extra-small" />
             00:00:25
           </div>
@@ -85,6 +87,11 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
       </div>
       {mnemonicItems}
     </RuxTreeNode>
+    <span onClick={()=>{
+      setValue(initialValue.current)
+      setInProgress(false)
+      setProgressComplete(false)
+    }}>reset</span>
     </div>
   );
 };
