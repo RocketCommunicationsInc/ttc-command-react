@@ -4,9 +4,10 @@ import MnemonicListItem from "../MnemonicListItem/MnemonicListItem";
 
 type PropTypes = {
   stepNumber: number | string;
+  queueCommand: string;
 };
 
-const ExecutableListItem = ({ stepNumber }: PropTypes) => {
+const ExecutableListItem = ({ stepNumber, queueCommand }: PropTypes) => {
   const getRandomInt = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
   };
@@ -73,7 +74,7 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
         }
         
         <div className="pass_executable-progress-wrapper">
-          <div className="pass_command-name">Command Name Placeholder</div>
+          <div className="pass_command-name">{queueCommand}</div>
           <div className="pass_progress-time">
             <RuxProgress ref={progressBar} value={value} hideLabel />
             <RuxIcon icon="schedule" size="extra-small" />

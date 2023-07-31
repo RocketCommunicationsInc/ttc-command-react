@@ -3,8 +3,15 @@ import SelectMenuListItem from "./SelectMenuListItem/SelectMenuListItem";
 import "./PassList.css";
 import MnemonicListItem from "./MnemonicListItem/MnemonicListItem";
 import ExecutableListItem from "./ExecutableListItem/ExecutableListItem";
+import { useState } from "react";
 
-const PassList = () => {
+type PropTypes = {
+  commandList: string[];
+}
+
+const PassList = ({commandList}: PropTypes) => {
+  const itemAmount: number = 8;
+
   return (
     <>
       <div className="pass_header-wrapper">
@@ -16,9 +23,15 @@ const PassList = () => {
         <MnemonicListItem stepNumber={2} slotNode={false} />
         <MnemonicListItem stepNumber={3} slotNode={false} />
         <SelectMenuListItem stepNumber={4} />
-        <ExecutableListItem stepNumber={5} />
+        <ExecutableListItem stepNumber={5} queueCommand={'WAIT'} />
         <MnemonicListItem stepNumber={6} slotNode={false} />
         <MnemonicListItem stepNumber={7} slotNode={false} />
+        {commandList.length > 0 ? 
+        commandList.map((item,index)=>{
+          return <ExecutableListItem key={index} stepNumber={itemAmount + index} queueCommand={item} /> 
+        })
+      : null
+      }
       </RuxTree>
     </>
   );

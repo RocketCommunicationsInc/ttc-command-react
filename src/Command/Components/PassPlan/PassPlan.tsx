@@ -9,10 +9,11 @@ import PassList from "./PassList/PassList";
 const PassPlan = () => {
   const [command, setCommand] = useState({});
   const [pass, setPass] = useState("Pre-Pass");
+  const [commandList, setCommandList] = useState<string[]>([])
 
-  const addToPassQueue = (commandListItem: string) => {
-    if (commandListItem === "") return;
-    console.log(commandListItem);
+  const addToPassQueue = (commandListItem: {commandId: number, commandString: string, description: string}) => {
+    if (!commandListItem) return;
+    setCommandList([...commandList, commandListItem.commandString]);
   };
   return (
     <RuxContainer className="pass-plan">
@@ -23,10 +24,8 @@ const PassPlan = () => {
           <RuxOption label="Automatic" value="" />
         </RuxSelect>
       </div>
-      <div>
         <div className={`banner ${pass}`}>{pass}</div>
-        {pass === "Pre-Pass" ? <PrePassList setPass={setPass} /> : <PassList />}
-      </div>
+        {pass === "Pre-Pass" ? <PrePassList setPass={setPass} /> : <PassList commandList={commandList} />}
       <div slot="footer">
         <SearchCommands
           commands={commands}

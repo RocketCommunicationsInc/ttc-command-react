@@ -2,6 +2,9 @@
     display: flex;
     background: var(--color-background-surface-header);
     padding-block: var(--spacing-2);
+    font-size: var(--font-heading-5-font-size);
+    box-shadow: var(--list-panel-box-shadow);
+    z-index: 90;
 }
 
 .pass_header-step {
@@ -10,6 +13,10 @@
 
 .pass_header-instruction {
     padding-inline-start: var(--spacing-20);
+}
+
+rux-tree.pass_body-wrapper {
+    overflow: auto;
 }
 
 rux-tree.pass_body-wrapper rux-tree-node::part(text) {
@@ -83,7 +90,7 @@ rux-tree-node::part(node) {
 
 .pass_execute-button {
     position: absolute;
-    z-index: 10000;
+    z-index: 100;
     top: 12px;
     left: 82px;
 }
