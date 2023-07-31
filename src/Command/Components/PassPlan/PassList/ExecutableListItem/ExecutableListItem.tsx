@@ -50,7 +50,7 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
         {[...Array(randomNumber)].map((_, index) => (
           <MnemonicListItem
             key={index}
-            stepNumber={`${stepNumber}.${index}`}
+            stepNumber={`${stepNumber}.${index + 1}`}
             slotNode={true}
           />
         ))}
