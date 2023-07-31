@@ -75,7 +75,6 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
         <div className="pass_executable-progress-wrapper">
           <div className="pass_command-name">Command Name Placeholder</div>
           <div className="pass_progress-time">
-            {/* <progress ref={progressBar} max="100" value={value}></progress> */}
             <RuxProgress ref={progressBar} value={value} hideLabel />
             <RuxIcon icon="schedule" size="extra-small" />
             00:00:25
@@ -84,11 +83,6 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
       </div>
       {mnemonicItems}
     </RuxTreeNode>
-    {/* <span onClick={()=>{
-      setValue(initialValue.current)
-      setInProgress(false)
-      setProgressComplete(false)
-    }}>reset</span> */}
     </div>
   );
 };
