@@ -39,7 +39,9 @@ const Mnemonics = ({ title }: PropTypes) => {
     );
   };
 
-  const numOfWatchedMnemonics = watched.filter((device) => device.watched).length;
+  const numOfWatchedMnemonics = watched.filter(
+    (device) => device.watched
+  ).length;
 
   return (
     <RuxContainer className="electronics">
@@ -66,7 +68,9 @@ const Mnemonics = ({ title }: PropTypes) => {
             <RuxTableHeaderCell>Measurment</RuxTableHeaderCell>
             <RuxTableHeaderCell>Value</RuxTableHeaderCell>
             <RuxTableHeaderCell>Unit</RuxTableHeaderCell>
-            <RuxTableHeaderCell>Watching ({numOfWatchedMnemonics})</RuxTableHeaderCell>
+            <RuxTableHeaderCell>
+              Watching ({numOfWatchedMnemonics})
+            </RuxTableHeaderCell>
           </RuxTableHeaderRow>
           <RuxTableBody>
             {filteredMnemonics.map((mnemonic, index) => (
