@@ -121,9 +121,9 @@ const Assembly = () => {
       css: {
         "background-image": (node: any) => getBackground(node.data()),
         "background-image-containment": "over",
+        "bounds-expansion": "48.5px 0 0 0",
         "background-clip": "none",
         shape: "round-diamond",
-        "bounds-expansion": "48.5px 0 0 0",
         "background-color": (node: any) => getColor(node.data()),
         "border-color": (node: any) => getColor(node.data()),
         "background-image-opacity": 0.85,
@@ -257,10 +257,10 @@ const Assembly = () => {
         userPanningEnabled={false}
         boxSelectionEnabled={false}
         elements={cyArr}
-        layout={{ name: "preset", fit: true }}
-        cy={setCy}
         style={{ width: "100%", height: "100%", overflow: "hidden" }}
         stylesheet={styles}
+        layout={{ name: "preset", fit: true }}
+        cy={setCy}
       />
     </RuxContainer>
   );
