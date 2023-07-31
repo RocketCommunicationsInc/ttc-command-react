@@ -11,14 +11,16 @@ import { getRandomInt } from "utils";
 import { useAppContext, ContextType } from "provider/useAppContext";
 import type { Subsystem } from "@astrouxds/mock-data";
 import "./MnemonicPopUp.css";
+import { Dispatch, SetStateAction } from "react";
 
 type PropTypes = {
   triggerValue: string | number;
   data: Mnemonic;
   isPassPlan: boolean;
+  setWatched?: Dispatch<SetStateAction<boolean>> | null;
 };
 
-const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
+const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes) => {
   const {
     contact,
     toggleInvestigate,
@@ -81,9 +83,9 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
             </RuxButton>
           )}
         </div>
-        {isPassPlan ? (
+        {isPassPlan && setWatched ? (
           <div slot="footer">
-            <RuxCheckbox>Add to Watcher</RuxCheckbox>
+            <RuxCheckbox onRuxchange={() => setWatched(true)}>Add to Watcher</RuxCheckbox>
           </div>
         ) : null}
       </RuxCard>
