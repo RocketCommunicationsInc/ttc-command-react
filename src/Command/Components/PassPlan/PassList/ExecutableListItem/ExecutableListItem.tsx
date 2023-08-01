@@ -1,5 +1,5 @@
 import { RuxButton, RuxProgress, RuxIcon, RuxTreeNode } from "@astrouxds/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MnemonicListItem from "../MnemonicListItem/MnemonicListItem";
 import { getRandomInt } from "../../../../../utils";
 
@@ -8,26 +8,32 @@ type PropTypes = {
 };
 
 const randomNumber = getRandomInt(5, 2);
-let inProgress: boolean = false; //this value needs to remain outside the component function so it doesn't redeclare on rerender
 
 const ExecutableListItem = ({ stepNumber }: PropTypes) => {
   const [value, setValue] = useState<number>(0);
+  const [inProgress, setInProgress] = useState<boolean>(false);
   const progressComplete: boolean = value >= 100;
 
-  const handleExecuteButtonClick = () => {
-    inProgress ? (inProgress = false) : (inProgress = true);
-    const interval = setInterval(() => {
-      if (inProgress) {
+  useEffect(() => {
+    let interval: any;
+    if (inProgress) {
+      interval = setInterval(() => {
         setValue((prevValue) => {
           if (prevValue >= 100) {
             clearInterval(interval);
           }
           return prevValue + 1;
         });
-      } else {
-        clearInterval(interval);
-      }
-    }, 50);
+      }, 50);
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [inProgress]);
+
+  const handleExecuteButtonClick = () => {
+    setInProgress((prevState) => !prevState);
   };
 
   return (
