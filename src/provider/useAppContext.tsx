@@ -124,13 +124,13 @@ const AppProvider = ({ children }: PropTypes) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     if (contact.alerts.length < 25) addAlert(contact.id);
-  //   }, 3000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (contact.alerts.length < 25) addAlert(contact.id);
+    }, 3000);
 
-  //   return () => clearInterval(interval);
-  // }, [addAlert, contact.alerts.length, contact.id]);
+    return () => clearInterval(interval);
+  }, [addAlert, contact.alerts.length, contact.id]);
 
   useEffect(() => {
     // set 20 random mnemonics to watched
