@@ -13,7 +13,16 @@ const options = {
   alertsPercentage: 0 as const,
   initial: 1,
   limit: 1,
-  desiredSubsystems: ["Attitude", "Payload", "Power", "Propulsion", "Thermal"],
+  subsystemOptions: {
+    desiredSubsystems: [
+      "Attitude",
+      "Payload",
+      "Power",
+      "Propulsion",
+      "Thermal",
+    ],
+    mnemonicsPerAssemblyDevice: 10,
+  },
 };
 
 root.render(
