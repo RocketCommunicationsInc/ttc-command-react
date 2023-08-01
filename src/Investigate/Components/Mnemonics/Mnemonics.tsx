@@ -81,7 +81,7 @@ const Mnemonics = ({ title }: PropTypes) => {
     }
   };
 
-  const sortedAssemblyDevices = useMemo(() => {
+  const sortedMnemonics = useMemo(() => {
     return sortMnemonics(filteredMnemonicStatus, sortDirection);
   }, [filteredMnemonicStatus, sortMnemonics, sortDirection]);
 
@@ -122,7 +122,7 @@ const Mnemonics = ({ title }: PropTypes) => {
                   sortDirection === "ASC" ? "arrow-drop-down" : "arrow-drop-up"
                 }
                 size="small"
-                className={sortProp === "status" ? "visible" : "hidden"}
+                className="visible"
               />
             </RuxTableHeaderCell>
             <RuxTableHeaderCell>Mnemonic</RuxTableHeaderCell>
@@ -134,7 +134,7 @@ const Mnemonics = ({ title }: PropTypes) => {
             </RuxTableHeaderCell>
           </RuxTableHeaderRow>
           <RuxTableBody>
-            {sortedAssemblyDevices.map((mnemonic, index) => (
+            {sortedMnemonics.map((mnemonic, index) => (
               <RuxTableRow key={index}>
                 <RuxTableCell>
                   <RuxStatus status={mnemonic.status} />

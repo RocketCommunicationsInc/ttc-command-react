@@ -40,10 +40,6 @@ width: 16%
   color: var(--color-text-interactive-default);
 }
 
-.table-wrapper.mnemonics rux-table-header-row .hidden {
-  visibility: hidden;
-}
-
 .table-wrapper.mnemonics rux-table-header-cell[data-sortprop='status'] {
   text-align: center;
 }
