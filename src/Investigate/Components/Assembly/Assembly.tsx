@@ -6,6 +6,10 @@ import ThermoElectric from "./SVG/ThermoElectric.svg";
 import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
 import Default from "./SVG/Default.svg";
+import Oscillator from "./SVG/Oscillator.svg";
+import Receiver from "./SVG/Receiver.svg";
+import Transmitter from "./SVG/Transmitter.svg";
+import FrequencyConverter from "./SVG/FrequencyConverter.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
@@ -32,6 +36,10 @@ const backgroundImg = {
   "Thermo-Electric Cooler": ThermoElectric,
   Detector,
   Electronics,
+  "Frequency Converter": FrequencyConverter,
+  Receiver,
+  Transmitter,
+  "Local Oscillator": Oscillator,
 };
 
 const getColor = ({ status }: ElementObject) => {
@@ -191,7 +199,8 @@ const Assembly = () => {
     },
     //the cooler icon needs location adjustment in the node
     {
-      selector: 'node[label="Thermo-Electric Cooler"]',
+      selector:
+        'node[label="Thermo-Electric Cooler"], node[label="Frequency Converter"]',
       css: {
         "background-offset-y": -30,
       },
@@ -209,6 +218,22 @@ const Assembly = () => {
       selector: 'node[label="Detector"]',
       css: {
         "background-offset-y": -10,
+      },
+    },
+    //the transmitter icon needs location adjustment in the node
+    {
+      selector: 'node[label="Transmitter"]',
+      css: {
+        "background-offset-y": -40,
+        "background-offset-x": 25,
+      },
+    },
+    //the receiver icon needs location adjustment in the node
+    {
+      selector: 'node[label="Receiver"]',
+      css: {
+        "background-offset-y": -40,
+        "background-offset-x": -25,
       },
     },
   ];
