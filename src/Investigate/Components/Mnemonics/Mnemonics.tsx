@@ -78,7 +78,9 @@ const Mnemonics = ({ title }: PropTypes) => {
     );
   };
 
-  const watchedDevices = watched.filter((device) => device.watched).length;
+  const numOfWatchedMnemonics = watched.filter(
+    (device) => device.watched
+  ).length;
 
   return (
     <RuxContainer className="electronics">
@@ -114,26 +116,27 @@ const Mnemonics = ({ title }: PropTypes) => {
             <RuxTableHeaderCell>Measurment</RuxTableHeaderCell>
             <RuxTableHeaderCell>Value</RuxTableHeaderCell>
             <RuxTableHeaderCell>Unit</RuxTableHeaderCell>
-            <RuxTableHeaderCell>Watching ({watchedDevices})</RuxTableHeaderCell>
+            <RuxTableHeaderCell>
+              Watching ({numOfWatchedMnemonics})
+            </RuxTableHeaderCell>
           </RuxTableHeaderRow>
           <RuxTableBody>
-            {sortedAssemblyDevices.map((device, index) => (
+            {sortedAssemblyDevices.map((mnemonic, index) => (
               <RuxTableRow key={index}>
                 <RuxTableCell>
-                  <RuxStatus status={device.status} />
+                  <RuxStatus status={mnemonic.status} />
                 </RuxTableCell>
-                <RuxTableCell>{device.mnemonicId}</RuxTableCell>
-                <RuxTableCell>{device.measurement}</RuxTableCell>
-                <RuxTableCell>{device.currentValue}</RuxTableCell>
-                <RuxTableCell>{device.unit}</RuxTableCell>
+                <RuxTableCell>{mnemonic.mnemonicId}</RuxTableCell>
+                <RuxTableCell>{mnemonic.measurement}</RuxTableCell>
+                <RuxTableCell>{mnemonic.currentValue}</RuxTableCell>
+                <RuxTableCell>{mnemonic.unit}</RuxTableCell>
                 <RuxTableCell>
-                  {watched.map((device) => (
-                    <RuxCheckbox
-                      checked={device.watched}
-                      label="Watching"
-                      onRuxchange={() => handleWatching(device.id)}
-                    />
-                  ))}
+                  <RuxCheckbox
+                    checked={mnemonic.watched}
+                    label="Watching"
+                    onRuxchange={() => handleWatching(mnemonic.id)}
+                    key={mnemonic.id}
+                  />
                 </RuxTableCell>
               </RuxTableRow>
             ))}
