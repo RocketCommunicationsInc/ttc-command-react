@@ -11,7 +11,7 @@ type PropTypes = {
 const randomNumber = getRandomInt(5, 2);
 let inProgress: boolean = false; //this value needs to remain outside the component function so it doesn't redeclare on rerender
 
-const ExecutableListItem = ({ stepNumber }: PropTypes) => {
+const ExecutableListItem = ({ stepNumber, queueCommand }: PropTypes) => {
   const [value, setValue] = useState<number>(0);
   const progressComplete: boolean = value >= 100;
 
@@ -49,7 +49,7 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
           )}
 
           <div className="pass_executable-progress-wrapper">
-            <div className="pass_command-name">Command Name Placeholder</div>
+            <div className="pass_command-name">{queueCommand}</div>
             <div className="pass_progress-time">
               <RuxProgress value={value} hideLabel />
               <RuxIcon icon="schedule" size="extra-small" />
