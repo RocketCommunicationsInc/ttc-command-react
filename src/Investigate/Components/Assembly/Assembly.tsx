@@ -210,6 +210,7 @@ const Assembly = () => {
     const resize = () => {
       cy.nodes().style({ css: { "bounds-expansion": "" } });
       cy.layout({ name: "preset", fit: true }).run();
+      cy.ready(() => cy.resize());
     };
 
     window.addEventListener("resize", resize);
