@@ -10,34 +10,86 @@ import {
   RuxTableCell,
   RuxStatus,
   RuxCheckbox,
+  RuxIcon,
 } from "@astrouxds/react";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
+import { useCallback, useMemo, useState } from "react";
+import { useTTCGRMActions, type Mnemonic } from "@astrouxds/mock-data";
 
 import "./Mnemonics.css";
-import { useState } from "react";
-
-import { useTTCGRMActions, type Mnemonic } from "@astrouxds/mock-data";
 
 type PropTypes = {
   title: string | any;
 };
 
+type SortDirection = "ASC" | "DESC";
+
 const Mnemonics = ({ title }: PropTypes) => {
   const { modifyMnemonic } = useTTCGRMActions();
   const { selectedAssemblyDevice }: ContextType = useAppContext();
   const [searchValue, setSearchValue] = useState("");
+  const [sortDirection, setSortDirection] = useState<SortDirection>("ASC");
+  const [sortProp, setSortProp] = useState("");
+  const [filterValue, setFilterValue] = useState("All");
 
-  const filteredMnemonics = selectedAssemblyDevice.mnemonics.filter((value) =>
-    Object.values(value).some((value) =>
-      value.toString().toLowerCase().includes(searchValue.toLowerCase())
-    )
+  const filteredMnemonicIds = selectedAssemblyDevice.mnemonics.filter((value) =>
+    value.mnemonicId.toLowerCase().includes(searchValue.toLowerCase())
   );
+
+  const filteredMnemonicStatus =
+    filterValue === "Critical"
+      ? filteredMnemonicIds.filter((val) => val.status === "critical")
+      : filterValue === "Marginal"
+      ? filteredMnemonicIds.filter(
+          (val) => val.status === "caution" || val.status === "serious"
+        )
+      : filteredMnemonicIds;
+
+  const sortMnemonics = useCallback(
+    (filteredMnemonics: Mnemonic[], sortDirection: SortDirection) => {
+      const newSortedMnemonics = [...filteredMnemonics].sort((a, b) => {
+        const statusOrder = [
+          "off",
+          "standby",
+          "normal",
+          "caution",
+          "serious",
+          "critical",
+        ];
+        const statusAsc = statusOrder.indexOf(a.status);
+        const statusDesc = statusOrder.indexOf(b.status);
+        if (sortDirection !== "ASC") {
+          return statusAsc - statusDesc;
+        } else {
+          return statusDesc - statusAsc;
+        }
+      });
+      return newSortedMnemonics;
+    },
+    []
+  );
+
+  const handleSort = () => {
+    if ("status" === sortProp) {
+      if (sortDirection === "ASC") {
+        setSortDirection("DESC");
+      } else {
+        setSortDirection("ASC");
+      }
+    } else {
+      setSortProp("status");
+    }
+  };
+
+  const sortedMnemonics = useMemo(() => {
+    return sortMnemonics(filteredMnemonicStatus, sortDirection);
+  }, [filteredMnemonicStatus, sortMnemonics, sortDirection]);
 
   const handleWatching = (mnemonic: Mnemonic) => {
     modifyMnemonic({ ...mnemonic, watched: !mnemonic.watched });
   };
 
-  const numOfWatchedMnemonics = filteredMnemonics.filter(
+  const numOfWatchedMnemonics = filteredMnemonicStatus.filter(
     (mnemonic) => mnemonic.watched
   ).length;
 
@@ -51,6 +103,8 @@ const Mnemonics = ({ title }: PropTypes) => {
           placeholder="Filter by name"
         />
         <RuxSegmentedButton
+          selected={filterValue}
+          onRuxchange={(e) => setFilterValue(e.target.selected)}
           data={[
             { label: "All" },
             { label: "Marginal" },
@@ -61,7 +115,16 @@ const Mnemonics = ({ title }: PropTypes) => {
       <div className="table-wrapper mnemonics">
         <RuxTable>
           <RuxTableHeaderRow>
-            <RuxTableHeaderCell>Severity</RuxTableHeaderCell>
+            <RuxTableHeaderCell onClick={handleSort}>
+              Severity
+              <RuxIcon
+                icon={
+                  sortDirection === "ASC" ? "arrow-drop-down" : "arrow-drop-up"
+                }
+                size="small"
+                className="visible"
+              />
+            </RuxTableHeaderCell>
             <RuxTableHeaderCell>Mnemonic</RuxTableHeaderCell>
             <RuxTableHeaderCell>Measurment</RuxTableHeaderCell>
             <RuxTableHeaderCell>Value</RuxTableHeaderCell>
@@ -71,7 +134,7 @@ const Mnemonics = ({ title }: PropTypes) => {
             </RuxTableHeaderCell>
           </RuxTableHeaderRow>
           <RuxTableBody>
-            {filteredMnemonics.map((mnemonic, index) => (
+            {sortedMnemonics.map((mnemonic, index) => (
               <RuxTableRow key={index}>
                 <RuxTableCell>
                   <RuxStatus status={mnemonic.status} />

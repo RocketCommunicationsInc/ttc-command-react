@@ -30,3 +30,16 @@ width: 16%
   float: left;
   margin-left: var(--spacing-8);
 }
+
+.table-wrapper.mnemonics rux-table-header-row rux-icon {
+  vertical-align: middle;
+  width: 32px;
+}
+
+.table-wrapper.mnemonics rux-table-header-cell:has(rux-icon.visible) {
+  color: var(--color-text-interactive-default);
+}
+
+.table-wrapper.mnemonics rux-table-header-cell[data-sortprop='status'] {
+  text-align: center;
+}
