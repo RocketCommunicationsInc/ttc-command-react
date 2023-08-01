@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { RuxContainer } from "@astrouxds/react";
 import Lens from "./SVG/Lens.svg";
 import Baffle from "./SVG/Baffle.svg";
@@ -7,9 +6,10 @@ import ThermoElectric from "./SVG/ThermoElectric.svg";
 import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
 import Default from "./SVG/Default.svg";
-import Cytoscape from "react-cytoscapejs";
-import { Core, StylesheetCSS } from "cytoscape";
+import CytoscapeComponent from "react-cytoscapejs";
+import { StylesheetCSS } from "cytoscape";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
+import { useEffect, useRef } from "react";
 
 type ElementObject = {
   status: string;
@@ -43,9 +43,15 @@ const getBackground = ({ label }: ElementObject) => {
 };
 
 const Assembly = () => {
-  const [cy, setCy] = useState<Core | null>(null);
   const { selectAssemblyDevice, selectedChildSubsystem }: ContextType =
     useAppContext();
+
+  const cyRef = useRef<any>(null);
+
+  const findAssemblyDeviceByName = (name: string) =>
+    selectedChildSubsystem.assemblyDevices.find(
+      (device) => device?.name === name
+    );
 
   const positionArr: object[] = [
     { x: 120, y: 195 },
@@ -114,6 +120,7 @@ const Assembly = () => {
 
   const cyArr: any[] = [...elementsArr, ...newEdges];
 
+  //Programatic styles for nodes
   const styles: StylesheetCSS[] = [
     //svg background
     {
@@ -129,6 +136,8 @@ const Assembly = () => {
         "background-image-opacity": 0.85,
         height: "130%",
         width: "210%",
+        "background-width-relative-to": "inner",
+        "background-height-relative-to": "inner",
         opacity: 0.75,
         "border-width": "4px",
       },
@@ -204,67 +213,58 @@ const Assembly = () => {
     },
   ];
 
+  const handleClick = (e: any) => {
+    const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
+    if (!assemblyDevice) return;
+    selectAssemblyDevice(assemblyDevice);
+  };
+
   useEffect(() => {
-    if (!cy) return;
-
     const resize = () => {
-      cy.layout({ name: "preset", fit: true }).run();
-      cy.ready(() => cy.resize());
-      cy.center();
-      cy.fit();
+      if (cyRef.current) {
+        cyRef.current.layout({ name: "preset", fit: true }).run();
+        cyRef.current.ready(() => cyRef.current.resize());
+        cyRef.current.center();
+        cyRef.current.fit();
+      }
     };
-
+    resize();
     window.addEventListener("resize", resize);
-
-    const findAssemblyDeviceByName = (name: string) =>
-      selectedChildSubsystem.assemblyDevices.find(
-        (device) => device?.name === name
-      );
-
-    const handleClick = (e: any) => {
-      const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
-      if (!assemblyDevice) return;
-      selectAssemblyDevice(assemblyDevice);
-    };
-
-    cy.on("click", "node", handleClick);
-    cy.on("mouseout", "node", function (e: any) {
-      e.target.removeClass("hover");
-      (cy.container() as any).style.cursor = "initial";
-    });
-    cy.on("mouseover", "node", function (e: any) {
-      e.target.addClass("hover");
-      (cy.container() as any).style.cursor = "pointer";
-    });
-    cy.on("data", () => {
-      cy.nodes().deselect();
-      cy.nodes()[0].select();
-      resize();
-    });
-
-    cy.on("mouseout", "node", () => {
-      const popup = document.querySelector("rux-pop-up");
-      popup?.remove();
-    });
-
     return () => {
       window.removeEventListener("resize", resize);
-      cy.removeAllListeners();
     };
-  }, [cy, selectAssemblyDevice, selectedChildSubsystem.assemblyDevices]);
+  }, []);
 
   return (
     <RuxContainer className="star-tracker">
       <div slot="header">{selectedChildSubsystem?.name}</div>
-      <Cytoscape
-        autoungrabify
-        userPanningEnabled={false}
-        boxSelectionEnabled={false}
+      <CytoscapeComponent
         elements={cyArr}
         style={{ width: "100%", height: "100%", overflow: "hidden" }}
         stylesheet={styles}
+        autoungrabify
+        boxSelectionEnabled={false}
+        userPanningEnabled={false}
         layout={{ name: "preset", fit: true }}
-        cy={setCy}
+        cy={(cy: any) => {
+          cy.layout({ name: "preset", fit: true }).run();
+          cy.ready(() => cy.resize());
+          cy.fit();
+          cyRef.current = cy;
+          cy.on("click", "node", handleClick);
+          cy.on("mouseout", "node", function (e: any) {
+            e.target.removeClass("hover");
+            cy.container().style.cursor = "initial";
+          });
+          cy.on("mouseover", "node", function (e: any) {
+            e.target.addClass("hover");
+            cy.container().style.cursor = "pointer";
+          });
+          cy.on("data", () => {
+            cy.nodes().deselect();
+            cy.nodes()[0].select();
+          });
+        }}
       />
     </RuxContainer>
   );
