@@ -39,17 +39,18 @@ const AppProvider = ({ children }: PropTypes) => {
   const firstChildSubsystem = contact.subsystems[0].childSubsystems[0];
   const firstAssemblyDevice =
     contact.subsystems[0].childSubsystems[0].assemblyDevices[0];
-
+  
+  
   const [showInvestigate, setShowInvestigate] = useState<boolean>(false);
 
-  const [selectedSubsystem, setSelectedSubsystem] =
-    useState<Subsystem>(firstSubsystem);
-  const [selectedChildSubsystem, setSelectedChildSubsystem] =
-    useState<ChildSubsystem>(firstChildSubsystem);
-  const [selectedAssemblyDevice, setSelectedAssemblyDevice] =
-    useState<AssemblyDevice>(firstAssemblyDevice);
+  const [selectedSubsystemName, setSelectedSubsystemName] =
+    useState<string>(firstSubsystem.name);
+  const [selectedChildSubsystemName, setSelectedChildSubsystemName] =
+    useState<string>(firstChildSubsystem.name);
+  const [selectedAssemblyDeviceName, setSelectedAssemblyDeviceName] =
+    useState<string>(firstAssemblyDevice.name);
 
-  //Utility finder functions
+    //Utility finder functions
   const findSubsystemByName = (name?: string) =>
     contact.subsystems.find((subsystem) => subsystem.name === name);
   const findChildSubsystemByName = (subsystem: Subsystem, name?: string) =>
@@ -62,6 +63,10 @@ const AppProvider = ({ children }: PropTypes) => {
   ) =>
     childSubsystem.assemblyDevices.find((device) => device.name === name) ||
     firstAssemblyDevice;
+    
+  const selectedSubsystem = findSubsystemByName(selectedSubsystemName) || firstSubsystem;
+  const selectedChildSubsystem = findChildSubsystemByName(selectedSubsystem, selectedChildSubsystemName) || firstChildSubsystem;
+  const selectedAssemblyDevice = findAssemblyDeviceByName(selectedChildSubsystem, selectedAssemblyDeviceName);
 
   // Exported state setters
   const toggleInvestigate = () => {
@@ -70,26 +75,26 @@ const AppProvider = ({ children }: PropTypes) => {
   };
 
   const resetSelected = () => {
-    setSelectedSubsystem(firstSubsystem);
-    setSelectedChildSubsystem(firstChildSubsystem);
-    setSelectedAssemblyDevice(firstAssemblyDevice);
+    setSelectedSubsystemName(firstSubsystem.name);
+    setSelectedChildSubsystemName(firstChildSubsystem.name);
+    setSelectedAssemblyDeviceName(firstAssemblyDevice.name);
   };
 
   const selectSubsystem = (subsystem: Subsystem) => {
-    setSelectedSubsystem(subsystem);
-    setSelectedChildSubsystem(subsystem.childSubsystems[0]);
-    setSelectedAssemblyDevice(subsystem.childSubsystems[0].assemblyDevices[0]);
+    setSelectedSubsystemName(subsystem.name);
+    setSelectedChildSubsystemName(subsystem.childSubsystems[0].name);
+    setSelectedAssemblyDeviceName(subsystem.childSubsystems[0].assemblyDevices[0].name);
   };
 
   const selectChildSubsystem = (childSubsystem: ChildSubsystem) => {
-    const subsystem = findSubsystemByName(childSubsystem.subsystemParent);
-    setSelectedSubsystem(subsystem || firstSubsystem);
-    setSelectedChildSubsystem(childSubsystem);
-    setSelectedAssemblyDevice(childSubsystem.assemblyDevices[0]);
+    const subsystem = findSubsystemByName(childSubsystem.subsystemParent) || firstSubsystem;
+    setSelectedSubsystemName(subsystem.name);
+    setSelectedChildSubsystemName(childSubsystem.name);
+    setSelectedAssemblyDeviceName(childSubsystem.assemblyDevices[0].name);
   };
 
   const selectAssemblyDevice = (assemblyDevice: AssemblyDevice) => {
-    setSelectedAssemblyDevice(assemblyDevice);
+    setSelectedAssemblyDeviceName(assemblyDevice.name);
   };
 
   const selectSubsystemsFromMnemonic = (mnemonic: Mnemonic) => {
@@ -105,9 +110,9 @@ const AppProvider = ({ children }: PropTypes) => {
       mnemonic.assemblyDevice
     );
 
-    setSelectedSubsystem(subsystem);
-    setSelectedChildSubsystem(childSubsystem);
-    setSelectedAssemblyDevice(assemblyDevices);
+    setSelectedSubsystemName(subsystem.name);
+    setSelectedChildSubsystemName(childSubsystem.name);
+    setSelectedAssemblyDeviceName(assemblyDevices.name);
   };
 
   // Creates the initaial mock data functionality
@@ -119,13 +124,13 @@ const AppProvider = ({ children }: PropTypes) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (contact.alerts.length < 25) addAlert(contact.id);
-    }, 3000);
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     if (contact.alerts.length < 25) addAlert(contact.id);
+  //   }, 3000);
 
-    return () => clearInterval(interval);
-  }, [addAlert, contact.alerts.length, contact.id]);
+  //   return () => clearInterval(interval);
+  // }, [addAlert, contact.alerts.length, contact.id]);
 
   useEffect(() => {
     // set 20 random mnemonics to watched
@@ -143,7 +148,6 @@ const AppProvider = ({ children }: PropTypes) => {
     selectedSubsystem,
     selectedChildSubsystem,
     selectedAssemblyDevice,
-    setSelectedAssemblyDevice,
     resetSelected,
     selectSubsystem,
     selectChildSubsystem,
