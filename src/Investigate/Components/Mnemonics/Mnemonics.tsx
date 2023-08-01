@@ -37,11 +37,13 @@ const Mnemonics = ({ title }: PropTypes) => {
   );
 
   const filteredMnemonicStatus =
-    filterValue === "All"
-      ? filteredMnemonicIds
+    filterValue === "Critical"
+      ? filteredMnemonicIds.filter((val) => val.status === "critical")
       : filterValue === "Marginal"
-      ? filteredMnemonicIds
-      : filteredMnemonicIds.filter((val) => val.status === "critical");
+      ? filteredMnemonicIds.filter(
+          (val) => val.status === "caution" || val.status === "serious"
+        )
+      : filteredMnemonicIds;
 
   const sortMnemonics = useCallback(
     (filteredMnemonics: Mnemonic[], sortDirection: SortDirection) => {
