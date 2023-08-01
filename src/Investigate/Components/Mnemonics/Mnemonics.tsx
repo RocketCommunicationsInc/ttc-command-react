@@ -32,9 +32,16 @@ const Mnemonics = ({ title }: PropTypes) => {
   const [sortProp, setSortProp] = useState("");
   const [filterValue, setFilterValue] = useState("All");
 
-  const filteredMnemonics = selectedAssemblyDevice.mnemonics.filter((value) =>
+  const filteredMnemonicIds = selectedAssemblyDevice.mnemonics.filter((value) =>
     value.mnemonicId.toLowerCase().includes(searchValue.toLowerCase())
   );
+
+  const filteredMnemonicStatus =
+    filterValue === "All"
+      ? filteredMnemonicIds
+      : filterValue === "Marginal"
+      ? filteredMnemonicIds
+      : filteredMnemonicIds.filter((val) => val.status === "critical");
 
   const sortMnemonics = useCallback(
     (filteredMnemonics: Mnemonic[], sortDirection: SortDirection) => {
@@ -73,14 +80,14 @@ const Mnemonics = ({ title }: PropTypes) => {
   };
 
   const sortedAssemblyDevices = useMemo(() => {
-    return sortMnemonics(filteredMnemonics, sortDirection);
-  }, [filteredMnemonics, sortMnemonics, sortDirection]);
+    return sortMnemonics(filteredMnemonicStatus, sortDirection);
+  }, [filteredMnemonicStatus, sortMnemonics, sortDirection]);
 
   const handleWatching = (mnemonic: Mnemonic) => {
     modifyMnemonic({ ...mnemonic, watched: !mnemonic.watched });
   };
 
-  const numOfWatchedMnemonics = filteredMnemonics.filter(
+  const numOfWatchedMnemonics = filteredMnemonicStatus.filter(
     (mnemonic) => mnemonic.watched
   ).length;
 
