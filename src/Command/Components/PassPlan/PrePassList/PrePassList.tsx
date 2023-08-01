@@ -39,7 +39,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
 
     // if the current list item is the length of the state function array, set the pass from 'pre-pass' into 'pass'
     if (currentListItem === stateFunctionArray.length) {
-      //setPass("Pass");
+      setPass("Pass");
       return;
     }
 
