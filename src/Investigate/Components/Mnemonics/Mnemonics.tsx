@@ -16,11 +16,14 @@ import { useAppContext, ContextType } from "../../../provider/useAppContext";
 import "./Mnemonics.css";
 import { useState } from "react";
 
+import { useTTCGRMActions, type Mnemonic } from "@astrouxds/mock-data"
+
 type PropTypes = {
   title: string | any;
 };
 
 const Mnemonics = ({ title }: PropTypes) => {
+  const { modifyMnemonic } = useTTCGRMActions()
   const { selectedAssemblyDevice }: ContextType = useAppContext();
   const [searchValue, setSearchValue] = useState("");
 
@@ -29,18 +32,13 @@ const Mnemonics = ({ title }: PropTypes) => {
       value.toString().toLowerCase().includes(searchValue.toLowerCase())
     )
   );
-  const [watched, setWatched] = useState(filteredMnemonics);
 
-  const handleWatching = (id: string) => {
-    setWatched((prevData) =>
-      prevData.map((device) =>
-        device.id === id ? { ...device, watched: !device.watched } : device
-      )
-    );
+  const handleWatching = (mnemonic: Mnemonic) => {
+    modifyMnemonic({...mnemonic, watched: !mnemonic.watched})
   };
 
-  const numOfWatchedMnemonics = watched.filter(
-    (device) => device.watched
+  const numOfWatchedMnemonics = filteredMnemonics.filter(
+    (mnemonic) => mnemonic.watched
   ).length;
 
   return (
@@ -86,7 +84,7 @@ const Mnemonics = ({ title }: PropTypes) => {
                   <RuxCheckbox
                     checked={mnemonic.watched}
                     label="Watching"
-                    onRuxchange={() => handleWatching(mnemonic.id)}
+                    onRuxchange={() => handleWatching(mnemonic)}
                     key={mnemonic.id}
                   />
                 </RuxTableCell>
