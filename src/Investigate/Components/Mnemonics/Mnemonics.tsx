@@ -94,7 +94,7 @@ const Mnemonics = ({ title }: PropTypes) => {
   ).length;
 
   return (
-    <RuxContainer className="electronics">
+    <RuxContainer className="mnemonics">
       <div slot="header">
         <span>{title}</span>
         <RuxInput
@@ -112,7 +112,7 @@ const Mnemonics = ({ title }: PropTypes) => {
           ]}
         />
       </div>
-      <div className="table-wrapper electronics">
+      <div className="table-wrapper mnemonics">
         <RuxTable>
           <RuxTableHeaderRow>
             <RuxTableHeaderCell onClick={handleSort}>
