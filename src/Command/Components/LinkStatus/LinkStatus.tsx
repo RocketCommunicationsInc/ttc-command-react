@@ -9,7 +9,7 @@ import {
 import { getRandomInt } from "utils";
 import "./LinkStatus.css";
 import { Status } from "@astrouxds/mock-data";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const LinkStatus = () => {
   const [status1, setStatus1] = useState<Status>("off");
@@ -34,6 +34,13 @@ const LinkStatus = () => {
     setStatus3(statusValuesArr[randomStatus3] as Status);
   }, []);
 
+  const int1 = useMemo(() => getRandomInt(-100, -1), []);
+  const int2 = useMemo(() => getRandomInt(-100, -1), []);
+  const int3 = useMemo(() => getRandomInt(50, 90), []);
+  const int4 = useMemo(() => getRandomInt(10000, 99999), []);
+  const int5 = useMemo(() => getRandomInt(1000, 9999), []);
+  const int6 = useMemo(() => getRandomInt(0, 5), []);
+
   return (
     <RuxContainer className="link-status">
       <div slot="header">Link Status</div>
@@ -43,38 +50,34 @@ const LinkStatus = () => {
             <RuxTableCell>
               <span>
                 <RuxStatus status={status1} /> Lock
-                <span className="total">{getRandomInt(-100, -1)}</span>
+                <span className="total">{int1}</span>
               </span>
             </RuxTableCell>
           </RuxTableRow>
           <RuxTableRow>
-            <RuxTableCell>
-              Signal Strength: {getRandomInt(-100, -1)}
-            </RuxTableCell>
+            <RuxTableCell>Signal Strength: {int2}</RuxTableCell>
           </RuxTableRow>
           <RuxTableRow>
             <RuxTableCell>
               <span>
                 <RuxStatus status={status2} />
-                Telemetry<span className="total">{getRandomInt(50, 90)}</span>
+                Telemetry<span className="total">{int3}</span>
               </span>
             </RuxTableCell>
           </RuxTableRow>
           <RuxTableRow>
-            <RuxTableCell>
-              Total Frame Count: {getRandomInt(10000, 99999)}
-            </RuxTableCell>
+            <RuxTableCell>Total Frame Count: {int4}</RuxTableCell>
           </RuxTableRow>
           <RuxTableRow>
             <RuxTableCell>
               <span>
                 <RuxStatus status={status3} />
-                VCC <span className="total">{getRandomInt(1000, 9999)}</span>
+                VCC <span className="total">{int5}</span>
               </span>
             </RuxTableCell>
           </RuxTableRow>
           <RuxTableRow>
-            <RuxTableCell>Bad CMD: 0</RuxTableCell>
+            <RuxTableCell>Bad CMD: {int6}</RuxTableCell>
           </RuxTableRow>
         </RuxTableBody>
       </RuxTable>
