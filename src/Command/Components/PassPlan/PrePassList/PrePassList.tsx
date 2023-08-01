@@ -1,13 +1,8 @@
 import {
   RuxCheckbox,
   RuxProgress,
-  RuxTable,
-  RuxTableBody,
-  RuxTableCell,
-  RuxTableHeader,
-  RuxTableHeaderCell,
-  RuxTableHeaderRow,
-  RuxTableRow,
+  RuxTree,
+  RuxTreeNode,
 } from "@astrouxds/react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./PrePassList.css";
@@ -44,7 +39,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
 
     // if the current list item is the length of the state function array, set the pass from 'pre-pass' into 'pass'
     if (currentListItem === stateFunctionArray.length) {
-      setPass("Pass");
+      //setPass("Pass");
       return;
     }
 
@@ -79,90 +74,80 @@ const PrePassList = ({ setPass }: PropTypes) => {
   }, [currentListItem, setPass]);
 
   return (
-    <>
-      <RuxTable className="pre-pass-list-table">
-        <RuxTableHeader>
-          <RuxTableHeaderRow>
-            <RuxTableHeaderCell>Step</RuxTableHeaderCell>
-            <RuxTableHeaderCell>Instruction</RuxTableHeaderCell>
-          </RuxTableHeaderRow>
-        </RuxTableHeader>
-        <RuxTableBody>
-          <RuxTableRow>
-            <RuxTableCell>
-              <div className="pre-pass_cell-item-number">1</div>
-            </RuxTableCell>
-            <RuxTableCell>
-              <div className="pre-pass_cell-wrapper-content">
-                <RuxCheckbox className="pre-pass_checkbox" />
-                AIM = {aimState}
-                <RuxProgress className="pre-pass_progress" hideLabel={true} />
-              </div>
-            </RuxTableCell>
-          </RuxTableRow>
-          <RuxTableRow>
-            <RuxTableCell>
-              <div className="pre-pass_cell-item-number">2</div>
-            </RuxTableCell>
-            <RuxTableCell>
-              <div className="pre-pass_cell-wrapper-content">
-                <RuxCheckbox className="pre-pass_checkbox" />
-                SARM = {sarmState}
-                <RuxProgress className="pre-pass_progress" hideLabel={true} />
-              </div>
-            </RuxTableCell>
-          </RuxTableRow>
-          <RuxTableRow>
-            <RuxTableCell>
-              <div className="pre-pass_cell-item-number">3</div>
-            </RuxTableCell>
-            <RuxTableCell>
-              <div className="pre-pass_cell-wrapper-content">
-                <RuxCheckbox className="pre-pass_checkbox" />
-                LOCK = {lockState}
-                <RuxProgress className="pre-pass_progress" hideLabel={true} />
-              </div>
-            </RuxTableCell>
-          </RuxTableRow>
-          <RuxTableRow>
-            <RuxTableCell>
-              <div className="pre-pass_cell-item-number">4</div>
-            </RuxTableCell>
-            <RuxTableCell>
-              <div className="pre-pass_cell-wrapper-content">
-                <RuxCheckbox className="pre-pass_checkbox" />
-                AOS = {aosState}
-                <RuxProgress className="pre-pass_progress" hideLabel={true} />
-              </div>
-            </RuxTableCell>
-          </RuxTableRow>
-          <RuxTableRow>
-            <RuxTableCell>
-              <div className="pre-pass_cell-item-number">5</div>
-            </RuxTableCell>
-            <RuxTableCell>
-              <div className="pre-pass_cell-wrapper-content">
-                <RuxCheckbox className="pre-pass_checkbox" />
-                VCC = {vccState}
-                <RuxProgress className="pre-pass_progress" hideLabel={true} />
-              </div>
-            </RuxTableCell>
-          </RuxTableRow>
-          <RuxTableRow>
-            <RuxTableCell>
-              <div className="pre-pass_cell-item-number">6</div>
-            </RuxTableCell>
-            <RuxTableCell>
-              <div className="pre-pass_cell-wrapper-content">
-                <RuxCheckbox className="pre-pass_checkbox" />
-                PASS PLAN = {passPlanState}
-                <RuxProgress className="pre-pass_progress" hideLabel={true} />
-              </div>
-            </RuxTableCell>
-          </RuxTableRow>
-        </RuxTableBody>
-      </RuxTable>
-    </>
+    <RuxTree>
+      <RuxTreeNode>
+        <div slot="prefix">1</div>
+        <div className="pre-pass_cell-wrapper-content">
+          <RuxCheckbox className="pre-pass_checkbox" />
+          AIM = {aimState}
+        </div>
+        <RuxProgress
+          slot="suffix"
+          className="pre-pass_progress"
+          hideLabel={true}
+        />
+      </RuxTreeNode>
+      <RuxTreeNode>
+        <div slot="prefix">2</div>
+        <div className="pre-pass_cell-wrapper-content">
+          <RuxCheckbox className="pre-pass_checkbox" />
+          SARM = {sarmState}
+        </div>
+        <RuxProgress
+          slot="suffix"
+          className="pre-pass_progress"
+          hideLabel={true}
+        />
+      </RuxTreeNode>
+      <RuxTreeNode>
+        <div slot="prefix">3</div>
+        <div className="pre-pass_cell-wrapper-content">
+          <RuxCheckbox className="pre-pass_checkbox" />
+          LOCK = {lockState}
+        </div>
+        <RuxProgress
+          slot="suffix"
+          className="pre-pass_progress"
+          hideLabel={true}
+        />
+      </RuxTreeNode>
+      <RuxTreeNode>
+        <div slot="prefix">4</div>
+        <div className="pre-pass_cell-wrapper-content">
+          <RuxCheckbox className="pre-pass_checkbox" />
+          AOS = {aosState}
+        </div>
+        <RuxProgress
+          slot="suffix"
+          className="pre-pass_progress"
+          hideLabel={true}
+        />
+      </RuxTreeNode>
+      <RuxTreeNode>
+        <div slot="prefix">5</div>
+        <div className="pre-pass_cell-wrapper-content">
+          <RuxCheckbox className="pre-pass_checkbox" />
+          VCC = {vccState}
+        </div>
+        <RuxProgress
+          slot="suffix"
+          className="pre-pass_progress"
+          hideLabel={true}
+        />
+      </RuxTreeNode>
+      <RuxTreeNode>
+        <div slot="prefix">6</div>
+        <div className="pre-pass_cell-wrapper-content">
+          <RuxCheckbox className="pre-pass_checkbox" />
+          PASS PLAN = {passPlanState}
+        </div>
+        <RuxProgress
+          slot="suffix"
+          className="pre-pass_progress"
+          hideLabel={true}
+        />
+      </RuxTreeNode>
+    </RuxTree>
   );
 };
 
