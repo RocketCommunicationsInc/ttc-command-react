@@ -208,9 +208,10 @@ const Assembly = () => {
     if (!cy) return;
 
     const resize = () => {
-      // cy.style({ selector: "Core", css: { "bounds-expansion": "" } });
       cy.layout({ name: "preset", fit: true }).run();
       cy.ready(() => cy.resize());
+      cy.center();
+      cy.fit();
     };
 
     window.addEventListener("resize", resize);
@@ -262,7 +263,7 @@ const Assembly = () => {
         elements={cyArr}
         style={{ width: "100%", height: "100%", overflow: "hidden" }}
         stylesheet={styles}
-        layout={{ name: "preset" }}
+        layout={{ name: "preset", fit: true }}
         cy={setCy}
       />
     </RuxContainer>
