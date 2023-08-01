@@ -8,23 +8,26 @@ type PropTypes = {
 };
 
 const randomNumber = getRandomInt(5, 2);
+let inProgress: boolean = false; //this value needs to remain outside the component function so it doesn't redeclare on rerender
 
 const ExecutableListItem = ({ stepNumber }: PropTypes) => {
   const [value, setValue] = useState<number>(0);
-  const inProgress = value > 0 && value < 100;
-  const progressComplete = value >= 100;
+  const progressComplete: boolean = value >= 100;
 
   const handleExecuteButtonClick = () => {
-    const interval = setInterval(
-      () =>
+    inProgress ? (inProgress = false) : (inProgress = true);
+    const interval = setInterval(() => {
+      if (inProgress) {
         setValue((prevValue) => {
           if (prevValue >= 100) {
             clearInterval(interval);
           }
           return prevValue + 1;
-        }),
-      50
-    );
+        });
+      } else {
+        clearInterval(interval);
+      }
+    }, 50);
   };
 
   return (
