@@ -30,24 +30,31 @@ const Mnemonics = ({ title }: PropTypes) => {
   const [searchValue, setSearchValue] = useState("");
   const [sortDirection, setSortDirection] = useState<SortDirection>("ASC");
   const [sortProp, setSortProp] = useState("");
+  const [filterValue, setFilterValue] = useState("All");
 
   const filteredMnemonics = selectedAssemblyDevice.mnemonics.filter((value) =>
-    Object.values(value).some((value) =>
-      value.toString().toLowerCase().includes(searchValue.toLowerCase())
-    )
+    value.mnemonicId.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   const sortMnemonics = useCallback(
     (filteredMnemonics: Mnemonic[], sortDirection: SortDirection) => {
       const newSortedMnemonics = [...filteredMnemonics].sort((a, b) => {
+        const statusOrder = [
+          "off",
+          "standby",
+          "normal",
+          "caution",
+          "serious",
+          "critical",
+        ];
+        const statusAsc = statusOrder.indexOf(a.status);
+        const statusDesc = statusOrder.indexOf(b.status);
         if (sortDirection !== "ASC") {
-          console.log(a.status, "status");
-          return a.status > b.status ? -1 : 1;
+          return statusAsc - statusDesc;
         } else {
-          return a.status > b.status ? 1 : -1;
+          return statusDesc - statusAsc;
         }
       });
-      console.log(newSortedMnemonics);
       return newSortedMnemonics;
     },
     []
@@ -69,8 +76,6 @@ const Mnemonics = ({ title }: PropTypes) => {
     return sortMnemonics(filteredMnemonics, sortDirection);
   }, [filteredMnemonics, sortMnemonics, sortDirection]);
 
-  const [watched, setWatched] = useState(filteredMnemonics);
-
   const handleWatching = (mnemonic: Mnemonic) => {
     modifyMnemonic({ ...mnemonic, watched: !mnemonic.watched });
   };
@@ -89,6 +94,8 @@ const Mnemonics = ({ title }: PropTypes) => {
           placeholder="Filter by name"
         />
         <RuxSegmentedButton
+          selected={filterValue}
+          onRuxchange={(e) => setFilterValue(e.target.selected)}
           data={[
             { label: "All" },
             { label: "Marginal" },
@@ -106,7 +113,7 @@ const Mnemonics = ({ title }: PropTypes) => {
                   sortDirection === "ASC" ? "arrow-drop-down" : "arrow-drop-up"
                 }
                 size="small"
-                className={sortProp === "message" ? "visible" : "hidden"}
+                className={sortProp === "status" ? "visible" : "hidden"}
               />
             </RuxTableHeaderCell>
             <RuxTableHeaderCell>Mnemonic</RuxTableHeaderCell>
