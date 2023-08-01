@@ -22,7 +22,7 @@ const PassList = ({ commandList }: PropTypes) => {
         <MnemonicListItem stepNumber={2} slotNode={false} />
         <MnemonicListItem stepNumber={3} slotNode={false} />
         <SelectMenuListItem stepNumber={4} />
-        <ExecutableListItem stepNumber={5} queueCommand={"WAIT"} />
+        <ExecutableListItem stepNumber={5} queueCommand={"WAIT_TYPE"} />
         <MnemonicListItem stepNumber={6} slotNode={false} />
         <MnemonicListItem stepNumber={7} slotNode={false} />
         {commandList.length > 0
