@@ -6,7 +6,7 @@
   margin-top: var(--spacing-1);
   margin-left: var(--spacing-1);
   padding: 0;
-  margin-right: 0
+  margin-right: 0;
 }
 
 .mnemonic-pop-up rux-button {
