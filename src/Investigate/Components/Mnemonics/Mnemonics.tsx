@@ -16,14 +16,14 @@ import { useAppContext, ContextType } from "../../../provider/useAppContext";
 import "./Mnemonics.css";
 import { useState } from "react";
 
-import { useTTCGRMActions, type Mnemonic } from "@astrouxds/mock-data"
+import { useTTCGRMActions, type Mnemonic } from "@astrouxds/mock-data";
 
 type PropTypes = {
   title: string | any;
 };
 
 const Mnemonics = ({ title }: PropTypes) => {
-  const { modifyMnemonic } = useTTCGRMActions()
+  const { modifyMnemonic } = useTTCGRMActions();
   const { selectedAssemblyDevice }: ContextType = useAppContext();
   const [searchValue, setSearchValue] = useState("");
 
@@ -34,7 +34,7 @@ const Mnemonics = ({ title }: PropTypes) => {
   );
 
   const handleWatching = (mnemonic: Mnemonic) => {
-    modifyMnemonic({...mnemonic, watched: !mnemonic.watched})
+    modifyMnemonic({ ...mnemonic, watched: !mnemonic.watched });
   };
 
   const numOfWatchedMnemonics = filteredMnemonics.filter(
@@ -42,7 +42,7 @@ const Mnemonics = ({ title }: PropTypes) => {
   ).length;
 
   return (
-    <RuxContainer className="electronics">
+    <RuxContainer className="mnemonics">
       <div slot="header">
         <span>{title}</span>
         <RuxInput
@@ -58,7 +58,7 @@ const Mnemonics = ({ title }: PropTypes) => {
           ]}
         />
       </div>
-      <div className="table-wrapper electronics">
+      <div className="table-wrapper mnemonics">
         <RuxTable>
           <RuxTableHeaderRow>
             <RuxTableHeaderCell>Severity</RuxTableHeaderCell>
