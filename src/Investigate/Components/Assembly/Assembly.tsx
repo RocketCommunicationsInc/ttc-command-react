@@ -208,7 +208,7 @@ const Assembly = () => {
     if (!cy) return;
 
     const resize = () => {
-      cy.nodes().style({ css: { "bounds-expansion": "" } });
+      // cy.style({ selector: "Core", css: { "bounds-expansion": "" } });
       cy.layout({ name: "preset", fit: true }).run();
       cy.ready(() => cy.resize());
     };
@@ -238,6 +238,7 @@ const Assembly = () => {
     cy.on("data", () => {
       cy.nodes().deselect();
       cy.nodes()[0].select();
+      resize();
     });
 
     cy.on("mouseout", "node", () => {
@@ -247,6 +248,7 @@ const Assembly = () => {
 
     return () => {
       window.removeEventListener("resize", resize);
+      cy.removeAllListeners();
     };
   }, [cy, selectAssemblyDevice, selectedChildSubsystem.assemblyDevices]);
 
@@ -260,7 +262,7 @@ const Assembly = () => {
         elements={cyArr}
         style={{ width: "100%", height: "100%", overflow: "hidden" }}
         stylesheet={styles}
-        layout={{ name: "preset", fit: true }}
+        layout={{ name: "preset" }}
         cy={setCy}
       />
     </RuxContainer>
