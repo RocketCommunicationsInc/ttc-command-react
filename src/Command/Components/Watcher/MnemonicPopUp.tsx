@@ -18,16 +18,15 @@ type PropTypes = {
   triggerValue: string | number;
   data: Mnemonic;
   isPassPlan: boolean;
-  setWatched?: Dispatch<SetStateAction<boolean>>;
 };
 
-const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes) => {
+const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
   const { modifyMnemonic } = useTTCGRMActions();
 
-  useEffect(() => {
-    data.watched && (setWatched && setWatched(prevState => !prevState))
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
+  // useEffect(() => {
+  //   data.watched && (setWatched && setWatched(prevState => !prevState))
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // },[])
   
   const {
     contact,
@@ -60,7 +59,6 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes
   };
 
   const handleWatched = () => {
-    setWatched && setWatched(prevState => !prevState);
     modifyMnemonic({ ...data, watched: !data.watched });
   }
 
@@ -99,9 +97,9 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes
             </RuxButton>
           )}
         </div>
-        {isPassPlan && setWatched ? (
+        {isPassPlan ? (
           <div slot="footer">
-            <RuxCheckbox onRuxchange={() => handleWatched()}>Add to Watcher</RuxCheckbox>
+            <RuxCheckbox checked={ data.watched } onRuxchange={() => handleWatched()}>Add to Watcher</RuxCheckbox>
           </div>
         ) : null}
       </RuxCard>

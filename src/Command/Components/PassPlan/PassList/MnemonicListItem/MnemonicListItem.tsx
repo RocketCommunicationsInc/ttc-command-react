@@ -1,7 +1,6 @@
 import { RuxCheckbox, RuxIcon, RuxTreeNode } from "@astrouxds/react";
 import { Mnemonic } from "@astrouxds/mock-data";
 import MnemonicPopUp from "../../../Watcher/MnemonicPopUp";
-import { useState } from "react";
 
 type PropTypes = {
   stepNumber: number | string;
@@ -10,8 +9,6 @@ type PropTypes = {
 };
 
 const MnemonicListItem = ({ stepNumber, slotNode, mnemonic }: PropTypes) => {
-  const [watched, setWatched] = useState<boolean>(false);
-
   return (
     <>
       <RuxTreeNode slot={slotNode ? "node" : ""} key={mnemonic.id}>
@@ -23,13 +20,12 @@ const MnemonicListItem = ({ stepNumber, slotNode, mnemonic }: PropTypes) => {
           {"Verify\u00A0"}
           <MnemonicPopUp
             isPassPlan
-            setWatched={setWatched}
             triggerValue={mnemonic.mnemonicId}
             data={mnemonic}
           />
           {"\u00A0 = \u00A0"}
           {mnemonic.currentValue}
-          {watched && (
+          {mnemonic.watched && (
             <div className="pass_mnemonic-watching">
               <RuxIcon icon="visibility" size="extra-small" />
               <i>Watching</i>
