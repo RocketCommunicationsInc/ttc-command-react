@@ -28,6 +28,10 @@ const PassPlan = () => {
       </div>
       <div>
         <div className={`banner ${pass}`}>{pass}</div>
+        <div className="pass_header-wrapper">
+        <div className="pass_header-step">Step</div>
+        <div className="pass_header-instruction">Instruction</div>
+      </div>
         {pass === "Pre-Pass" ? <PrePassList setPass={setPass} /> : <PassList mnemonics={passPlanMnemonics} />}
       </div>
       <div slot="footer">
