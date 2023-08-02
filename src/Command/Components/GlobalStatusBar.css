@@ -1,5 +1,5 @@
 rux-global-status-bar {
-  /* needed so that menu dropdown will fall over the alerrts table header */
+  /* menu dropdown will fall over the alerts table header */
   z-index: 100;
 }
 .status-indicators {
