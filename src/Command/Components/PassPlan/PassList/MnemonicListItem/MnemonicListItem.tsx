@@ -1,7 +1,5 @@
 import { RuxCheckbox, RuxIcon, RuxTreeNode } from "@astrouxds/react";
-import {
-  Mnemonic,
-} from "@astrouxds/mock-data";
+import { Mnemonic } from "@astrouxds/mock-data";
 import MnemonicPopUp from "../../../Watcher/MnemonicPopUp";
 import { useState } from "react";
 

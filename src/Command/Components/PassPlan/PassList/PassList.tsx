@@ -4,33 +4,17 @@ import "./PassList.css";
 import MnemonicListItem from "./MnemonicListItem/MnemonicListItem";
 import ExecutableListItem from "./ExecutableListItem/ExecutableListItem";
 import { Mnemonic } from "@astrouxds/mock-data";
-import { getRandomInt } from "utils";
+import { generateRandomNumberArray } from "utils";
 
 type PropTypes = {
   mnemonics: Mnemonic[];
-}
+};
 
-const numberArray1 = [
-  getRandomInt(0,100),
-  getRandomInt(0,100),
-  getRandomInt(0,100),
-]
+const numberArray1 = generateRandomNumberArray(3);
 
-const numberArray2 = [
-  getRandomInt(0,100),
-  getRandomInt(0,100),
-]
+const numberArray2 = generateRandomNumberArray(2);
 
-const PassList = ({mnemonics}: PropTypes) => {
-  // const randomMnemonics = useMemo(() => {
-  //   let mnemonicsArray: Mnemonic[] = []
-    
-  //     mnemonicsArray.push(mnemonics[getRandomInt(0,100)])
-
-    
-  //   return mnemonicsArray;
-  // },[])
-
+const PassList = ({ mnemonics }: PropTypes) => {
   return (
     <>
       <div className="pass_header-wrapper">
@@ -38,28 +22,24 @@ const PassList = ({mnemonics}: PropTypes) => {
         <div className="pass_header-instruction">Instruction</div>
       </div>
       <RuxTree className="pass_body-wrapper">
-        {
-          numberArray1.map((item, index) => (
-            <MnemonicListItem
+        {numberArray1.map((item, index) => (
+          <MnemonicListItem
             key={index}
             stepNumber={index + 1}
             slotNode={false}
             mnemonic={mnemonics[item]}
           />
-          ))
-        }
+        ))}
         <SelectMenuListItem stepNumber={4} />
         <ExecutableListItem stepNumber={5} mnemonics={mnemonics} />
-        {
-          numberArray2.map((item, index) => (
-            <MnemonicListItem
+        {numberArray2.map((item, index) => (
+          <MnemonicListItem
             key={index}
             stepNumber={index + 6}
             slotNode={false}
             mnemonic={mnemonics[item]}
           />
-          ))
-        }
+        ))}
       </RuxTree>
     </>
   );

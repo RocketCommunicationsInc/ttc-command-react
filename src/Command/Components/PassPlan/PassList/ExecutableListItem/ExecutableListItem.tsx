@@ -1,7 +1,7 @@
 import { RuxButton, RuxProgress, RuxIcon, RuxTreeNode } from "@astrouxds/react";
 import { useEffect, useState } from "react";
 import MnemonicListItem from "../MnemonicListItem/MnemonicListItem";
-import { getRandomInt } from "../../../../../utils";
+import { generateRandomNumberArray, getRandomInt } from "../../../../../utils";
 import { Mnemonic } from "@astrouxds/mock-data";
 
 type PropTypes = {
@@ -9,11 +9,7 @@ type PropTypes = {
   mnemonics: Mnemonic[];
 };
 
-const numberArray = [
-    getRandomInt(0,100),
-    getRandomInt(0,100),
-    getRandomInt(0,100),
-  ]
+const numberArray = generateRandomNumberArray(getRandomInt(2, 5));
 
 const ExecutableListItem = ({ stepNumber, mnemonics }: PropTypes) => {
   const [value, setValue] = useState<number>(0);
@@ -68,16 +64,14 @@ const ExecutableListItem = ({ stepNumber, mnemonics }: PropTypes) => {
             </div>
           </div>
         </div>
-        {
-          numberArray.map((item, index) => (
-            <MnemonicListItem
+        {numberArray.map((item, index) => (
+          <MnemonicListItem
             key={index}
-            stepNumber={index + 1}
+            stepNumber={`${stepNumber}.${index + 1}`}
             slotNode={true}
             mnemonic={mnemonics[item]}
           />
-          ))
-        }
+        ))}
       </RuxTreeNode>
     </div>
   );
