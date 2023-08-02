@@ -74,7 +74,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
   }, [currentListItem, setPass]);
 
   return (
-    <RuxTree>
+    <RuxTree className="pass_body-wrapper">
       <RuxTreeNode>
         <div slot="prefix">1</div>
         <div className="pre-pass_cell-wrapper-content">

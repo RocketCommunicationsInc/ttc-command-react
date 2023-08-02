@@ -28,3 +28,13 @@ export const addToast = (
 export const getRandomInt = (max: number, min: number = 0) => {
   return Math.floor(Math.random() * (max - min) + min);
 };
+
+export const generateRandomNumberArray = (amount: number) => {
+  const numberArray: number[] = [];
+
+  for (let i = 0; i < amount; i++) {
+    const randomNumber = getRandomInt(0, 100);
+    numberArray.push(randomNumber);
+  }
+  return numberArray;
+};

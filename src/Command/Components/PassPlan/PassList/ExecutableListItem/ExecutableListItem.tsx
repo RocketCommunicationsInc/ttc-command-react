@@ -1,33 +1,41 @@
 import { RuxButton, RuxProgress, RuxIcon, RuxTreeNode } from "@astrouxds/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MnemonicListItem from "../MnemonicListItem/MnemonicListItem";
-import { getRandomInt } from "../../../../../utils";
+import { generateRandomNumberArray, getRandomInt } from "../../../../../utils";
+import { Mnemonic } from "@astrouxds/mock-data";
 
 type PropTypes = {
   stepNumber: number | string;
+  mnemonics: Mnemonic[];
 };
 
-const randomNumber = getRandomInt(5, 2);
-let inProgress: boolean = false; //this value needs to remain outside the component function so it doesn't redeclare on rerender
+const numberArray = generateRandomNumberArray(getRandomInt(2, 5));
 
-const ExecutableListItem = ({ stepNumber }: PropTypes) => {
+const ExecutableListItem = ({ stepNumber, mnemonics }: PropTypes) => {
   const [value, setValue] = useState<number>(0);
+  const [inProgress, setInProgress] = useState<boolean>(false);
   const progressComplete: boolean = value >= 100;
 
-  const handleExecuteButtonClick = () => {
-    inProgress ? (inProgress = false) : (inProgress = true);
-    const interval = setInterval(() => {
-      if (inProgress) {
+  useEffect(() => {
+    let interval: any;
+    if (inProgress) {
+      interval = setInterval(() => {
         setValue((prevValue) => {
           if (prevValue >= 100) {
             clearInterval(interval);
           }
           return prevValue + 1;
         });
-      } else {
-        clearInterval(interval);
-      }
-    }, 50);
+      }, 50);
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [inProgress]);
+
+  const handleExecuteButtonClick = () => {
+    setInProgress((prevState) => !prevState);
   };
 
   return (
@@ -56,11 +64,12 @@ const ExecutableListItem = ({ stepNumber }: PropTypes) => {
             </div>
           </div>
         </div>
-        {[...Array(randomNumber)].map((_, index) => (
+        {numberArray.map((item, index) => (
           <MnemonicListItem
             key={index}
             stepNumber={`${stepNumber}.${index + 1}`}
             slotNode={true}
+            mnemonic={mnemonics[item]}
           />
         ))}
       </RuxTreeNode>
