@@ -39,18 +39,21 @@ const SubsystemsTree = () => {
           >
             <RuxStatus slot="prefix" status={subsystem.status} />
             {subsystem.name}
-            {subsystem.childSubsystems.map((child, index) => (
-              <RuxTreeNode
-                id={"childSubsystem" + child.name}
-                key={index}
-                slot="node"
-                selected={child === selectedChildSubsystem}
-                onRuxtreenodeselected={() => selectChildSubsystem(child)}
-              >
-                <RuxStatus slot="prefix" status={child.status} />
-                {child.name}
-              </RuxTreeNode>
-            ))}
+            {subsystem.childSubsystems.map((child, index) => {
+              console.log(child, selectedChildSubsystem);
+              return (
+                <RuxTreeNode
+                  id={"childSubsystem" + child.name.replace(/\s+/g, "")}
+                  key={index}
+                  slot="node"
+                  selected={child === selectedChildSubsystem}
+                  onRuxtreenodeselected={() => selectChildSubsystem(child)}
+                >
+                  <RuxStatus slot="prefix" status={child.status} />
+                  {child.name}
+                </RuxTreeNode>
+              );
+            })}
           </RuxTreeNode>
         ))}
       </RuxTree>
