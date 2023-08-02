@@ -5,7 +5,7 @@ import {
   RuxCard,
   RuxButton,
 } from "@astrouxds/react";
-import { type Mnemonic } from "@astrouxds/mock-data";
+import { useTTCGRMActions, type Mnemonic } from "@astrouxds/mock-data";
 import LineChart from "./LineChart";
 import { getRandomInt } from "utils";
 import { useAppContext, ContextType } from "provider/useAppContext";
@@ -17,10 +17,12 @@ type PropTypes = {
   triggerValue: string | number;
   data: Mnemonic;
   isPassPlan: boolean;
-  setWatched?: Dispatch<SetStateAction<boolean>> | null;
+  setWatched?: Dispatch<SetStateAction<boolean>>;
 };
 
 const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes) => {
+  const { modifyMnemonic } = useTTCGRMActions();
+  
   const {
     contact,
     toggleInvestigate,
@@ -47,6 +49,11 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes
     selectSubsystemsFromMnemonic(data);
     toggleInvestigate();
   };
+
+  const handleWatched = () => {
+    setWatched && setWatched(prevState => !prevState);
+    modifyMnemonic({ ...data, watched: !data.watched });
+  }
 
   return (
     <RuxPopUp
@@ -85,7 +92,7 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes
         </div>
         {isPassPlan && setWatched ? (
           <div slot="footer">
-            <RuxCheckbox onRuxchange={() => setWatched(true)}>Add to Watcher</RuxCheckbox>
+            <RuxCheckbox onRuxchange={() => handleWatched()}>Add to Watcher</RuxCheckbox>
           </div>
         ) : null}
       </RuxCard>
