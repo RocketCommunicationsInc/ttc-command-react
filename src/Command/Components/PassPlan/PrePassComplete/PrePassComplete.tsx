@@ -1,10 +1,5 @@
-import {
-  RuxIndeterminateProgress,
-  RuxTree,
-  RuxTreeNode,
-} from "@astrouxds/react";
+import { RuxIndeterminateProgress } from "@astrouxds/react";
 import { Dispatch, SetStateAction } from "react";
-import "./PrePassList.css";
 
 type PropTypes = {
   setPass: Dispatch<SetStateAction<string>>;
@@ -12,11 +7,12 @@ type PropTypes = {
 
 const PrePassComplete = ({ setPass }: PropTypes) => {
   return (
-    <RuxTree className="pass_body-wrapper">
-      <RuxTreeNode>
-        <RuxIndeterminateProgress />
-      </RuxTreeNode>
-    </RuxTree>
+    <div className="pass_pre-pass-complete-wrapper">
+      <RuxIndeterminateProgress />
+      <div>
+        <i>Loading Pass Plan...</i>
+      </div>
+    </div>
   );
 };
 
