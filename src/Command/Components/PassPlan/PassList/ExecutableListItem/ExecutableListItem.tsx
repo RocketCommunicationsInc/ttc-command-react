@@ -1,5 +1,5 @@
 import { RuxButton, RuxProgress, RuxIcon, RuxTreeNode } from "@astrouxds/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import MnemonicListItem from "../MnemonicListItem/MnemonicListItem";
 import { generateRandomNumberArray, getRandomInt } from "../../../../../utils";
 import { Mnemonic } from "@astrouxds/mock-data";
@@ -10,12 +10,13 @@ type PropTypes = {
   mnemonics: Mnemonic[];
 };
 
-const numberArray = generateRandomNumberArray(getRandomInt(2, 5));
-
 const ExecutableListItem = ({ stepNumber, queueCommand, mnemonics }: PropTypes) => {
   const [value, setValue] = useState<number>(0);
   const [inProgress, setInProgress] = useState<boolean>(false);
   const progressComplete: boolean = value >= 100;
+  const numberArray = useMemo(() => {
+    return generateRandomNumberArray(getRandomInt(2, 5));
+  },[])
 
   useEffect(() => {
     let interval: any;
