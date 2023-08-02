@@ -35,7 +35,6 @@ const PassPlan = () => {
             clearInterval(interval);
             setPass("Pass");
           }
-          console.log(countdown);
           return prevValue - 1;
         });
       }, 1000);
