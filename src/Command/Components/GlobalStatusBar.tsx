@@ -24,7 +24,8 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
   const [notifications2, setNotifications2] = useState(2);
   const [notifications3, setNotifications3] = useState(4);
   const [lightTheme, setLightTheme] = useState(false);
-  const { contact }: ContextType = useAppContext();
+  const { contact, toggleInvestigate, showInvestigate }: ContextType =
+    useAppContext();
 
   const statusValuesArr = [
     "off",
@@ -65,6 +66,10 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
       document.body.classList.toggle("light-theme");
       return;
     }
+    if (detail.value === "investigate") {
+      toggleInvestigate();
+      return;
+    }
     addToast("This feature has not been implemented", false, 3000);
   }
 
@@ -86,7 +91,9 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
         >
           <RuxIcon slot="trigger" size="small" icon="apps" />
           <RuxMenu onRuxmenuselected={(e) => menuSelect(e)}>
-            <RuxMenuItem value="investigate">TTC Investigate</RuxMenuItem>
+            <RuxMenuItem value="investigate">
+              TTC {showInvestigate ? "Command" : "Investigate"}
+            </RuxMenuItem>
             <RuxMenuItemDivider />
             <RuxMenuItem value="themeToggle">
               {lightTheme ? "Dark" : "Light"} Theme

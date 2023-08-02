@@ -1,3 +1,7 @@
+rux-global-status-bar {
+  /* menu dropdown will fall over the alerts table header */
+  z-index: 100;
+}
 .status-indicators {
   display: flex;
 }
