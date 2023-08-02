@@ -19,7 +19,7 @@
 }
 
 .table-wrapper.mnemonics rux-table-header-cell:nth-of-type(6) {
-width: 16%
+  width: 16%;
 }
 
 .table-wrapper.mnemonics rux-table-cell:nth-of-type(4) {
@@ -40,6 +40,6 @@ width: 16%
   color: var(--color-text-interactive-default);
 }
 
-.table-wrapper.mnemonics rux-table-header-cell[data-sortprop='status'] {
+.table-wrapper.mnemonics rux-table-header-cell[data-sortprop="status"] {
   text-align: center;
 }

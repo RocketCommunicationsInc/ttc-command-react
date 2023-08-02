@@ -57,7 +57,11 @@ rux-container.investigate-subsystem {
 /* GlOBAL TABLE STYLES */
 
 .table-wrapper {
-  overflow-y: scroll;
+  overflow-y: auto;
+}
+
+.table-wrapper rux-table {
+  height: calc(100% - 2px);
 }
 
 .table-wrapper::-webkit-scrollbar-track {
