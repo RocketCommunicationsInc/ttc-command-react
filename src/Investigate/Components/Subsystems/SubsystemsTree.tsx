@@ -40,7 +40,6 @@ const SubsystemsTree = () => {
             <RuxStatus slot="prefix" status={subsystem.status} />
             {subsystem.name}
             {subsystem.childSubsystems.map((child, index) => {
-              console.log(child, selectedChildSubsystem);
               return (
                 <RuxTreeNode
                   id={"childSubsystem" + child.name.replace(/\s+/g, "")}
