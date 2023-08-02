@@ -1,33 +1,38 @@
-.watcher rux-accordion {
-  height: 100%;
-}
-
-.watcher rux-accordion-item::part(container) {
-  display: block;
-  height: 100%;
-  padding: 0px;
-  overflow: hidden;
-}
-
 .watcher rux-table-header-cell {
   text-align: right;
 }
 
-.watcher rux-table-header-cell:nth-of-type(2) {
-  text-align: left;
+.watcher rux-table-cell:nth-of-type(1),
+.watcher rux-table-header-cell:nth-of-type(1) {
+  width: 22px;
 }
 
-.watcher rux-table-body {
-  height: 100px;
+.watcher rux-table-cell:nth-of-type(2),
+.watcher rux-table-header-cell:nth-of-type(2) {
+  max-width: 0;
+  text-align: left;
+}
+.watcher rux-table-cell:nth-of-type(3),
+.watcher rux-table-header-cell:nth-of-type(3) {
+  max-width: 0
+}
+.watcher rux-table-cell:nth-of-type(4),
+.watcher rux-table-header-cell:nth-of-type(4) {
+  max-width: 0
+}
+
+.watcher rux-table-cell:nth-of-type(5),
+.watcher rux-table-header-cell:nth-of-type(5) {
+  max-width: 0
+}
+
+.watcher rux-table-cell:nth-of-type(6),
+.watcher rux-table-header-cell:nth-of-type(6) {
+  width: 32px;
 }
 
 .watcher rux-table-cell {
   text-align: right;
-}
-
-.watcher rux-table-cell:last-of-type {
-  display: flex;
-  justify-content: center;
 }
 
 .watcher rux-icon[icon="arrow-upward"],
@@ -42,28 +47,6 @@
 
 .watcher rux-icon[icon="arrow-downward"] {
   transform: rotate(-45deg);
-}
-
-/* THRESHOLD INPUT STYLES */
-
-.watcher rux-input {
-  width: 0px;
-}
-
-.watcher rux-input::part(form-field) {
-  position: relative;
-  left: 30px;
-  width: 110px;
-  box-shadow: rgba(0, 0, 0, 0.45) 0px 0.25rem 0.5rem;
-}
-
-.watcher rux-input div[slot="suffix"] {
-  display: flex;
-}
-
-.watcher rux-input div[slot="suffix"] div {
-  display: flex;
-  justify-content: center;
 }
 
 /* MNEMONIC POP-UP STYLES */
@@ -95,12 +78,4 @@ rux-pop-up.mnemonic-pop-up rux-card div {
 
 rux-pop-up.mnemonic-pop-up rux-checkbox::part(label) {
   font-weight: var(--font-weights-bold);
-}
-
-.threshold-value {
-  margin-left: "auto";
-
-  &::part(container) {
-    box-shadow: none;
-  }
 }
