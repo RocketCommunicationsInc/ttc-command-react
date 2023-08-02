@@ -10,13 +10,17 @@ type PropTypes = {
   mnemonics: Mnemonic[];
 };
 
-const ExecutableListItem = ({ stepNumber, queueCommand, mnemonics }: PropTypes) => {
+const ExecutableListItem = ({
+  stepNumber,
+  queueCommand,
+  mnemonics,
+}: PropTypes) => {
   const [value, setValue] = useState<number>(0);
   const [inProgress, setInProgress] = useState<boolean>(false);
   const progressComplete: boolean = value >= 100;
   const numberArray = useMemo(() => {
     return generateRandomNumberArray(getRandomInt(2, 5));
-  },[])
+  }, []);
 
   useEffect(() => {
     let interval: any;

@@ -54,7 +54,7 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
 
   const handleWatched = () => {
     modifyMnemonic({ ...data, watched: !data.watched });
-  }
+  };
 
   return (
     <RuxPopUp
@@ -93,7 +93,12 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
         </div>
         {isPassPlan ? (
           <div slot="footer">
-            <RuxCheckbox checked={ data.watched } onRuxchange={() => handleWatched()}>Add to Watcher</RuxCheckbox>
+            <RuxCheckbox
+              checked={data.watched}
+              onRuxchange={() => handleWatched()}
+            >
+              Add to Watcher
+            </RuxCheckbox>
           </div>
         ) : null}
       </RuxCard>

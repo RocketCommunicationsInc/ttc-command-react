@@ -10,11 +10,15 @@ import { useAppContext, ContextType } from "provider/useAppContext";
 const PassPlan = () => {
   const [command, setCommand] = useState({});
   const [pass, setPass] = useState("Pre-Pass");
-  const [commandList, setCommandList] = useState<string[]>([])
+  const [commandList, setCommandList] = useState<string[]>([]);
   const { contact }: ContextType = useAppContext();
-  const passPlanMnemonics = contact.mnemonics.slice(0,100)
+  const passPlanMnemonics = contact.mnemonics.slice(0, 100);
 
-  const addToPassQueue = (commandListItem: {commandId: number, commandString: string, description: string}) => {
+  const addToPassQueue = (commandListItem: {
+    commandId: number;
+    commandString: string;
+    description: string;
+  }) => {
     if (!commandListItem) return;
     setCommandList([...commandList, commandListItem.commandString]);
   };
@@ -27,12 +31,16 @@ const PassPlan = () => {
           <RuxOption label="Automatic" value="" />
         </RuxSelect>
       </div>
-        <div className={`banner ${pass}`}>{pass}</div>
-        <div className="pass_header-wrapper">
+      <div className={`banner ${pass}`}>{pass}</div>
+      <div className="pass_header-wrapper">
         <div className="pass_header-step">Step</div>
         <div className="pass_header-instruction">Instruction</div>
-        </div>
-        {pass === "Pre-Pass" ? <PrePassList setPass={setPass} /> : <PassList commandList={commandList} mnemonics={passPlanMnemonics} />}
+      </div>
+      {pass === "Pre-Pass" ? (
+        <PrePassList setPass={setPass} />
+      ) : (
+        <PassList commandList={commandList} mnemonics={passPlanMnemonics} />
+      )}
       <div slot="footer">
         <SearchCommands
           commands={commands}

@@ -30,7 +30,11 @@ const PassList = ({ commandList, mnemonics }: PropTypes) => {
           />
         ))}
         <SelectMenuListItem stepNumber={4} />
-        <ExecutableListItem stepNumber={5} mnemonics={mnemonics} queueCommand={"WAIT_TYPE"} />
+        <ExecutableListItem
+          stepNumber={5}
+          mnemonics={mnemonics}
+          queueCommand={"WAIT_TYPE"}
+        />
         {numberArray2.map((item, index) => (
           <MnemonicListItem
             key={index}
@@ -39,7 +43,7 @@ const PassList = ({ commandList, mnemonics }: PropTypes) => {
             mnemonic={mnemonics[item]}
           />
         ))}
-                {commandList.length > 0
+        {commandList.length > 0
           ? commandList.map((item, index) => {
               return (
                 <ExecutableListItem
