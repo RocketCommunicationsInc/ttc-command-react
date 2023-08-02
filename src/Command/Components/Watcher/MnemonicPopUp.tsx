@@ -5,22 +5,23 @@ import {
   RuxCard,
   RuxButton,
 } from "@astrouxds/react";
-import { type Mnemonic } from "@astrouxds/mock-data";
+import { useTTCGRMActions, type Mnemonic } from "@astrouxds/mock-data";
 import LineChart from "./LineChart";
 import { getRandomInt } from "utils";
 import { useAppContext, ContextType } from "provider/useAppContext";
 import type { Subsystem } from "@astrouxds/mock-data";
 import "./MnemonicPopUp.css";
-import { Dispatch, SetStateAction } from "react";
+import { useMemo } from "react";
 
 type PropTypes = {
   triggerValue: string | number;
   data: Mnemonic;
   isPassPlan: boolean;
-  setWatched?: Dispatch<SetStateAction<boolean>> | null;
 };
 
-const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes) => {
+const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
+  const { modifyMnemonic } = useTTCGRMActions();
+
   const {
     contact,
     toggleInvestigate,
@@ -28,15 +29,18 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes
     selectSubsystemsFromMnemonic,
   }: ContextType = useAppContext();
 
-  const menmonicData = [
-    getRandomInt(110),
-    getRandomInt(110),
-    getRandomInt(110),
-    data.currentValue,
-    getRandomInt(110),
-    getRandomInt(110),
-    getRandomInt(110),
-  ];
+  const menmonicData = useMemo(
+    () => [
+      getRandomInt(110),
+      getRandomInt(110),
+      getRandomInt(110),
+      data.currentValue,
+      getRandomInt(110),
+      getRandomInt(110),
+      getRandomInt(110),
+    ],
+    [data.currentValue]
+  );
 
   const handleSubsystemClick = (subsystem: Subsystem) => {
     toggleInvestigate();
@@ -47,6 +51,10 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes
     selectSubsystemsFromMnemonic(data);
     toggleInvestigate();
   };
+
+  const handleWatched = () => {
+    modifyMnemonic({ ...data, watched: !data.watched });
+  }
 
   return (
     <RuxPopUp
@@ -83,9 +91,9 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes
             </RuxButton>
           )}
         </div>
-        {isPassPlan && setWatched ? (
+        {isPassPlan ? (
           <div slot="footer">
-            <RuxCheckbox onRuxchange={() => setWatched(true)}>Add to Watcher</RuxCheckbox>
+            <RuxCheckbox checked={ data.watched } onRuxchange={() => handleWatched()}>Add to Watcher</RuxCheckbox>
           </div>
         ) : null}
       </RuxCard>

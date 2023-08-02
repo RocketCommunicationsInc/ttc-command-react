@@ -6,9 +6,14 @@ import ThermoElectric from "./SVG/ThermoElectric.svg";
 import Detector from "./SVG/Detector.svg";
 import Electronics from "./SVG/Electronics.svg";
 import Default from "./SVG/Default.svg";
+import Oscillator from "./SVG/Oscillator.svg";
+import Receiver from "./SVG/Receiver.svg";
+import Transmitter from "./SVG/Transmitter.svg";
+import FrequencyConverter from "./SVG/FrequencyConverter.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
+import { useEffect, useRef } from "react";
 
 type ElementObject = {
   status: string;
@@ -31,6 +36,10 @@ const backgroundImg = {
   "Thermo-Electric Cooler": ThermoElectric,
   Detector,
   Electronics,
+  "Frequency Converter": FrequencyConverter,
+  Receiver,
+  Transmitter,
+  "Local Oscillator": Oscillator,
 };
 
 const getColor = ({ status }: ElementObject) => {
@@ -44,6 +53,8 @@ const getBackground = ({ label }: ElementObject) => {
 const Assembly = () => {
   const { selectAssemblyDevice, selectedChildSubsystem }: ContextType =
     useAppContext();
+
+  const cyRef = useRef<any>(null);
 
   const findAssemblyDeviceByName = (name: string) =>
     selectedChildSubsystem.assemblyDevices.find(
@@ -125,7 +136,7 @@ const Assembly = () => {
       css: {
         "background-image": (node: any) => getBackground(node.data()),
         "background-image-containment": "over",
-        "bounds-expansion": "200px 0 0 0",
+        "bounds-expansion": "48.5px 0 0 0",
         "background-clip": "none",
         shape: "round-diamond",
         "background-color": (node: any) => getColor(node.data()),
@@ -188,7 +199,8 @@ const Assembly = () => {
     },
     //the cooler icon needs location adjustment in the node
     {
-      selector: 'node[label="Thermo-Electric Cooler"]',
+      selector:
+        'node[label="Thermo-Electric Cooler"], node[label="Frequency Converter"]',
       css: {
         "background-offset-y": -30,
       },
@@ -208,6 +220,22 @@ const Assembly = () => {
         "background-offset-y": -10,
       },
     },
+    //the transmitter icon needs location adjustment in the node
+    {
+      selector: 'node[label="Transmitter"]',
+      css: {
+        "background-offset-y": -40,
+        "background-offset-x": 25,
+      },
+    },
+    //the receiver icon needs location adjustment in the node
+    {
+      selector: 'node[label="Receiver"]',
+      css: {
+        "background-offset-y": -40,
+        "background-offset-x": -25,
+      },
+    },
   ];
 
   const handleClick = (e: any) => {
@@ -216,17 +244,38 @@ const Assembly = () => {
     selectAssemblyDevice(assemblyDevice);
   };
 
+  useEffect(() => {
+    const resize = () => {
+      if (cyRef.current) {
+        cyRef.current.layout({ name: "preset", fit: true }).run();
+        cyRef.current.ready(() => cyRef.current.resize());
+        cyRef.current.center();
+        cyRef.current.fit();
+      }
+    };
+    resize();
+    window.addEventListener("resize", resize);
+    return () => {
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
   return (
     <RuxContainer className="star-tracker">
       <div slot="header">{selectedChildSubsystem?.name}</div>
       <CytoscapeComponent
         elements={cyArr}
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "100%", overflow: "hidden" }}
         stylesheet={styles}
-        zoomingEnabled={false}
-        panningEnabled={false}
+        autoungrabify
         boxSelectionEnabled={false}
+        userPanningEnabled={false}
+        layout={{ name: "preset", fit: true }}
         cy={(cy: any) => {
+          cy.layout({ name: "preset", fit: true }).run();
+          cy.ready(() => cy.resize());
+          cy.fit();
+          cyRef.current = cy;
           cy.on("click", "node", handleClick);
           cy.on("mouseout", "node", function (e: any) {
             e.target.removeClass("hover");

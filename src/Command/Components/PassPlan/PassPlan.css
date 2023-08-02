@@ -70,12 +70,31 @@ li {
   box-shadow: var(--list-panel-box-shadow);
 }
 
+.pass_header-wrapper {
+  display: flex;
+  background: var(--color-background-surface-header);
+  padding-block: var(--spacing-2);
+}
+
+.pass_header-step {
+  padding-inline-start: var(--spacing-3);
+}
+
+.pass_header-instruction {
+  padding-inline-start: var(--spacing-20);
+}
+
 .rux-tree-header span:nth-of-type(1) {
   margin-right: 4.5rem;
 }
 
 .tree-wrapper .arrow::part(indicator) {
   align-items: center;
+}
+
+rux-tree.pass_body-wrapper rux-tree-node::part(text) {
+  padding-inline-start: var(--spacing-8);
+  width: 100%;
 }
 
 .banner {

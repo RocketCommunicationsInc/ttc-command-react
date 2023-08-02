@@ -5,11 +5,14 @@ import SearchCommands from "./SearchCommands/SearchCommands";
 import { useState } from "react";
 import PrePassList from "./PrePassList/PrePassList";
 import PassList from "./PassList/PassList";
+import { useAppContext, ContextType } from "provider/useAppContext";
 
 const PassPlan = () => {
   const [command, setCommand] = useState({});
   const [pass, setPass] = useState("Pre-Pass");
   const [commandList, setCommandList] = useState<string[]>([])
+  const { contact }: ContextType = useAppContext();
+  const passPlanMnemonics = contact.mnemonics.slice(0,100)
 
   const addToPassQueue = (commandListItem: {commandId: number, commandString: string, description: string}) => {
     if (!commandListItem) return;
@@ -25,7 +28,11 @@ const PassPlan = () => {
         </RuxSelect>
       </div>
         <div className={`banner ${pass}`}>{pass}</div>
-        {pass === "Pre-Pass" ? <PrePassList setPass={setPass} /> : <PassList commandList={commandList} />}
+        <div className="pass_header-wrapper">
+        <div className="pass_header-step">Step</div>
+        <div className="pass_header-instruction">Instruction</div>
+        </div>
+        {pass === "Pre-Pass" ? <PrePassList setPass={setPass} /> : <PassList commandList={commandList} mnemonics={passPlanMnemonics} />}
       <div slot="footer">
         <SearchCommands
           commands={commands}

@@ -42,8 +42,8 @@ rux-container.pass-plan {
   grid-area: watcher;
 }
 
-rux-container.electronics {
-  grid-area: electronics;
+rux-container.mnemonics {
+  grid-area: mnemonics;
 }
 
 rux-container.star-tracker {

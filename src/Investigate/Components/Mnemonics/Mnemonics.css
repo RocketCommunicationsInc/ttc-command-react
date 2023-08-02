@@ -1,22 +1,45 @@
-.electronics [slot="header"] {
+.mnemonics [slot="header"] {
   display: flex;
 }
 
-.electronics rux-input {
+.mnemonics rux-input {
   margin-left: auto;
   margin-right: var(--spacing-4);
   width: 18rem;
 }
 
-.table-wrapper.electronics rux-table-header-cell:nth-of-type(1) {
+.table-wrapper.mnemonics rux-table-header-row {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.table-wrapper.mnemonics rux-table-header-cell:nth-of-type(1) {
   padding-left: var(--spacing-4);
 }
 
-.table-wrapper.electronics rux-table-cell:nth-of-type(4) {
+.table-wrapper.mnemonics rux-table-header-cell:nth-of-type(6) {
+width: 16%
+}
+
+.table-wrapper.mnemonics rux-table-cell:nth-of-type(4) {
   padding-left: var(--spacing-3);
 }
 
-.table-wrapper.electronics rux-status {
+.table-wrapper.mnemonics rux-status {
   float: left;
   margin-left: var(--spacing-8);
+}
+
+.table-wrapper.mnemonics rux-table-header-row rux-icon {
+  vertical-align: middle;
+  width: 32px;
+}
+
+.table-wrapper.mnemonics rux-table-header-cell:has(rux-icon.visible) {
+  color: var(--color-text-interactive-default);
+}
+
+.table-wrapper.mnemonics rux-table-header-cell[data-sortprop='status'] {
+  text-align: center;
 }
