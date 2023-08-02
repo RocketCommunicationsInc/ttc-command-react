@@ -12,6 +12,7 @@ import { useAppContext, ContextType } from "provider/useAppContext";
 import type { Subsystem } from "@astrouxds/mock-data";
 import "./MnemonicPopUp.css";
 import { Dispatch, SetStateAction } from "react";
+import { useMemo } from "react";
 
 type PropTypes = {
   triggerValue: string | number;
@@ -30,15 +31,18 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes
     selectSubsystemsFromMnemonic,
   }: ContextType = useAppContext();
 
-  const menmonicData = [
-    getRandomInt(110),
-    getRandomInt(110),
-    getRandomInt(110),
-    data.currentValue,
-    getRandomInt(110),
-    getRandomInt(110),
-    getRandomInt(110),
-  ];
+  const menmonicData = useMemo(
+    () => [
+      getRandomInt(110),
+      getRandomInt(110),
+      getRandomInt(110),
+      data.currentValue,
+      getRandomInt(110),
+      getRandomInt(110),
+      getRandomInt(110),
+    ],
+    [data.currentValue]
+  );
 
   const handleSubsystemClick = (subsystem: Subsystem) => {
     toggleInvestigate();

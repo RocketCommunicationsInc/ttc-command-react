@@ -39,18 +39,18 @@ const AppProvider = ({ children }: PropTypes) => {
   const firstChildSubsystem = contact.subsystems[0].childSubsystems[0];
   const firstAssemblyDevice =
     contact.subsystems[0].childSubsystems[0].assemblyDevices[0];
-  
-  
+
   const [showInvestigate, setShowInvestigate] = useState<boolean>(false);
 
-  const [selectedSubsystemName, setSelectedSubsystemName] =
-    useState<string>(firstSubsystem.name);
+  const [selectedSubsystemName, setSelectedSubsystemName] = useState<string>(
+    firstSubsystem.name
+  );
   const [selectedChildSubsystemName, setSelectedChildSubsystemName] =
     useState<string>(firstChildSubsystem.name);
   const [selectedAssemblyDeviceName, setSelectedAssemblyDeviceName] =
     useState<string>(firstAssemblyDevice.name);
 
-    //Utility finder functions
+  //Utility finder functions
   const findSubsystemByName = (name?: string) =>
     contact.subsystems.find((subsystem) => subsystem.name === name);
   const findChildSubsystemByName = (subsystem: Subsystem, name?: string) =>
@@ -63,10 +63,16 @@ const AppProvider = ({ children }: PropTypes) => {
   ) =>
     childSubsystem.assemblyDevices.find((device) => device.name === name) ||
     firstAssemblyDevice;
-    
-  const selectedSubsystem = findSubsystemByName(selectedSubsystemName) || firstSubsystem;
-  const selectedChildSubsystem = findChildSubsystemByName(selectedSubsystem, selectedChildSubsystemName) || firstChildSubsystem;
-  const selectedAssemblyDevice = findAssemblyDeviceByName(selectedChildSubsystem, selectedAssemblyDeviceName);
+
+  const selectedSubsystem =
+    findSubsystemByName(selectedSubsystemName) || firstSubsystem;
+  const selectedChildSubsystem =
+    findChildSubsystemByName(selectedSubsystem, selectedChildSubsystemName) ||
+    firstChildSubsystem;
+  const selectedAssemblyDevice = findAssemblyDeviceByName(
+    selectedChildSubsystem,
+    selectedAssemblyDeviceName
+  );
 
   // Exported state setters
   const toggleInvestigate = () => {
@@ -83,11 +89,14 @@ const AppProvider = ({ children }: PropTypes) => {
   const selectSubsystem = (subsystem: Subsystem) => {
     setSelectedSubsystemName(subsystem.name);
     setSelectedChildSubsystemName(subsystem.childSubsystems[0].name);
-    setSelectedAssemblyDeviceName(subsystem.childSubsystems[0].assemblyDevices[0].name);
+    setSelectedAssemblyDeviceName(
+      subsystem.childSubsystems[0].assemblyDevices[0].name
+    );
   };
 
   const selectChildSubsystem = (childSubsystem: ChildSubsystem) => {
-    const subsystem = findSubsystemByName(childSubsystem.subsystemParent) || firstSubsystem;
+    const subsystem =
+      findSubsystemByName(childSubsystem.subsystemParent) || firstSubsystem;
     setSelectedSubsystemName(subsystem.name);
     setSelectedChildSubsystemName(childSubsystem.name);
     setSelectedAssemblyDeviceName(childSubsystem.assemblyDevices[0].name);
