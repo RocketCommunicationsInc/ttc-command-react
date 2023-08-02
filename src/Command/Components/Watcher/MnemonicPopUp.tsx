@@ -11,7 +11,7 @@ import { getRandomInt } from "utils";
 import { useAppContext, ContextType } from "provider/useAppContext";
 import type { Subsystem } from "@astrouxds/mock-data";
 import "./MnemonicPopUp.css";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 import { useMemo } from "react";
 
 type PropTypes = {
@@ -23,6 +23,11 @@ type PropTypes = {
 
 const MnemonicPopUp = ({ triggerValue, data, isPassPlan, setWatched }: PropTypes) => {
   const { modifyMnemonic } = useTTCGRMActions();
+
+  useEffect(() => {
+    data.watched && (setWatched && setWatched(prevState => !prevState))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
   
   const {
     contact,
