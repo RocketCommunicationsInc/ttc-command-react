@@ -44,7 +44,7 @@
   flex-flow: row nowrap;
   margin: 0;
   font-size: var(--font-heading-5-font-size);
-  box-shadow: 0px 3px 3px 0px rgb(0 0 0 / 40%);
+  box-shadow: var(--list-panel-box-shadow);
   padding: var(--spacing-2) var(--spacing-4);
   background-color: var(--color-background-base-header);
   position: sticky;
@@ -122,7 +122,7 @@ rux-accordion rux-status {
   display: flex;
   flex-direction: column;
   background-color: var(--color-background-surface-default);
-  overflow-y: scroll;
+  overflow-y: auto;
   flex-grow: 1;
   padding-left: 0;
   margin: 0;

@@ -1,3 +1,29 @@
+.pass_header-wrapper {
+    display: flex;
+    background: var(--color-background-surface-header);
+    padding-block: var(--spacing-2);
+    font-size: var(--font-heading-5-font-size);
+    box-shadow: var(--list-panel-box-shadow);
+    z-index: 90;
+}
+
+.pass_header-step {
+  padding-inline-start: var(--spacing-3);
+}
+
+.pass_header-instruction {
+  padding-inline-start: var(--spacing-20);
+}
+
+rux-tree.pass_body-wrapper {
+    overflow: auto;
+}
+
+rux-tree.pass_body-wrapper rux-tree-node::part(text) {
+  padding-inline-start: var(--spacing-8);
+  width: 100%;
+}
+
 .pre-pass-list-table rux-table-cell:first-of-type > div:first-of-type {
   display: flex;
   justify-content: center;
@@ -60,13 +86,6 @@ rux-tree-node::part(node) {
 
 .pass_executable-parent {
   position: relative;
-}
-
-.pass_execute-button {
-  position: absolute;
-  z-index: 10000;
-  top: 12px;
-  left: 82px;
 }
 
 .pass_executable-parent rux-tree-node rux-tree-node::part(node) {

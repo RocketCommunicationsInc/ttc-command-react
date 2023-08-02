@@ -1,20 +1,26 @@
 import { RuxButton, RuxProgress, RuxIcon, RuxTreeNode } from "@astrouxds/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import MnemonicListItem from "../MnemonicListItem/MnemonicListItem";
 import { generateRandomNumberArray, getRandomInt } from "../../../../../utils";
 import { Mnemonic } from "@astrouxds/mock-data";
 
 type PropTypes = {
   stepNumber: number | string;
+  queueCommand: string;
   mnemonics: Mnemonic[];
 };
 
-const numberArray = generateRandomNumberArray(getRandomInt(2, 5));
-
-const ExecutableListItem = ({ stepNumber, mnemonics }: PropTypes) => {
+const ExecutableListItem = ({
+  stepNumber,
+  queueCommand,
+  mnemonics,
+}: PropTypes) => {
   const [value, setValue] = useState<number>(0);
   const [inProgress, setInProgress] = useState<boolean>(false);
   const progressComplete: boolean = value >= 100;
+  const numberArray = useMemo(() => {
+    return generateRandomNumberArray(getRandomInt(2, 5));
+  }, []);
 
   useEffect(() => {
     let interval: any;
@@ -56,7 +62,7 @@ const ExecutableListItem = ({ stepNumber, mnemonics }: PropTypes) => {
           )}
 
           <div className="pass_executable-progress-wrapper">
-            <div className="pass_command-name">Command Name Placeholder</div>
+            <div className="pass_command-name">{queueCommand}</div>
             <div className="pass_progress-time">
               <RuxProgress value={value} hideLabel />
               <RuxIcon icon="schedule" size="extra-small" />
