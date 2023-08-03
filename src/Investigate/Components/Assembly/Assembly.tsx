@@ -51,8 +51,11 @@ const getBackground = ({ label }: ElementObject) => {
 };
 
 const Assembly = () => {
-  const { selectAssemblyDevice, selectedChildSubsystem }: ContextType =
-    useAppContext();
+  const {
+    selectAssemblyDevice,
+    selectedChildSubsystem,
+    selectedAssemblyDevice,
+  }: ContextType = useAppContext();
 
   const cyRef = useRef<any>(null);
 
@@ -260,6 +263,11 @@ const Assembly = () => {
     };
   }, []);
 
+  useEffect(() => {
+    cyRef.current.nodes().deselect();
+    cyRef.current.$(`node[label="${selectedAssemblyDevice.name}"]`).select();
+  }, [selectedAssemblyDevice]);
+
   return (
     <RuxContainer className="star-tracker">
       <div slot="header">{selectedChildSubsystem?.name}</div>
@@ -285,10 +293,7 @@ const Assembly = () => {
             e.target.addClass("hover");
             cy.container().style.cursor = "pointer";
           });
-          cy.on("data", () => {
-            cy.nodes().deselect();
-            cy.nodes()[0].select();
-          });
+          cy.on("data", () => {});
         }}
       />
     </RuxContainer>

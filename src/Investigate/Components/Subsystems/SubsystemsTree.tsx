@@ -46,7 +46,9 @@ const SubsystemsTree = () => {
                   key={index}
                   slot="node"
                   selected={child === selectedChildSubsystem}
-                  onRuxtreenodeselected={() => selectChildSubsystem(child)}
+                  onClick={() => {
+                    selectChildSubsystem(child);
+                  }}
                 >
                   <RuxStatus slot="prefix" status={child.status} />
                   {child.name}
