@@ -13,7 +13,7 @@ import FrequencyConverter from "./SVG/FrequencyConverter.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { getRandomInt } from "utils";
 
 type ElementObject = {
@@ -178,21 +178,24 @@ const Assembly = () => {
     selectAssemblyDevice(assemblyDevice);
   };
 
-  const layout = {
-    name: "breadthfirst",
+  const layout = useMemo(
+    () => ({
+      name: "breadthfirst",
 
-    fit: true, // whether to fit the viewport to the graph
-    directed: false,
-    padding: 0, // padding on fit
-    circle: false, // put depths in concentric circles if true, put depths top down if false
-    grid: false, // whether to create an even grid into which the DAG is placed (circle:false only)
-    spacingFactor: 0.9, // positive spacing factor, larger => more space between nodes (N.B. n/a if causes overlap)
-    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-    avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
-    nodeDimensionsIncludeLabels: true, // Excludes the label when calculating node bounding boxes for the layout algorithm
-    roots: undefined, // the roots of the trees
-    depthSort: undefined, // a sorting function to order nodes at equal depth. e.g. function(a, b){ return a.data('weight') - b.data('weight') }
-  };
+      fit: true, // whether to fit the viewport to the graph
+      directed: false,
+      padding: 0, // padding on fit
+      circle: false, // put depths in concentric circles if true, put depths top down if false
+      grid: false, // whether to create an even grid into which the DAG is placed (circle:false only)
+      spacingFactor: 0.9, // positive spacing factor, larger => more space between nodes (N.B. n/a if causes overlap)
+      boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+      avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
+      nodeDimensionsIncludeLabels: true, // Excludes the label when calculating node bounding boxes for the layout algorithm
+      roots: undefined, // the roots of the trees
+      depthSort: undefined, // a sorting function to order nodes at equal depth. e.g. function(a, b){ return a.data('weight') - b.data('weight') }
+    }),
+    []
+  );
 
   useEffect(() => {
     //this is going to randomize nodes connect to which
@@ -228,18 +231,18 @@ const Assembly = () => {
         },
       })
     );
-    console.log("change!!");
+    console.log("run!");
     const newEdges = randomEdges(elementsArr);
-    console.log(cyRef.current.elements());
     cyRef.current.elements().remove();
-    cyRef.current.elements().data([...elementsArr, ...newEdges]);
-  }, [selectedChildSubsystem]);
+    cyRef.current.add([...elementsArr, ...newEdges]);
+    cyRef.current.layout(layout).run();
+    cyRef.current.ready(() => cyRef.current.resize());
+    cyRef.current.fit();
+  }, [selectedChildSubsystem, layout]);
 
   useEffect(() => {
     const resize = () => {
       if (cyRef.current) {
-        // cyRef.current.layout(layout).run();
-        // cyRef.current.ready(() => cyRef.current.resize());
         cyRef.current.center();
         cyRef.current.fit();
       }
@@ -263,9 +266,6 @@ const Assembly = () => {
         userPanningEnabled={false}
         layout={layout}
         cy={(cy: any) => {
-          cy.layout(layout).run();
-          cy.ready(() => cy.resize());
-          cy.fit();
           cyRef.current = cy;
           cy.on("click", "node", handleClick);
           cy.on("mouseout", "node", function (e: any) {
