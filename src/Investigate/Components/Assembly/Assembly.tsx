@@ -14,6 +14,7 @@ import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
 import { useEffect, useRef } from "react";
+import { getRandomInt } from "utils";
 
 type ElementObject = {
   status: string;
@@ -60,73 +61,6 @@ const Assembly = () => {
     selectedChildSubsystem.assemblyDevices.find(
       (device) => device?.name === name
     );
-
-  const positionArr: object[] = [
-    { x: 120, y: 195 },
-    { x: 390, y: 150 },
-    { x: 625, y: 250 },
-    { x: 830, y: 120 },
-    { x: 1020, y: 250 },
-    { x: 1285, y: 165 },
-  ];
-
-  const elementsArr = selectedChildSubsystem.assemblyDevices
-    .map(({ name, status }, index) => ({
-      data: {
-        id: index,
-        label: name,
-        status: status,
-      },
-      position: positionArr[index] || { x: 0, y: 0 },
-    }))
-    .filter((el) => el.data.id < 6);
-
-  const edgesArr = [
-    {
-      data: {
-        source: 0,
-        target: 1,
-      },
-    },
-    {
-      data: {
-        source: 1,
-        target: 2,
-      },
-    },
-    {
-      data: {
-        source: 2,
-        target: 3,
-      },
-    },
-    {
-      data: {
-        source: 2,
-        target: 4,
-      },
-    },
-    {
-      data: {
-        source: 3,
-        target: 5,
-      },
-    },
-    {
-      data: {
-        source: 4,
-        target: 5,
-      },
-    },
-  ];
-
-  const newEdges = edgesArr.filter(
-    (edge) =>
-      edge.data.source < elementsArr.length &&
-      edge.data.target < elementsArr.length
-  );
-
-  const cyArr: any[] = [...elementsArr, ...newEdges];
 
   //Programatic styles for nodes
   const styles: StylesheetCSS[] = [
@@ -244,11 +178,68 @@ const Assembly = () => {
     selectAssemblyDevice(assemblyDevice);
   };
 
+  const layout = {
+    name: "breadthfirst",
+
+    fit: true, // whether to fit the viewport to the graph
+    directed: false,
+    padding: 0, // padding on fit
+    circle: false, // put depths in concentric circles if true, put depths top down if false
+    grid: false, // whether to create an even grid into which the DAG is placed (circle:false only)
+    spacingFactor: 0.9, // positive spacing factor, larger => more space between nodes (N.B. n/a if causes overlap)
+    boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+    avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
+    nodeDimensionsIncludeLabels: true, // Excludes the label when calculating node bounding boxes for the layout algorithm
+    roots: undefined, // the roots of the trees
+    depthSort: undefined, // a sorting function to order nodes at equal depth. e.g. function(a, b){ return a.data('weight') - b.data('weight') }
+  };
+
+  useEffect(() => {
+    //this is going to randomize nodes connect to which
+    const randomEdges = (elements: any[]) => {
+      let edgesArray: any[] = [];
+      elements.forEach((element, index) => {
+        //we don't need the last element to have outgoing edges
+        if (index === elements.length - 1) return;
+
+        //generate number of lines either up to 2 or 1 for the penultimate node
+        const numberEdges =
+          index === elements.length - 2 ? 1 : getRandomInt(3, 1);
+        //for each edge make it connect forward in the array
+        for (let i = 1; i <= numberEdges; i++) {
+          const edge = {
+            data: {
+              source: index,
+              target: index + i,
+            },
+          };
+          edgesArray.push(edge);
+        }
+      });
+      return edgesArray;
+    };
+
+    const elementsArr = selectedChildSubsystem.assemblyDevices.map(
+      ({ name, status }, index) => ({
+        data: {
+          id: index,
+          label: name,
+          status: status,
+        },
+      })
+    );
+    console.log("change!!");
+    const newEdges = randomEdges(elementsArr);
+    console.log(cyRef.current.elements());
+    cyRef.current.elements().remove();
+    cyRef.current.elements().data([...elementsArr, ...newEdges]);
+  }, [selectedChildSubsystem]);
+
   useEffect(() => {
     const resize = () => {
       if (cyRef.current) {
-        cyRef.current.layout({ name: "preset", fit: true }).run();
-        cyRef.current.ready(() => cyRef.current.resize());
+        // cyRef.current.layout(layout).run();
+        // cyRef.current.ready(() => cyRef.current.resize());
         cyRef.current.center();
         cyRef.current.fit();
       }
@@ -264,15 +255,15 @@ const Assembly = () => {
     <RuxContainer className="star-tracker">
       <div slot="header">{selectedChildSubsystem?.name}</div>
       <CytoscapeComponent
-        elements={cyArr}
+        elements={[]}
         style={{ width: "100%", height: "100%", overflow: "hidden" }}
         stylesheet={styles}
         autoungrabify
         boxSelectionEnabled={false}
         userPanningEnabled={false}
-        layout={{ name: "preset", fit: true }}
+        layout={layout}
         cy={(cy: any) => {
-          cy.layout({ name: "preset", fit: true }).run();
+          cy.layout(layout).run();
           cy.ready(() => cy.resize());
           cy.fit();
           cyRef.current = cy;
