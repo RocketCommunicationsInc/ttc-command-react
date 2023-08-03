@@ -7,14 +7,15 @@ import PrePassList from "./PrePassList/PrePassList";
 import PassList from "./PassList/PassList";
 import { useAppContext, ContextType } from "provider/useAppContext";
 import PrePassComplete from "./PrePassComplete/PrePassComplete";
+import { Mnemonic } from "@astrouxds/mock-data";
 
 const PassPlan = () => {
-  const [command, setCommand] = useState({});
-  const [pass, setPass] = useState("Pre-Pass");
+  const [command, setCommand] = useState<object>({});
+  const [pass, setPass] = useState<string>("Pre-Pass");
   const [commandList, setCommandList] = useState<string[]>([]);
   const [countdown, setCountdown] = useState<number>(4);
   const { contact }: ContextType = useAppContext();
-  const passPlanMnemonics = contact.mnemonics.slice(0, 100);
+  const passPlanMnemonics: Mnemonic[] = contact.mnemonics.slice(0, 100);
   let countdownFormat: string = `00:00:0${countdown}`;
 
   const addToPassQueue = (commandListItem: {
@@ -71,7 +72,7 @@ const PassPlan = () => {
       {pass === "Pre-Pass" ? (
         <PrePassList setPass={setPass} />
       ) : pass === "Pre-Pass-Complete" ? (
-        <PrePassComplete setPass={setPass} />
+        <PrePassComplete />
       ) : (
         <PassList commandList={commandList} mnemonics={passPlanMnemonics} />
       )}
