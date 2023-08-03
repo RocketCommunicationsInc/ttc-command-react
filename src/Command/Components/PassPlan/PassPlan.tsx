@@ -48,21 +48,25 @@ const PassPlan = () => {
   }, [pass]);
   return (
     <RuxContainer className="pass-plan">
-      <div slot="header" className="header">
+      <div slot="header" className="pass-plan_header">
         <span>IRON 4090 PASS PLAN</span>
-        <RuxSelect className="header-select" size="small" label="Mode">
+        <RuxSelect
+          className="pass-plan_header-select"
+          size="small"
+          label="Mode"
+        >
           <RuxOption label="Semi-Auto" value="" />
           <RuxOption label="Automatic" value="" />
         </RuxSelect>
       </div>
-      <div className={`banner ${pass}`}>
+      <div className={`pass-plan_banner ${pass}`}>
         {pass === "Pre-Pass-Complete"
           ? `${pass}. Pass starts in ${countdownFormat}`
           : pass}
       </div>
-      <div className="pass_header-wrapper">
-        <div className="pass_header-step">Step</div>
-        <div className="pass_header-instruction">Instruction</div>
+      <div className="pass-plan_header-wrapper">
+        <div className="pass-plan_header-step">Step</div>
+        <div className="pass-plan_header-instruction">Instruction</div>
       </div>
       {pass === "Pre-Pass" ? (
         <PrePassList setPass={setPass} />

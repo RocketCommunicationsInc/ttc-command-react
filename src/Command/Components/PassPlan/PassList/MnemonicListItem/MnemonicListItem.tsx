@@ -12,11 +12,11 @@ const MnemonicListItem = ({ stepNumber, slotNode, mnemonic }: PropTypes) => {
   return (
     <>
       <RuxTreeNode slot={slotNode ? "node" : ""} key={mnemonic.id}>
-        <div slot="prefix" className="pass_number-wrapper">
+        <div slot="prefix" className="pass-plan_number-wrapper">
           {stepNumber}
         </div>
-        <div className="pass_mnemonic-wrapper">
-          <RuxCheckbox />
+        <div className="pass-plan_mnemonic-wrapper">
+          <RuxCheckbox className="pass-plan_checkbox" />
           {"Verify\u00A0"}
           <MnemonicPopUp
             isPassPlan
@@ -26,7 +26,7 @@ const MnemonicListItem = ({ stepNumber, slotNode, mnemonic }: PropTypes) => {
           {"\u00A0 = \u00A0"}
           {mnemonic.currentValue}
           {mnemonic.watched && (
-            <div className="pass_mnemonic-watching">
+            <div className="pass-plan_mnemonic-watching">
               <RuxIcon icon="visibility" size="extra-small" />
               <i>Watching</i>
             </div>
