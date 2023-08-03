@@ -1,11 +1,6 @@
 import { RuxIndeterminateProgress } from "@astrouxds/react";
-import { Dispatch, SetStateAction } from "react";
 
-type PropTypes = {
-  setPass: Dispatch<SetStateAction<string>>;
-};
-
-const PrePassComplete = ({ setPass }: PropTypes) => {
+const PrePassComplete = () => {
   return (
     <div className="pass_pre-pass-complete-wrapper">
       <RuxIndeterminateProgress />

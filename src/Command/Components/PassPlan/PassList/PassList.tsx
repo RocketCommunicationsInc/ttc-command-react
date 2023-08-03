@@ -20,7 +20,7 @@ const numberArray2 = generateRandomNumberArray(2);
 const PassList = ({ commandList, mnemonics }: PropTypes) => {
   return (
     <>
-      <RuxTree className="pass_body-wrapper">
+      <RuxTree className="pass-plan_tree-wrapper">
         {numberArray1.map((item, index) => (
           <MnemonicListItem
             key={index}
