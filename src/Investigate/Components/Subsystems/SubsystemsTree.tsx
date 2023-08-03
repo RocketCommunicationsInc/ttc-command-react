@@ -46,7 +46,7 @@ const SubsystemsTree = () => {
                   key={index}
                   slot="node"
                   selected={child === selectedChildSubsystem}
-                  onClick={() => {
+                  onRuxtreenodeselected={() => {
                     selectChildSubsystem(child);
                   }}
                 >
