@@ -47,7 +47,7 @@ const getBackground = ({ label }: ElementObject) => {
 };
 
 //Programatic styles for nodes
-const styles: StylesheetCSS[] = [
+export const Styles: StylesheetCSS[] = [
   //svg background
   {
     selector: "node",
@@ -156,4 +156,18 @@ const styles: StylesheetCSS[] = [
   },
 ];
 
-export default styles;
+export const Layout = {
+  name: "cose",
+
+  animate: false,
+  directed: false,
+  padding: 15, // padding on fit
+  circle: false, // put depths in concentric circles if true, put depths top down if false
+  grid: true, // whether to create an even grid into which the DAG is placed (circle:false only)
+  spacingFactor: 1, // positive spacing factor, larger => more space between nodes (N.B. n/a if causes overlap)
+  boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+  avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
+  nodeDimensionsIncludeLabels: true, // Excludes the label when calculating node bounding boxes for the layout algorithm
+  roots: undefined, // the roots of the trees
+  depthSort: undefined, // a sorting function to order nodes at equal depth. e.g. function(a, b){ return a.data('weight') - b.data('weight') }
+};

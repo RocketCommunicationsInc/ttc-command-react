@@ -1,55 +1,10 @@
 import { RuxContainer } from "@astrouxds/react";
-import Lens from "./SVG/Lens.svg";
-import Baffle from "./SVG/Baffle.svg";
-import DetectionModule from "./SVG/DetectionModule.svg";
-import ThermoElectric from "./SVG/ThermoElectric.svg";
-import Detector from "./SVG/Detector.svg";
-import Electronics from "./SVG/Electronics.svg";
-import Default from "./SVG/Default.svg";
-import Oscillator from "./SVG/Oscillator.svg";
-import Receiver from "./SVG/Receiver.svg";
-import Transmitter from "./SVG/Transmitter.svg";
-import FrequencyConverter from "./SVG/FrequencyConverter.svg";
 import CytoscapeComponent from "react-cytoscapejs";
-import { StylesheetCSS } from "cytoscape";
+import { Styles, Layout } from "./CytoScapeStyles";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
-import { useEffect, useRef, useMemo, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getRandomInt } from "utils";
-
-type ElementObject = {
-  status: string;
-  label: string;
-};
-
-const statusColor = {
-  off: "#a4abb6",
-  normal: "#56f000",
-  standby: "#2dccff",
-  caution: "#fce83a",
-  serious: "#ffb302",
-  critical: "#ff3838",
-};
-
-const backgroundImg = {
-  Lens,
-  Baffle,
-  "Detection Module": DetectionModule,
-  "Thermo-Electric Cooler": ThermoElectric,
-  Detector,
-  Electronics,
-  "Frequency Converter": FrequencyConverter,
-  Receiver,
-  Transmitter,
-  "Local Oscillator": Oscillator,
-};
-
-const getColor = ({ status }: ElementObject) => {
-  return statusColor[status as keyof typeof statusColor] || statusColor.off;
-};
-
-const getBackground = ({ label }: ElementObject) => {
-  return backgroundImg[label as keyof typeof backgroundImg] || Default;
-};
+import { ChildSubsystem } from "@astrouxds/mock-data";
 
 const Assembly = () => {
   const {
@@ -57,6 +12,9 @@ const Assembly = () => {
     selectedChildSubsystem,
     selectedAssemblyDeviceName,
   }: ContextType = useAppContext();
+  const [childSubsystem, setChildSubsystem] = useState<ChildSubsystem | null>(
+    null
+  );
 
   const cyRef = useRef<any>(null);
 
@@ -65,143 +23,35 @@ const Assembly = () => {
       (device) => device?.name === name
     );
 
-  //Programatic styles for nodes
-  const styles: StylesheetCSS[] = [
-    //svg background
-    {
-      selector: "node",
-      css: {
-        "background-image": (node: any) => getBackground(node.data()),
-        "background-image-containment": "over",
-        "bounds-expansion": "48.5px 0 0 0",
-        "background-clip": "none",
-        shape: "round-diamond",
-        "background-color": (node: any) => getColor(node.data()),
-        "border-color": (node: any) => getColor(node.data()),
-        "background-image-opacity": 0.85,
-        height: "130%",
-        width: "210%",
-        "background-width-relative-to": "inner",
-        "background-height-relative-to": "inner",
-        opacity: 0.75,
-        "border-width": "4px",
-      },
-    },
-    //actions
-    {
-      selector: "node.hover",
-      css: {
-        "border-color": "#FFF",
-      },
-    },
-    //remove default overlay
-    {
-      selector: "node:active",
-      css: {
-        "overlay-opacity": 0,
-        opacity: 1,
-      },
-    },
-    //add hover effect
-    {
-      selector: "node:selected",
-      css: {
-        "border-color": "#FFF",
-        opacity: 1,
-      },
-    },
-    //label text
-    {
-      selector: "node[label]",
-      css: {
-        label: "data(label)",
-        "font-size": "16",
-        color: "white",
-        "text-halign": "center",
-        "text-valign": "bottom",
-        "text-margin-y": 7,
-      },
-    },
-    //lines between the nodes
-    {
-      selector: "edge",
-      css: {
-        "curve-style": "taxi",
-        "line-style": "solid",
-        "taxi-turn-min-distance": "15px",
-        "source-distance-from-node": 3,
-        "target-distance-from-node": 3,
-        width: 1.5,
-      },
-    },
-    //the cooler icon needs location adjustment in the node
-    {
-      selector:
-        'node[label="Thermo-Electric Cooler"], node[label="Frequency Converter"]',
-      css: {
-        "background-offset-y": -30,
-      },
-    },
-    //the electronics icon needs location adjustment in the node
-    {
-      selector: 'node[label="Electronics"]',
-      css: {
-        "background-offset-y": -12,
-        "background-offset-x": 1,
-      },
-    },
-    //the detector icon needs location adjustment in the node
-    {
-      selector: 'node[label="Detector"]',
-      css: {
-        "background-offset-y": -10,
-      },
-    },
-    //the transmitter icon needs location adjustment in the node
-    {
-      selector: 'node[label="Transmitter"]',
-      css: {
-        "background-offset-y": -40,
-        "background-offset-x": 25,
-      },
-    },
-    //the receiver icon needs location adjustment in the node
-    {
-      selector: 'node[label="Receiver"]',
-      css: {
-        "background-offset-y": -40,
-        "background-offset-x": -25,
-      },
-    },
-  ];
-
   const handleClick = (e: any) => {
     const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
     if (!assemblyDevice) return;
     selectAssemblyDevice(assemblyDevice);
   };
 
-  const layout = useMemo(
-    () => ({
-      name: "breadthfirst",
+  //compare our subsystem to our stored array, if different set the new array
+  if (
+    JSON.stringify(childSubsystem) !== JSON.stringify(selectedChildSubsystem)
+  ) {
+    console.log("changed?");
+    setChildSubsystem(selectedChildSubsystem);
+  }
 
-      fit: true, // whether to fit the viewport to the graph
-      directed: false,
-      padding: 0, // padding on fit
-      circle: false, // put depths in concentric circles if true, put depths top down if false
-      grid: false, // whether to create an even grid into which the DAG is placed (circle:false only)
-      spacingFactor: 0.9, // positive spacing factor, larger => more space between nodes (N.B. n/a if causes overlap)
-      boundingBox: undefined, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-      avoidOverlap: true, // prevents node overlap, may overflow boundingBox if not enough space
-      nodeDimensionsIncludeLabels: true, // Excludes the label when calculating node bounding boxes for the layout algorithm
-      roots: undefined, // the roots of the trees
-      depthSort: undefined, // a sorting function to order nodes at equal depth. e.g. function(a, b){ return a.data('weight') - b.data('weight') }
-    }),
-    []
-  );
+  //now that we have subsystem in a state we can use it to generate nodes and edges
+  useEffect(() => {
+    console.log("changed!");
+    const cy = cyRef.current;
 
-  const setupCytoscape = useCallback(() => {
-    //this is going to randomize nodes connect to which
+    const elements = childSubsystem
+      ? childSubsystem.assemblyDevices.map(({ name, status }, index) => ({
+          data: {
+            id: index,
+            label: name,
+            status: status,
+          },
+        }))
+      : [];
+
     const randomEdges = (elements: any[]) => {
       let edgesArray: any[] = [];
       elements.forEach((_, index) => {
@@ -224,27 +74,12 @@ const Assembly = () => {
       });
       return edgesArray;
     };
-
-    const elementsArr = selectedChildSubsystem.assemblyDevices.map(
-      ({ name, status }, index) => ({
-        data: {
-          id: index,
-          label: name,
-          status: status,
-        },
-      })
-    );
-    const newEdges = randomEdges(elementsArr);
-    cyRef.current.elements().remove();
-    cyRef.current.add([...elementsArr, ...newEdges]);
-    cyRef.current.layout(layout).run();
-    cyRef.current.ready(() => cyRef.current.resize());
-    cyRef.current.fit();
-  }, [layout, selectedChildSubsystem]);
-
-  useEffect(() => {
-    setupCytoscape();
-  }, [setupCytoscape, selectedChildSubsystem, layout]);
+    cy.elements().remove();
+    cy.add([...elements, ...randomEdges(elements)]);
+    cy.layout(Layout).run();
+    cy.ready(() => cy.resize());
+    cy.fit();
+  }, [childSubsystem]);
 
   useEffect(() => {
     const resize = () => {
@@ -260,13 +95,6 @@ const Assembly = () => {
     };
   }, []);
 
-  //run cytoscape the first time
-  console.log(cyRef.current && cyRef.current.elements().length === 0);
-  if (cyRef.current && cyRef.current.elements().length === 0) {
-    console.log("make cytoscape first time");
-    setupCytoscape();
-  }
-
   useEffect(() => {
     if (!selectedAssemblyDeviceName) return;
     cyRef.current.nodes().deselect();
@@ -276,28 +104,32 @@ const Assembly = () => {
   return (
     <RuxContainer className="star-tracker">
       <div slot="header">{selectedChildSubsystem?.name}</div>
-      <CytoscapeComponent
-        elements={[]}
-        style={{ width: "100%", height: "100%", overflow: "hidden" }}
-        stylesheet={styles}
-        autoungrabify
-        boxSelectionEnabled={false}
-        userPanningEnabled={false}
-        layout={layout}
-        cy={(cy: any) => {
-          cyRef.current = cy;
-          cy.on("click", "node", handleClick);
-          cy.on("mouseout", "node", function (e: any) {
-            e.target.removeClass("hover");
-            cy.container().style.cursor = "initial";
-          });
-          cy.on("mouseover", "node", function (e: any) {
-            e.target.addClass("hover");
-            cy.container().style.cursor = "pointer";
-          });
-          cy.on("data", () => {});
-        }}
-      />
+      <div style={{ width: 1200, height: 400, maxWidth: "100%" }}>
+        <CytoscapeComponent
+          elements={[]}
+          style={{ width: "100%", height: "100%", overflow: "hidden" }}
+          stylesheet={Styles}
+          autoungrabify
+          boxSelectionEnabled={false}
+          userPanningEnabled={false}
+          layout={Layout}
+          cy={(cy: any) => {
+            cyRef.current = cy;
+            cy.on("click", "node", handleClick);
+            cy.on("mouseout", "node", function (e: any) {
+              e.target.removeClass("hover");
+              cy.container().style.cursor = "initial";
+            });
+            cy.on("mouseover", "node", function (e: any) {
+              e.target.addClass("hover");
+              cy.container().style.cursor = "pointer";
+            });
+            cy.on("resize", function () {
+              cyRef.current.fit();
+            });
+          }}
+        />
+      </div>
     </RuxContainer>
   );
 };

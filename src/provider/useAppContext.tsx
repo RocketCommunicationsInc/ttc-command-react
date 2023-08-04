@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useEffect, useMemo } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 import type {
   Contact,
   Subsystem,
@@ -72,14 +72,9 @@ const AppProvider = ({ children }: PropTypes) => {
 
   const selectedSubsystem =
     findSubsystemByName(selectedSubsystemName) || firstSubsystem;
-
-  const selectedChildSubsystem = useMemo(
-    () =>
-      findChildSubsystemByName(selectedSubsystem, selectedChildSubsystemName) ||
-      firstChildSubsystem,
-    [firstChildSubsystem, selectedChildSubsystemName, selectedSubsystem]
-  );
-
+  const selectedChildSubsystem =
+    findChildSubsystemByName(selectedSubsystem, selectedChildSubsystemName) ||
+    firstChildSubsystem;
   const selectedAssemblyDevice = findAssemblyDeviceByName(
     selectedChildSubsystem,
     selectedAssemblyDeviceName
