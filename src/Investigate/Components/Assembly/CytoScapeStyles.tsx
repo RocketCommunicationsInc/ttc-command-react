@@ -162,6 +162,7 @@ export const Layout = {
   animate: false,
   directed: false,
   padding: 15, // padding on fit
+  componentSpacing: 100,
   circle: false, // put depths in concentric circles if true, put depths top down if false
   grid: true, // whether to create an even grid into which the DAG is placed (circle:false only)
   spacingFactor: 1, // positive spacing factor, larger => more space between nodes (N.B. n/a if causes overlap)

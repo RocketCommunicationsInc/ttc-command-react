@@ -33,13 +33,11 @@ const Assembly = () => {
   if (
     JSON.stringify(childSubsystem) !== JSON.stringify(selectedChildSubsystem)
   ) {
-    console.log("changed?");
     setChildSubsystem(selectedChildSubsystem);
   }
 
   //now that we have subsystem in a state we can use it to generate nodes and edges
   useEffect(() => {
-    console.log("changed!");
     const cy = cyRef.current;
 
     const elements = childSubsystem
