@@ -13,8 +13,9 @@ import FrequencyConverter from "./SVG/FrequencyConverter.svg";
 import CytoscapeComponent from "react-cytoscapejs";
 import { StylesheetCSS } from "cytoscape";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
-import { useEffect, useRef, useMemo } from "react";
+import { useEffect, useRef, useMemo, useCallback } from "react";
 import { getRandomInt } from "utils";
+import { ChildSubsystem } from "@astrouxds/mock-data";
 
 type ElementObject = {
   status: string;
@@ -54,6 +55,8 @@ const getBackground = ({ label }: ElementObject) => {
 const Assembly = () => {
   const { selectAssemblyDevice, selectedChildSubsystem }: ContextType =
     useAppContext();
+
+  const childSubsystem = useRef<ChildSubsystem | null>(null);
 
   const cyRef = useRef<any>(null);
 
@@ -197,11 +200,11 @@ const Assembly = () => {
     []
   );
 
-  useEffect(() => {
+  const setupCytoscape = useCallback(() => {
     //this is going to randomize nodes connect to which
     const randomEdges = (elements: any[]) => {
       let edgesArray: any[] = [];
-      elements.forEach((element, index) => {
+      elements.forEach((_, index) => {
         //we don't need the last element to have outgoing edges
         if (index === elements.length - 1) return;
 
@@ -231,14 +234,26 @@ const Assembly = () => {
         },
       })
     );
-    console.log("run!");
     const newEdges = randomEdges(elementsArr);
     cyRef.current.elements().remove();
     cyRef.current.add([...elementsArr, ...newEdges]);
     cyRef.current.layout(layout).run();
     cyRef.current.ready(() => cyRef.current.resize());
     cyRef.current.fit();
-  }, [selectedChildSubsystem, layout]);
+  }, [layout, selectedChildSubsystem]);
+
+  useEffect(() => {
+    //check to see if the selected subsystem is same as the one stores in useRef and return if so
+    if (
+      childSubsystem.current &&
+      childSubsystem.current.name === selectedChildSubsystem.name &&
+      childSubsystem.current.subsystemParent ===
+        selectedChildSubsystem.subsystemParent
+    )
+      return;
+    childSubsystem.current = selectedChildSubsystem;
+    setupCytoscape();
+  }, [setupCytoscape, selectedChildSubsystem, layout]);
 
   useEffect(() => {
     const resize = () => {
@@ -253,6 +268,13 @@ const Assembly = () => {
       window.removeEventListener("resize", resize);
     };
   }, []);
+
+  //run cytoscape the first time
+  console.log(cyRef.current && cyRef.current.elements().length === 0);
+  if (cyRef.current && cyRef.current.elements().length === 0) {
+    console.log("make cytoscape first time");
+    setupCytoscape();
+  }
 
   return (
     <RuxContainer className="star-tracker">
