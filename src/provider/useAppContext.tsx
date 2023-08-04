@@ -16,7 +16,10 @@ export type ContextType = {
   selectedSubsystem: Subsystem;
   selectedChildSubsystem: ChildSubsystem;
   selectedAssemblyDevice: AssemblyDevice;
+  selectedAssemblyDeviceName: string;
+  selectedMnemonic: Mnemonic;
   resetSelected: () => void;
+  selectMnemonic: (mnemonic: Mnemonic) => void;
   selectSubsystem: (subsystem: Subsystem) => void;
   selectChildSubsystem: (childSubsystem: ChildSubsystem) => void;
   selectAssemblyDevice: (assemblyDevice: AssemblyDevice) => void;
@@ -49,6 +52,9 @@ const AppProvider = ({ children }: PropTypes) => {
     useState<string>(firstChildSubsystem.name);
   const [selectedAssemblyDeviceName, setSelectedAssemblyDeviceName] =
     useState<string>(firstAssemblyDevice.name);
+  const [selectedMnemonic, setSelectedMnemonic] = useState<Mnemonic | null>(
+    null
+  );
 
   //Utility finder functions
   const findSubsystemByName = (name?: string) =>
@@ -89,6 +95,7 @@ const AppProvider = ({ children }: PropTypes) => {
     setSelectedSubsystemName(firstSubsystem.name);
     setSelectedChildSubsystemName(firstChildSubsystem.name);
     setSelectedAssemblyDeviceName(firstAssemblyDevice.name);
+    setSelectedMnemonic(null);
   };
 
   const selectSubsystem = (subsystem: Subsystem) => {
@@ -102,13 +109,23 @@ const AppProvider = ({ children }: PropTypes) => {
   const selectChildSubsystem = (childSubsystem: ChildSubsystem) => {
     const subsystem =
       findSubsystemByName(childSubsystem.subsystemParent) || firstSubsystem;
+    if (
+      childSubsystem.name === selectedMnemonic?.childSubsystem &&
+      childSubsystem.subsystemParent === selectedMnemonic.subsystem
+    )
+      return;
     setSelectedSubsystemName(subsystem.name);
     setSelectedChildSubsystemName(childSubsystem.name);
     setSelectedAssemblyDeviceName(childSubsystem.assemblyDevices[0].name);
+    setSelectedMnemonic(null);
   };
 
   const selectAssemblyDevice = (assemblyDevice: AssemblyDevice) => {
     setSelectedAssemblyDeviceName(assemblyDevice.name);
+  };
+
+  const selectMnemonic = (mnemonic: Mnemonic) => {
+    setSelectedMnemonic(mnemonic);
   };
 
   const selectSubsystemsFromMnemonic = (mnemonic: Mnemonic) => {
@@ -162,10 +179,13 @@ const AppProvider = ({ children }: PropTypes) => {
     selectedSubsystem,
     selectedChildSubsystem,
     selectedAssemblyDevice,
+    selectedAssemblyDeviceName,
+    selectedMnemonic,
     resetSelected,
     selectSubsystem,
     selectChildSubsystem,
     selectAssemblyDevice,
+    selectMnemonic,
     selectSubsystemsFromMnemonic,
   };
 

@@ -53,10 +53,11 @@ const getBackground = ({ label }: ElementObject) => {
 };
 
 const Assembly = () => {
-  const { selectAssemblyDevice, selectedChildSubsystem }: ContextType =
-    useAppContext();
-
-  const childSubsystem = useRef<ChildSubsystem | null>(null);
+  const {
+    selectAssemblyDevice,
+    selectedChildSubsystem,
+    selectedAssemblyDeviceName,
+  }: ContextType = useAppContext();
 
   const cyRef = useRef<any>(null);
 
@@ -243,15 +244,6 @@ const Assembly = () => {
   }, [layout, selectedChildSubsystem]);
 
   useEffect(() => {
-    //check to see if the selected subsystem is same as the one stores in useRef and return if so
-    if (
-      childSubsystem.current &&
-      childSubsystem.current.name === selectedChildSubsystem.name &&
-      childSubsystem.current.subsystemParent ===
-        selectedChildSubsystem.subsystemParent
-    )
-      return;
-    childSubsystem.current = selectedChildSubsystem;
     setupCytoscape();
   }, [setupCytoscape, selectedChildSubsystem, layout]);
 
@@ -276,6 +268,12 @@ const Assembly = () => {
     setupCytoscape();
   }
 
+  useEffect(() => {
+    if (!selectedAssemblyDeviceName) return;
+    cyRef.current.nodes().deselect();
+    cyRef.current.$(`node[label="${selectedAssemblyDeviceName}"]`).select();
+  }, [selectedAssemblyDeviceName]);
+
   return (
     <RuxContainer className="star-tracker">
       <div slot="header">{selectedChildSubsystem?.name}</div>
@@ -298,10 +296,7 @@ const Assembly = () => {
             e.target.addClass("hover");
             cy.container().style.cursor = "pointer";
           });
-          cy.on("data", () => {
-            cy.nodes().deselect();
-            cy.nodes()[0].select();
-          });
+          cy.on("data", () => {});
         }}
       />
     </RuxContainer>
