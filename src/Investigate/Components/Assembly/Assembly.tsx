@@ -54,7 +54,7 @@ const Assembly = () => {
   const {
     selectAssemblyDevice,
     selectedChildSubsystem,
-    selectedAssemblyDevice,
+    selectedAssemblyDeviceName,
   }: ContextType = useAppContext();
 
   const cyRef = useRef<any>(null);
@@ -264,9 +264,10 @@ const Assembly = () => {
   }, []);
 
   useEffect(() => {
+    if (!selectedAssemblyDeviceName) return;
     cyRef.current.nodes().deselect();
-    cyRef.current.$(`node[label="${selectedAssemblyDevice.name}"]`).select();
-  }, [selectedAssemblyDevice]);
+    cyRef.current.$(`node[label="${selectedAssemblyDeviceName}"]`).select();
+  }, [selectedAssemblyDeviceName]);
 
   return (
     <RuxContainer className="star-tracker">

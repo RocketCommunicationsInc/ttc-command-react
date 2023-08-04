@@ -16,6 +16,8 @@ export type ContextType = {
   selectedSubsystem: Subsystem;
   selectedChildSubsystem: ChildSubsystem;
   selectedAssemblyDevice: AssemblyDevice;
+  selectedAssemblyDeviceName: string;
+  selectedMnemonic: Mnemonic;
   resetSelected: () => void;
   selectMnemonic: (mnemonic: Mnemonic) => void;
   selectSubsystem: (subsystem: Subsystem) => void;
@@ -172,6 +174,8 @@ const AppProvider = ({ children }: PropTypes) => {
     selectedSubsystem,
     selectedChildSubsystem,
     selectedAssemblyDevice,
+    selectedAssemblyDeviceName,
+    selectedMnemonic,
     resetSelected,
     selectSubsystem,
     selectChildSubsystem,
