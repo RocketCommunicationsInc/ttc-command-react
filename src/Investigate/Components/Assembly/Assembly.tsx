@@ -15,7 +15,6 @@ import { StylesheetCSS } from "cytoscape";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
 import { useEffect, useRef, useMemo, useCallback } from "react";
 import { getRandomInt } from "utils";
-import { ChildSubsystem } from "@astrouxds/mock-data";
 
 type ElementObject = {
   status: string;
