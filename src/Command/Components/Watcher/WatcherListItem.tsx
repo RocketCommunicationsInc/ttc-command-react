@@ -21,8 +21,11 @@ type PropTypes = {
 
 const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
   const { modifyMnemonic } = useTTCGRMActions();
-  const { toggleInvestigate, selectSubsystemsFromMnemonic }: ContextType =
-    useAppContext();
+  const {
+    toggleInvestigate,
+    selectSubsystemsFromMnemonic,
+    selectMnemonic,
+  }: ContextType = useAppContext();
 
   const handleRuxMenuSelected = (e: any, mnemonic: Mnemonic) => {
     if (e.detail.value === "remove") {
@@ -32,6 +35,7 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
       });
     }
     if (e.detail.value === "investigate") {
+      selectMnemonic(mnemonic);
       selectSubsystemsFromMnemonic(mnemonic);
       toggleInvestigate();
     }

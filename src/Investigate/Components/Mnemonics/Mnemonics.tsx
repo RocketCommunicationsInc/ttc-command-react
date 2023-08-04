@@ -26,7 +26,8 @@ type SortDirection = "ASC" | "DESC";
 
 const Mnemonics = ({ title }: PropTypes) => {
   const { modifyMnemonic } = useTTCGRMActions();
-  const { selectedAssemblyDevice }: ContextType = useAppContext();
+  const { selectedAssemblyDevice, selectedMnemonic }: ContextType =
+    useAppContext();
   const [searchValue, setSearchValue] = useState("");
   const [sortDirection, setSortDirection] = useState<SortDirection>("ASC");
   const [sortProp, setSortProp] = useState("");
@@ -135,7 +136,13 @@ const Mnemonics = ({ title }: PropTypes) => {
           </RuxTableHeaderRow>
           <RuxTableBody>
             {sortedMnemonics.map((mnemonic, index) => (
-              <RuxTableRow key={index}>
+              <RuxTableRow
+                key={index}
+                selected={
+                  selectedMnemonic &&
+                  mnemonic.mnemonicId === selectedMnemonic.mnemonicId
+                }
+              >
                 <RuxTableCell>
                   <RuxStatus status={mnemonic.status} />
                 </RuxTableCell>
