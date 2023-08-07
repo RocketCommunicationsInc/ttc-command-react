@@ -65,6 +65,7 @@ const Assembly = () => {
   const height = cyRef.current
     ? cyRef.current.container().getBoundingClientRect().height
     : 300;
+  console.log(width, height);
 
   const Layout = useMemo(
     () => ({
@@ -78,7 +79,7 @@ const Assembly = () => {
         w: width >= 1200 ? width : 1200,
       }, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
       nodeDimensionsIncludeLabels: true,
-      fit: true,
+      fit: false,
     }),
     [width, height]
   );
@@ -134,7 +135,9 @@ const Assembly = () => {
     const resize = () => {
       if (cyRef.current) {
         cyRef.current.layout(Layout).run();
-        cyRef.current.ready(() => cyRef.current.resize());
+        cyRef.current.center();
+
+        cyRef.current.resize();
       }
     };
     resize();
@@ -153,8 +156,8 @@ const Assembly = () => {
           width: "100%",
           height: "100%",
           overflow: "hidden",
-          minHeight: 300,
-          minWidth: 900,
+          minHeight: 200,
+          minWidth: 200,
         }}
         stylesheet={Styles}
         autoungrabify
