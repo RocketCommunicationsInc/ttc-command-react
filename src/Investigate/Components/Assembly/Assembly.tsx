@@ -74,7 +74,7 @@ const Assembly = () => {
       boundingBox: {
         x1: 0,
         y1: 0,
-        h: height >= 300 ? height : 300,
+        h: 500 > height && height >= 200 ? height : 300,
         w: width >= 1200 ? width : 1200,
       }, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
       nodeDimensionsIncludeLabels: true,
@@ -119,11 +119,16 @@ const Assembly = () => {
       });
       return edgesArray;
     };
+
     cy.elements().remove();
     cy.add([...elements, ...randomEdges(elements)]);
+    if (selectedAssemblyDeviceName) {
+      cy.nodes().deselect();
+      cy.$(`node[label="${selectedAssemblyDeviceName}"]`).select();
+    }
     cy.layout(Layout).run();
-    cy.ready(() => cy.resize());
-  }, [childSubsystem, Layout]);
+    cy.resize();
+  }, [childSubsystem, Layout, selectedAssemblyDeviceName]);
 
   useEffect(() => {
     const resize = () => {
@@ -138,13 +143,6 @@ const Assembly = () => {
       window.removeEventListener("resize", resize);
     };
   }, [Layout]);
-
-  useEffect(() => {
-    console.log("device name", selectedAssemblyDeviceName);
-    if (!selectedAssemblyDeviceName) return;
-    cyRef.current.nodes().deselect();
-    cyRef.current.$(`node[label="${selectedAssemblyDeviceName}"]`).select();
-  }, [selectedAssemblyDeviceName]);
 
   return (
     <RuxContainer className="star-tracker">
