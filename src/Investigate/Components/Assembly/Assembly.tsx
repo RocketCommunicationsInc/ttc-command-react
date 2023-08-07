@@ -2,7 +2,6 @@ import { RuxContainer } from "@astrouxds/react";
 import CytoscapeComponent from "react-cytoscapejs";
 import cytoscape from "cytoscape";
 import { Styles } from "./CytoScapeStyles";
-//@ts-ignore
 import dagre from "cytoscape-dagre";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -129,7 +128,8 @@ const Assembly = () => {
     }
     cy.layout(Layout).run();
     cy.resize();
-  }, [childSubsystem, Layout, selectedAssemblyDeviceName]);
+    // eslint-disable-next-line
+  }, [childSubsystem, Layout]);
 
   useEffect(() => {
     const resize = () => {
