@@ -64,7 +64,6 @@ const Assembly = () => {
   const height = cyRef.current
     ? cyRef.current.container().getBoundingClientRect().height
     : 300;
-  console.log(width, height);
 
   const Layout = useMemo(
     () => ({
