@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import { TTCGRMProvider } from "@astrouxds/mock-data";
+import { TTCGRMProvider, ContactsServiceOptions } from "@astrouxds/mock-data";
 import AppProvider from "provider/useAppContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const options = {
+const options: ContactsServiceOptions = {
   alertsPercentage: 0 as const,
   initial: 1,
   limit: 1,
@@ -21,7 +21,14 @@ const options = {
       "Propulsion",
       "Thermal",
     ],
-    mnemonicsPerAssemblyDevice: 10,
+    assemblyDeviceOptions: {
+      mnemonicsPerAssemblyDevice: 10,
+    },
+    mnemonicOptions: {
+      deviation: -6,
+      seriousThresholdRange: 4,
+      cautionThresholdRange: 6,
+    },
   },
 };
 

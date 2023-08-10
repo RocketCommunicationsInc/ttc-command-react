@@ -5,7 +5,8 @@ import {
   RuxCard,
   RuxButton,
 } from "@astrouxds/react";
-import { useTTCGRMActions, type Mnemonic } from "@astrouxds/mock-data";
+import { useTTCGRMActions } from "@astrouxds/mock-data";
+import type { Mnemonic } from "@astrouxds/mock-data";
 import LineChart from "./LineChart";
 import { getRandomInt } from "utils";
 import { useAppContext, ContextType } from "provider/useAppContext";
