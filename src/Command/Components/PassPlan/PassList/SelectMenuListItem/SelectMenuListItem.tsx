@@ -11,7 +11,7 @@ const SelectMenuListItem = ({ stepNumber }: PropTypes) => {
   const [receiveTelemetry, setReceiveTelemetry] = useState<string>("yes");
   return (
     <RuxTreeNode>
-      <div slot="prefix" className="pass_number-wrapper">
+      <div slot="prefix" className="pass-plan_number-wrapper">
         {stepNumber}
       </div>
       <div className="pass_select-wrapper">

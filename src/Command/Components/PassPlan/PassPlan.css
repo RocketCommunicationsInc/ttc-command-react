@@ -1,123 +1,111 @@
-.header {
+/* Header Styles */
+
+.pass-plan_header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-rux-container.pass-plan::part(body) {
-  overflow-x: hidden;
-  background: var(--color-background-surface-default);
-}
-
-.pass-plan rux-select.header-select {
+rux-select.pass-plan_header-select {
   display: flex;
 }
 
-.pass-plan rux-select.header-select::part(select) {
+rux-select.pass-plan_header-select::part(select) {
   flex-direction: row;
   width: 8rem;
 }
 
-.pass-plan rux-select.header-select::part(label) {
+rux-select.pass-plan_header-select::part(label) {
   margin-right: var(--spacing-3);
   margin-top: 0.5rem;
 }
 
-rux-tree-node::part(node) {
-  display: flex;
-  align-items: center;
-  /* This is to account for the width of the caret on the left side of the node so the padding looks even.  */
-  padding-inline-end: var(--spacing-3);
-}
-
-.rux-tree-node_prefix {
-  margin-inline: var(--spacing-6) var(--spacing-8);
-  width: var(--spacing-3);
-}
-
-.rux-tree-node_content {
-  display: flex;
-  align-items: center;
-}
-
-.rux-tree-node_content > rux-checkbox {
-  margin-inline-end: var(--spacing-6);
-}
-
-rux-progress {
-  width: 16rem;
-}
-
-rux-progress::part(progress) {
-  height: var(--spacing-3);
-}
-
-.rux-tree-content div rux-progress::part(output) {
-  visibility: hidden;
-}
-
-li {
-  list-style-type: none;
-}
-
-.rux-tree-header {
-  display: flex;
-  flex-flow: row nowrap;
-  height: var(--spacing-8);
-  padding-left: var(--spacing-12);
-  font-size: var(--spacing-4);
-  align-items: center;
-  box-shadow: var(--list-panel-box-shadow);
-}
-
-.pass_header-wrapper {
-  display: flex;
-  background: var(--color-background-surface-header);
-  padding-block: var(--spacing-2);
-}
-
-.pass_header-step {
-  padding-inline-start: var(--spacing-3);
-}
-
-.pass_header-instruction {
-  padding-inline-start: var(--spacing-20);
-}
-
-.rux-tree-header span:nth-of-type(1) {
-  margin-right: 4.5rem;
-}
-
-.tree-wrapper .arrow::part(indicator) {
-  align-items: center;
-}
-
-rux-tree.pass_body-wrapper rux-tree-node::part(text) {
-  padding-inline-start: var(--spacing-8);
-  width: 100%;
-}
-
-.banner {
+.pass-plan_banner {
   height: var(--spacing-6);
   width: 100%;
   background-color: var(--color-background-surface-selected);
   text-align: center;
 }
 
-.banner.Pass {
+.pass-plan_banner.Pass {
   background-color: var(--color-background-interactive-muted);
 }
 
-.pass-plan div[slot="footer"] {
+.pass-plan_header-wrapper {
   display: flex;
-  justify-content: space-between;
+  background: var(--color-background-surface-header);
+  padding-block: var(--spacing-2);
+  font-size: var(--font-heading-5-font-size);
+  box-shadow: var(--list-panel-box-shadow);
+  z-index: 90;
+}
+
+.pass-plan_header-step {
+  padding-inline-start: var(--spacing-3);
+}
+
+.pass-plan_header-instruction {
+  padding-inline-start: var(--spacing-20);
+}
+
+/* Content/Body Styles */
+
+rux-container.pass-plan::part(body) {
+  overflow-x: hidden;
+  background: var(--color-background-surface-default);
+}
+
+/* Tree List Styles */
+
+rux-tree.pass-plan_tree-wrapper {
+  overflow: auto;
+}
+
+.pass-plan_tree-wrapper rux-tree-node::part(node) {
+  display: flex;
+  align-items: center;
+  /* This is to account for the width of the caret on the left side of the node so the padding looks even.  */
+  padding-inline-end: var(--spacing-3);
+  padding-block: var(--spacing-2, 0.5rem);
+  background-color: var(--color-background-surface-header);
+  box-shadow: 0 -1px 0 0 var(--color-background-base-default, #101923) inset;
+}
+
+rux-tree.pass-plan_tree-wrapper rux-tree-node::part(text) {
+  padding-inline-start: var(--spacing-8);
   width: 100%;
+}
+
+.pass-plan_tree-content-wrapper {
+  display: flex;
+  align-items: center;
+  margin-inline-end: var(--spacing-4);
+}
+
+.pass-plan_tree-content-wrapper > rux-checkbox {
+  margin-inline-end: var(--spacing-6);
+}
+
+.pass-plan_tree-content-wrapper > rux-progress {
+  margin-inline-start: auto;
+}
+
+/* List Item Styles */
+
+.pass-plan rux-progress {
+  width: 16rem;
+}
+
+.pass-plan rux-progress::part(progress) {
+  height: var(--spacing-3);
 }
 
 .pass-plan rux-input {
   width: 100%;
   margin-right: var(--spacing-2);
 }
+
+/* Pre-Pass Complete Styles */
 
 .pass_pre-pass-complete-wrapper {
   display: flex;
@@ -129,4 +117,12 @@ rux-tree.pass_body-wrapper rux-tree-node::part(text) {
 
 rux-indeterminate-progress {
   padding-block-end: var(--spacing-3);
+}
+
+/* Pass Plan Footer */
+
+.pass-plan div[slot="footer"] {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }

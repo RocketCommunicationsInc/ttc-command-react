@@ -23,13 +23,12 @@ const options: ContactsServiceOptions = {
     ],
     assemblyDeviceOptions: {
       mnemonicsPerAssemblyDevice: 10,
-    }
-    ,
+    },
     mnemonicOptions: {
       deviation: -6,
       seriousThresholdRange: 4,
-      cautionThresholdRange: 6
-    }
+      cautionThresholdRange: 6,
+    },
   },
 };
 

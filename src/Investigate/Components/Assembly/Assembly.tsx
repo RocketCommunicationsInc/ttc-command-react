@@ -1,242 +1,56 @@
 import { RuxContainer } from "@astrouxds/react";
-import Lens from "./SVG/Lens.svg";
-import Baffle from "./SVG/Baffle.svg";
-import DetectionModule from "./SVG/DetectionModule.svg";
-import ThermoElectric from "./SVG/ThermoElectric.svg";
-import Detector from "./SVG/Detector.svg";
-import Electronics from "./SVG/Electronics.svg";
-import Default from "./SVG/Default.svg";
-import Oscillator from "./SVG/Oscillator.svg";
-import Receiver from "./SVG/Receiver.svg";
-import Transmitter from "./SVG/Transmitter.svg";
-import FrequencyConverter from "./SVG/FrequencyConverter.svg";
 import CytoscapeComponent from "react-cytoscapejs";
-import { StylesheetCSS } from "cytoscape";
+import cytoscape from "cytoscape";
+import { Styles } from "./CytoScapeStyles";
+import dagre from "cytoscape-dagre";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { getRandomInt } from "utils";
 
-type ElementObject = {
+cytoscape.use(dagre);
+
+type ChildSubsystemNoMnemonics = {
+  name: string;
   status: string;
-  label: string;
-};
-
-const statusColor = {
-  off: "#a4abb6",
-  normal: "#56f000",
-  standby: "#2dccff",
-  caution: "#fce83a",
-  serious: "#ffb302",
-  critical: "#ff3838",
-};
-
-const backgroundImg = {
-  Lens,
-  Baffle,
-  "Detection Module": DetectionModule,
-  "Thermo-Electric Cooler": ThermoElectric,
-  Detector,
-  Electronics,
-  "Frequency Converter": FrequencyConverter,
-  Receiver,
-  Transmitter,
-  "Local Oscillator": Oscillator,
-};
-
-const getColor = ({ status }: ElementObject) => {
-  return statusColor[status as keyof typeof statusColor] || statusColor.off;
-};
-
-const getBackground = ({ label }: ElementObject) => {
-  return backgroundImg[label as keyof typeof backgroundImg] || Default;
+  subsystemParent: string;
+  assemblyDevices: any[];
 };
 
 const Assembly = () => {
-  const { selectAssemblyDevice, selectedChildSubsystem }: ContextType =
-    useAppContext();
+  const {
+    selectAssemblyDevice,
+    selectedChildSubsystem,
+    selectedAssemblyDeviceName,
+  }: ContextType = useAppContext();
+  const [childSubsystem, setChildSubsystem] =
+    useState<ChildSubsystemNoMnemonics | null>(null);
+
+  const subsytemWithoutMnuemonics = selectedChildSubsystem
+    ? {
+        name: selectedChildSubsystem.name,
+        status: selectedChildSubsystem.status,
+        subsystemParent: selectedChildSubsystem.subsystemParent,
+        assemblyDevices: [
+          ...selectedChildSubsystem.assemblyDevices.map((device) => ({
+            name: device.name,
+            status: device.status,
+            childSubsystemParent: device.childSubsystemParent,
+          })),
+        ],
+      }
+    : null;
+
+  //compare our subsystem to our stored array, if different set the new array
+  if (
+    JSON.stringify(childSubsystem) !== JSON.stringify(subsytemWithoutMnuemonics)
+  ) {
+    setChildSubsystem(subsytemWithoutMnuemonics);
+  }
 
   const cyRef = useRef<any>(null);
 
   const findAssemblyDeviceByName = (name: string) =>
-    selectedChildSubsystem.assemblyDevices.find(
-      (device) => device?.name === name
-    );
-
-  const positionArr: object[] = [
-    { x: 120, y: 195 },
-    { x: 390, y: 150 },
-    { x: 625, y: 250 },
-    { x: 830, y: 120 },
-    { x: 1020, y: 250 },
-    { x: 1285, y: 165 },
-  ];
-
-  const elementsArr = selectedChildSubsystem.assemblyDevices
-    .map(({ name, status }, index) => ({
-      data: {
-        id: index,
-        label: name,
-        status: status,
-      },
-      position: positionArr[index] || { x: 0, y: 0 },
-    }))
-    .filter((el) => el.data.id < 6);
-
-  const edgesArr = [
-    {
-      data: {
-        source: 0,
-        target: 1,
-      },
-    },
-    {
-      data: {
-        source: 1,
-        target: 2,
-      },
-    },
-    {
-      data: {
-        source: 2,
-        target: 3,
-      },
-    },
-    {
-      data: {
-        source: 2,
-        target: 4,
-      },
-    },
-    {
-      data: {
-        source: 3,
-        target: 5,
-      },
-    },
-    {
-      data: {
-        source: 4,
-        target: 5,
-      },
-    },
-  ];
-
-  const newEdges = edgesArr.filter(
-    (edge) =>
-      edge.data.source < elementsArr.length &&
-      edge.data.target < elementsArr.length
-  );
-
-  const cyArr: any[] = [...elementsArr, ...newEdges];
-
-  //Programatic styles for nodes
-  const styles: StylesheetCSS[] = [
-    //svg background
-    {
-      selector: "node",
-      css: {
-        "background-image": (node: any) => getBackground(node.data()),
-        "background-image-containment": "over",
-        "bounds-expansion": "48.5px 0 0 0",
-        "background-clip": "none",
-        shape: "round-diamond",
-        "background-color": (node: any) => getColor(node.data()),
-        "border-color": (node: any) => getColor(node.data()),
-        "background-image-opacity": 0.85,
-        height: "130%",
-        width: "210%",
-        "background-width-relative-to": "inner",
-        "background-height-relative-to": "inner",
-        opacity: 0.75,
-        "border-width": "4px",
-      },
-    },
-    //actions
-    {
-      selector: "node.hover",
-      css: {
-        "border-color": "#FFF",
-      },
-    },
-    //remove default overlay
-    {
-      selector: "node:active",
-      css: {
-        "overlay-opacity": 0,
-        opacity: 1,
-      },
-    },
-    //add hover effect
-    {
-      selector: "node:selected",
-      css: {
-        "border-color": "#FFF",
-        opacity: 1,
-      },
-    },
-    //label text
-    {
-      selector: "node[label]",
-      css: {
-        label: "data(label)",
-        "font-size": "16",
-        color: "white",
-        "text-halign": "center",
-        "text-valign": "bottom",
-        "text-margin-y": 7,
-      },
-    },
-    //lines between the nodes
-    {
-      selector: "edge",
-      css: {
-        "curve-style": "taxi",
-        "line-style": "solid",
-        "taxi-turn-min-distance": "15px",
-        "source-distance-from-node": 3,
-        "target-distance-from-node": 3,
-        width: 1.5,
-      },
-    },
-    //the cooler icon needs location adjustment in the node
-    {
-      selector:
-        'node[label="Thermo-Electric Cooler"], node[label="Frequency Converter"]',
-      css: {
-        "background-offset-y": -30,
-      },
-    },
-    //the electronics icon needs location adjustment in the node
-    {
-      selector: 'node[label="Electronics"]',
-      css: {
-        "background-offset-y": -12,
-        "background-offset-x": 1,
-      },
-    },
-    //the detector icon needs location adjustment in the node
-    {
-      selector: 'node[label="Detector"]',
-      css: {
-        "background-offset-y": -10,
-      },
-    },
-    //the transmitter icon needs location adjustment in the node
-    {
-      selector: 'node[label="Transmitter"]',
-      css: {
-        "background-offset-y": -40,
-        "background-offset-x": 25,
-      },
-    },
-    //the receiver icon needs location adjustment in the node
-    {
-      selector: 'node[label="Receiver"]',
-      css: {
-        "background-offset-y": -40,
-        "background-offset-x": -25,
-      },
-    },
-  ];
+    childSubsystem!.assemblyDevices.find((device) => device?.name === name);
 
   const handleClick = (e: any) => {
     const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
@@ -244,13 +58,85 @@ const Assembly = () => {
     selectAssemblyDevice(assemblyDevice);
   };
 
+  const width = cyRef.current
+    ? cyRef.current.container().getBoundingClientRect().width
+    : 1200;
+  const height = cyRef.current
+    ? cyRef.current.container().getBoundingClientRect().height
+    : 300;
+
+  const Layout = useMemo(
+    () => ({
+      name: "dagre",
+      align: "UL",
+      rankDir: "LR",
+      boundingBox: {
+        x1: 0,
+        y1: 0,
+        h: 500 > height && height >= 200 ? height : 300,
+        w: width >= 1200 ? width : 1200,
+      }, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
+      nodeDimensionsIncludeLabels: true,
+      fit: false,
+    }),
+    [width, height]
+  );
+
+  //now that we have subsystem in a state we can use it to generate nodes and edges
+  useEffect(() => {
+    const cy = cyRef.current;
+
+    const elements = childSubsystem
+      ? childSubsystem.assemblyDevices.map(({ name, status }, index) => ({
+          data: {
+            id: index,
+            label: name,
+            status: status,
+          },
+        }))
+      : [];
+
+    const randomEdges = (elements: any[]) => {
+      let edgesArray: any[] = [];
+      elements.forEach((_, index) => {
+        //we don't need the last element to have outgoing edges
+        if (index === elements.length - 1) return;
+
+        //generate number of lines either up to 2 or 1 for the penultimate node
+        const numberEdges =
+          index === elements.length - 2 ? 1 : getRandomInt(3, 1);
+        //for each edge make it connect forward in the array
+        for (let i = 1; i <= numberEdges; i++) {
+          const edge = {
+            data: {
+              source: index,
+              target: index + i,
+            },
+          };
+          edgesArray.push(edge);
+        }
+      });
+      return edgesArray;
+    };
+
+    cy.elements().remove();
+    cy.add([...elements, ...randomEdges(elements)]);
+    if (selectedAssemblyDeviceName) {
+      cy.nodes().deselect();
+      cy.$(`node[label="${selectedAssemblyDeviceName}"]`).select();
+    }
+    cy.layout(Layout).run();
+    cy.resize();
+    // eslint-disable-next-line
+  }, [childSubsystem, Layout]);
+
   useEffect(() => {
     const resize = () => {
       if (cyRef.current) {
-        cyRef.current.layout({ name: "preset", fit: true }).run();
-        cyRef.current.ready(() => cyRef.current.resize());
+        cyRef.current.layout(Layout).run();
         cyRef.current.center();
-        cyRef.current.fit();
+
+        cyRef.current.resize();
       }
     };
     resize();
@@ -258,23 +144,26 @@ const Assembly = () => {
     return () => {
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [Layout]);
 
   return (
     <RuxContainer className="star-tracker">
       <div slot="header">{selectedChildSubsystem?.name}</div>
       <CytoscapeComponent
-        elements={cyArr}
-        style={{ width: "100%", height: "100%", overflow: "hidden" }}
-        stylesheet={styles}
+        elements={[]}
+        style={{
+          width: "100%",
+          height: "100%",
+          overflow: "hidden",
+          minHeight: 200,
+          minWidth: 200,
+        }}
+        stylesheet={Styles}
         autoungrabify
         boxSelectionEnabled={false}
         userPanningEnabled={false}
-        layout={{ name: "preset", fit: true }}
+        layout={Layout}
         cy={(cy: any) => {
-          cy.layout({ name: "preset", fit: true }).run();
-          cy.ready(() => cy.resize());
-          cy.fit();
           cyRef.current = cy;
           cy.on("click", "node", handleClick);
           cy.on("mouseout", "node", function (e: any) {
@@ -285,9 +174,8 @@ const Assembly = () => {
             e.target.addClass("hover");
             cy.container().style.cursor = "pointer";
           });
-          cy.on("data", () => {
-            cy.nodes().deselect();
-            cy.nodes()[0].select();
+          cy.on("resize", function () {
+            cyRef.current.fit();
           });
         }}
       />

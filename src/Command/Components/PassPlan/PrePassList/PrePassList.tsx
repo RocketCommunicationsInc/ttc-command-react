@@ -5,7 +5,6 @@ import {
   RuxTreeNode,
 } from "@astrouxds/react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import "./PrePassList.css";
 
 type PropTypes = {
   setPass: Dispatch<SetStateAction<string>>;
@@ -34,7 +33,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
       document.querySelectorAll("rux-progress.pre-pass_progress")
     )!;
     const ruxCheckbox: HTMLRuxCheckboxElement[] = Array.from(
-      document.querySelectorAll("rux-checkbox.pre-pass_checkbox")
+      document.querySelectorAll("rux-checkbox.pass-plan_checkbox")
     )!;
 
     // if the current list item is the length of the state function array, set the pass from 'pre-pass' into 'pass'
@@ -74,11 +73,13 @@ const PrePassList = ({ setPass }: PropTypes) => {
   }, [currentListItem, setPass]);
 
   return (
-    <RuxTree className="pass_body-wrapper">
+    <RuxTree className="pass-plan_tree-wrapper">
       <RuxTreeNode>
-        <div slot="prefix">1</div>
-        <div className="pre-pass_cell-wrapper-content">
-          <RuxCheckbox className="pre-pass_checkbox" />
+        <div slot="prefix" className="pass-plan_number-wrapper">
+          1
+        </div>
+        <div className="pass-plan_tree-content-wrapper">
+          <RuxCheckbox className="pass-plan_checkbox" />
           AIM = {aimState}
         </div>
         <RuxProgress
@@ -88,9 +89,11 @@ const PrePassList = ({ setPass }: PropTypes) => {
         />
       </RuxTreeNode>
       <RuxTreeNode>
-        <div slot="prefix">2</div>
-        <div className="pre-pass_cell-wrapper-content">
-          <RuxCheckbox className="pre-pass_checkbox" />
+        <div slot="prefix" className="pass-plan_number-wrapper">
+          2
+        </div>
+        <div className="pass-plan_tree-content-wrapper">
+          <RuxCheckbox className="pass-plan_checkbox" />
           SARM = {sarmState}
         </div>
         <RuxProgress
@@ -100,9 +103,11 @@ const PrePassList = ({ setPass }: PropTypes) => {
         />
       </RuxTreeNode>
       <RuxTreeNode>
-        <div slot="prefix">3</div>
-        <div className="pre-pass_cell-wrapper-content">
-          <RuxCheckbox className="pre-pass_checkbox" />
+        <div slot="prefix" className="pass-plan_number-wrapper">
+          3
+        </div>
+        <div className="pass-plan_tree-content-wrapper">
+          <RuxCheckbox className="pass-plan_checkbox" />
           LOCK = {lockState}
         </div>
         <RuxProgress
@@ -112,9 +117,11 @@ const PrePassList = ({ setPass }: PropTypes) => {
         />
       </RuxTreeNode>
       <RuxTreeNode>
-        <div slot="prefix">4</div>
-        <div className="pre-pass_cell-wrapper-content">
-          <RuxCheckbox className="pre-pass_checkbox" />
+        <div slot="prefix" className="pass-plan_number-wrapper">
+          4
+        </div>
+        <div className="pass-plan_tree-content-wrapper">
+          <RuxCheckbox className="pass-plan_checkbox" />
           AOS = {aosState}
         </div>
         <RuxProgress
@@ -124,9 +131,11 @@ const PrePassList = ({ setPass }: PropTypes) => {
         />
       </RuxTreeNode>
       <RuxTreeNode>
-        <div slot="prefix">5</div>
-        <div className="pre-pass_cell-wrapper-content">
-          <RuxCheckbox className="pre-pass_checkbox" />
+        <div slot="prefix" className="pass-plan_number-wrapper">
+          5
+        </div>
+        <div className="pass-plan_tree-content-wrapper">
+          <RuxCheckbox className="pass-plan_checkbox" />
           VCC = {vccState}
         </div>
         <RuxProgress
@@ -136,9 +145,11 @@ const PrePassList = ({ setPass }: PropTypes) => {
         />
       </RuxTreeNode>
       <RuxTreeNode>
-        <div slot="prefix">6</div>
-        <div className="pre-pass_cell-wrapper-content">
-          <RuxCheckbox className="pre-pass_checkbox" />
+        <div slot="prefix" className="pass-plan_number-wrapper">
+          6
+        </div>
+        <div className="pass-plan_tree-content-wrapper">
+          <RuxCheckbox className="pass-plan_checkbox" />
           PASS PLAN = {passPlanState}
         </div>
         <RuxProgress
