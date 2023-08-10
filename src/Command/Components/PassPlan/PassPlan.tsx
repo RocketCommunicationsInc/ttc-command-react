@@ -50,7 +50,7 @@ const PassPlan = () => {
   return (
     <RuxContainer className="pass-plan">
       <div slot="header" className="pass-plan_header">
-        <span>IRON 4090 PASS PLAN</span>
+        <span>{contact.satellite} PASS PLAN</span>
         <RuxSelect
           className="pass-plan_header-select"
           size="small"
