@@ -44,7 +44,6 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
   );
 
   const handleSubsystemClick = (subsystem: Subsystem) => {
-    console.log(subsystem);
     toggleInvestigate();
     selectSubsystem(subsystem);
   };
