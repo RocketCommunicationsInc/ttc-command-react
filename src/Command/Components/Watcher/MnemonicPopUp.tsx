@@ -57,6 +57,9 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
     modifyMnemonic({ ...data, watched: !data.watched });
   };
 
+  const findSubsystemByName = (name?: string) =>
+    contact.subsystems.find((subsystem) => subsystem.name === name);
+
   return (
     <RuxPopUp
       placement="right-end"
@@ -85,7 +88,11 @@ const MnemonicPopUp = ({ triggerValue, data, isPassPlan }: PropTypes) => {
             <RuxButton
               size="small"
               borderless
-              onClick={() => handleSubsystemClick(contact.subsystems[0])}
+              onClick={() =>
+                handleSubsystemClick(
+                  findSubsystemByName(data.subsystem) || contact.subsystems[0]
+                )
+              }
             >
               {data.subsystem}
               <RuxIcon size="1rem" icon="launch" />
