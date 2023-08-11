@@ -29,7 +29,7 @@ rux-select.pass-plan_header-select::part(label) {
 
 .pass-plan_banner.Pass {
   background-color: var(--color-background-interactive-muted);
-  color: var(--color-text-white)
+  color: var(--color-text-white);
 }
 
 .pass-plan_header-wrapper {
