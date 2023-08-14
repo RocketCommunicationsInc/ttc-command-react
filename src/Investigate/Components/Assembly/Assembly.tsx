@@ -157,6 +157,8 @@ const Assembly = () => {
           overflow: "hidden",
           minHeight: 200,
           minWidth: 200,
+          backgroundColor: "var(--color-background-base-default)",
+          paddingBlock: "var(--spacing-2)",
         }}
         stylesheet={Styles}
         autoungrabify
