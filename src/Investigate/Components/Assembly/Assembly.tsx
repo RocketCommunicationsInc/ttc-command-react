@@ -1,7 +1,7 @@
 import { RuxContainer } from "@astrouxds/react";
 import CytoscapeComponent from "react-cytoscapejs";
 import cytoscape from "cytoscape";
-import { Styles } from "./CytoScapeStyles";
+import { CytoscapeTheme } from "./CytoScapeStyles";
 import dagre from "cytoscape-dagre";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -61,6 +61,7 @@ const Assembly = () => {
   const width = cyRef.current
     ? cyRef.current.container().getBoundingClientRect().width
     : 1200;
+  console.log(width);
   const height = cyRef.current
     ? cyRef.current.container().getBoundingClientRect().height
     : 300;
@@ -158,7 +159,7 @@ const Assembly = () => {
           minHeight: 200,
           minWidth: 200,
         }}
-        stylesheet={Styles}
+        stylesheet={CytoscapeTheme()}
         autoungrabify
         boxSelectionEnabled={false}
         userPanningEnabled={false}
@@ -175,6 +176,7 @@ const Assembly = () => {
             cy.container().style.cursor = "pointer";
           });
           cy.on("resize", function () {
+            console.log("width!", cy.container().getBoundingClientRect().width);
             cyRef.current.fit();
           });
         }}

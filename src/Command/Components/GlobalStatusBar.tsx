@@ -23,9 +23,13 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
   const [notifications1, setNotifications1] = useState(0);
   const [notifications2, setNotifications2] = useState(2);
   const [notifications3, setNotifications3] = useState(4);
-  const [lightTheme, setLightTheme] = useState(false);
-  const { contact, toggleInvestigate, showInvestigate }: ContextType =
-    useAppContext();
+  const {
+    contact,
+    toggleInvestigate,
+    showInvestigate,
+    lightTheme,
+    toggleTheme,
+  }: ContextType = useAppContext();
 
   const statusValuesArr = [
     "off",
@@ -62,7 +66,7 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
   function menuSelect(e: CustomEvent) {
     const { detail } = e;
     if (detail.value === "themeToggle") {
-      setLightTheme(!lightTheme);
+      toggleTheme();
       document.body.classList.toggle("light-theme");
       return;
     }
