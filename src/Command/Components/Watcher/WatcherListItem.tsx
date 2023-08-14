@@ -6,8 +6,8 @@ import {
   RuxPopUp,
   RuxMenu,
   RuxMenuItem,
+  RuxTooltip,
 } from "@astrouxds/react";
-import MnemonicPopUp from "./MnemonicPopUp";
 import type { Mnemonic, Status } from "@astrouxds/mock-data";
 import { useTTCGRMActions } from "@astrouxds/mock-data";
 
@@ -42,21 +42,23 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
     return;
   };
 
+  const tooltipMessage = `${rowData.subsystem}/ ${rowData.measurement} - ${rowData.mnemonicId} `;
+
   return (
     <RuxTableRow key={rowData.mnemonicId} data-index={index}>
       <RuxTableCell>
         <RuxStatus status={rowData.status as Status} />
       </RuxTableCell>
       <RuxTableCell>
-        <MnemonicPopUp
-          isPassPlan={false}
-          triggerValue={rowData.mnemonicId}
-          data={rowData}
-        />
+        <RuxTooltip message={tooltipMessage} placement="top" delay={300}>
+          {rowData.mnemonicId}
+        </RuxTooltip>
       </RuxTableCell>
       <RuxTableCell> {rowData.unit}</RuxTableCell>
-      <RuxTableCell>{String(rowData.thresholdMax)}</RuxTableCell>
-      <RuxTableCell>
+      <RuxTableCell className="text-align-right">
+        {String(rowData.thresholdMax)}
+      </RuxTableCell>
+      <RuxTableCell className="text-align-right">
         <>
           {rowData.currentValue}
           {chartDataSlope >= 0 ? (
