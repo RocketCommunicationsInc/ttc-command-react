@@ -68,7 +68,7 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
       </RuxTableCell>
       <RuxTableCell>
         <RuxPopUp placement="left" closeOnSelect>
-          <RuxIcon slot="trigger" icon="more-horiz" size="small" />
+          <RuxIcon slot="trigger" icon="more-horiz" size="1.5rem" />
           <RuxMenu onRuxmenuselected={(e) => handleRuxMenuSelected(e, rowData)}>
             <RuxMenuItem value="remove">Remove from Watcher</RuxMenuItem>
             <RuxMenuItem value="investigate">Investigate</RuxMenuItem>
