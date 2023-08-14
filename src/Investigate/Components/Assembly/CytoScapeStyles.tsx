@@ -166,6 +166,7 @@ export const CytoscapeTheme = () => {
         },
       },
     ],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [theme]
   );
 
