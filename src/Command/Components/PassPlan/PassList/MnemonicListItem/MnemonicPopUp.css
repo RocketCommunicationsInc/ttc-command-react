@@ -1,0 +1,47 @@
+.mnemonic-pop-up rux-card span {
+  margin-inline: var(--spacing-1);
+}
+
+.mnemonic-pop-up rux-icon {
+  margin-top: var(--spacing-1);
+  margin-left: var(--spacing-1);
+  padding: 0;
+  margin-right: 0;
+}
+
+.mnemonic-pop-up rux-button {
+  margin-left: var(--spacing-4);
+}
+
+.mnemonic-pop-up rux-button::part(container) {
+  padding: 0;
+}
+
+.mnemonic-pop-up span[slot="trigger"] {
+  color: var(--color-text-interactive-default);
+  display: inline-block;
+}
+
+.mnemonic-pop-up span[slot="trigger"]:hover {
+  box-shadow: inset 0 -1px 0 0 var(--color-text-interactive-default);
+}
+
+.mnemonic-pop-up rux-card::part(container) {
+  border-width: 0px;
+  box-shadow: none;
+}
+
+.mnemonic-pop-up rux-card::part(body) {
+  display: flex;
+  flex-direction: column;
+}
+
+.mnemonic-pop-up rux-card div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-8);
+}
+
+.mnemonic-pop-up rux-checkbox::part(label) {
+  font-weight: var(--font-weights-bold);
+}
