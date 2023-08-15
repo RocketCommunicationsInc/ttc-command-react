@@ -1,11 +1,4 @@
-import {
-  RuxContainer,
-  RuxStatus,
-  RuxTable,
-  RuxTableBody,
-  RuxTableCell,
-  RuxTableRow,
-} from "@astrouxds/react";
+import { RuxContainer, RuxStatus } from "@astrouxds/react";
 import { getRandomInt } from "utils";
 import "./LinkStatus.css";
 import { Status } from "@astrouxds/mock-data";
@@ -36,44 +29,30 @@ const int6 = getRandomInt(0, 5);
 const LinkStatus = () => {
   return (
     <RuxContainer className="link-status">
-      <div slot="header">Link Status</div>
-      <RuxTable>
-        <RuxTableBody>
-          <RuxTableRow>
-            <RuxTableCell>
-              <span>
-                <RuxStatus status={status1} /> Lock
-                <span className="total">{int1}</span>
-              </span>
-            </RuxTableCell>
-          </RuxTableRow>
-          <RuxTableRow>
-            <RuxTableCell>Signal Strength: {int2}</RuxTableCell>
-          </RuxTableRow>
-          <RuxTableRow>
-            <RuxTableCell>
-              <span>
-                <RuxStatus status={status2} />
-                Telemetry<span className="total">{int3}</span>
-              </span>
-            </RuxTableCell>
-          </RuxTableRow>
-          <RuxTableRow>
-            <RuxTableCell>Total Frame Count: {int4}</RuxTableCell>
-          </RuxTableRow>
-          <RuxTableRow>
-            <RuxTableCell>
-              <span>
-                <RuxStatus status={status3} />
-                VCC <span className="total">{int5}</span>
-              </span>
-            </RuxTableCell>
-          </RuxTableRow>
-          <RuxTableRow>
-            <RuxTableCell>Bad CMD: {int6}</RuxTableCell>
-          </RuxTableRow>
-        </RuxTableBody>
-      </RuxTable>
+      <span slot="header">Link Status</span>
+      <div>
+        <span>
+          <RuxStatus status={status1} /> Lock
+          <span className="total">{int1}</span>
+        </span>
+      </div>
+
+      <div>Signal Strength: {int2}</div>
+      <div>
+        <span>
+          <RuxStatus status={status2} />
+          Telemetry<span className="total">{int3}</span>
+        </span>
+      </div>
+      <div>Total Frame Count: {int4}</div>
+      <div>
+        <span>
+          <RuxStatus status={status3} />
+          VCC <span className="total">{int5}</span>
+        </span>
+      </div>
+
+      <div>Bad CMD: {int6}</div>
     </RuxContainer>
   );
 };

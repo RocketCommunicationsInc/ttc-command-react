@@ -6,7 +6,7 @@
   display: grid;
   gap: var(--spacing-2);
   grid-template-columns: calc(30% - 4px) calc(45% - 4px) calc(25%);
-  grid-template-rows: calc(33% - 8px) calc(28.25% - 8px) calc(39%);
+  grid-template-rows: calc(32% - 8px) calc(28.25% - 8px) calc(40%);
   grid-template-areas:
     "alerts pass-plan link-status"
     "alerts pass-plan subsystems"
