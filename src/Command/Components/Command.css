@@ -4,9 +4,9 @@
   background-color: var(--color-background-base-default);
   color: var(--color-text-primary);
   display: grid;
-  gap: var(--spacing-3);
-  grid-template-columns: calc(30% - 12px) calc(45% - 12px) calc(25%);
-  grid-template-rows: calc(33% - 12px) calc(28.25% - 12px) calc(39%);
+  gap: var(--spacing-2);
+  grid-template-columns: calc(30% - 4px) calc(45% - 4px) calc(25%);
+  grid-template-rows: calc(33% - 8px) calc(28.25% - 8px) calc(39%);
   grid-template-areas:
     "alerts pass-plan link-status"
     "alerts pass-plan subsystems"
