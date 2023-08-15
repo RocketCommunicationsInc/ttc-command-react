@@ -55,10 +55,8 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
         </RuxTooltip>
       </RuxTableCell>
       <RuxTableCell> {rowData.unit}</RuxTableCell>
-      <RuxTableCell className="text-align-right">
-        {String(rowData.thresholdMax)}
-      </RuxTableCell>
-      <RuxTableCell className="text-align-right">
+      <RuxTableCell>{String(rowData.thresholdMax)}</RuxTableCell>
+      <RuxTableCell>
         <>
           {rowData.currentValue}
           {chartDataSlope >= 0 ? (
