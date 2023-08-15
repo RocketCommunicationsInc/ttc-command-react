@@ -14,7 +14,8 @@ import {
 } from "@astrouxds/react";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
 import { useCallback, useMemo, useState } from "react";
-import { useTTCGRMActions, type Mnemonic } from "@astrouxds/mock-data";
+import { useTTCGRMActions } from "@astrouxds/mock-data";
+import type { Mnemonic } from "@astrouxds/mock-data";
 
 import "./Mnemonics.css";
 

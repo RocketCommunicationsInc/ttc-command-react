@@ -1,6 +1,6 @@
 import { RuxCheckbox, RuxIcon, RuxTreeNode } from "@astrouxds/react";
 import { Mnemonic } from "@astrouxds/mock-data";
-import MnemonicPopUp from "../../../Watcher/MnemonicPopUp";
+import MnemonicPopUp from "./MnemonicPopUp";
 
 type PropTypes = {
   stepNumber: number | string;
@@ -18,11 +18,7 @@ const MnemonicListItem = ({ stepNumber, slotNode, mnemonic }: PropTypes) => {
         <div className="pass-plan_mnemonic-wrapper">
           <RuxCheckbox className="pass-plan_checkbox" />
           {"Verify\u00A0"}
-          <MnemonicPopUp
-            isPassPlan
-            triggerValue={mnemonic.mnemonicId}
-            data={mnemonic}
-          />
+          <MnemonicPopUp triggerValue={mnemonic.mnemonicId} data={mnemonic} />
           {"\u00A0 = \u00A0"}
           {mnemonic.currentValue}
           {mnemonic.watched && (
