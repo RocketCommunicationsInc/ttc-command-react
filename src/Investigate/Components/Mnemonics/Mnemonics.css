@@ -26,7 +26,8 @@
 .table-wrapper.mnemonics rux-table-header-cell:nth-of-type(4),
 .table-wrapper.mnemonics rux-table-cell:nth-of-type(4) {
  text-align: right;
- border-right: transparent solid var(--spacing-20);
+ /* so it doesn't push content against next cell */
+ border-right: transparent solid var(--spacing-20); 
 }
 
 .table-wrapper.mnemonics rux-table-cell:nth-of-type(4) {
