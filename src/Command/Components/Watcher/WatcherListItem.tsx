@@ -54,7 +54,7 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
           {rowData.mnemonicId}
         </RuxTooltip>
       </RuxTableCell>
-      <RuxTableCell> {rowData.unit}</RuxTableCell>
+      <RuxTableCell>{rowData.unit}</RuxTableCell>
       <RuxTableCell>{String(rowData.thresholdMax)}</RuxTableCell>
       <RuxTableCell>
         <>

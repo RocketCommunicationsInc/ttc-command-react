@@ -20,14 +20,14 @@
 
 .table-wrapper.mnemonics rux-table-header-cell,
 .table-wrapper.mnemonics rux-table-cell {
- width: 8%;
+  width: 8%;
 }
 
 .table-wrapper.mnemonics rux-table-header-cell:nth-of-type(4),
 .table-wrapper.mnemonics rux-table-cell:nth-of-type(4) {
- text-align: right;
- /* so it doesn't push content against next cell */
- border-right: transparent solid var(--spacing-20); 
+  text-align: right;
+  /* so it doesn't push content against next cell */
+  border-right: transparent solid var(--spacing-20);
 }
 
 .table-wrapper.mnemonics rux-table-cell:nth-of-type(4) {

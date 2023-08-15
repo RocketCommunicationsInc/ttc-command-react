@@ -80,7 +80,6 @@ rux-status::part(status) {
 
 /* INVESTIGATE OVERLAY STYLES */
 
-
 .investigate__overlay {
   position: fixed;
   top: 0;
