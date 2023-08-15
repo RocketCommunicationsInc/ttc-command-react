@@ -44,3 +44,8 @@ rux-menu-item[value="themeToggle"] span {
 .app-icon-pop-up {
   height: calc(var(--spacing-14, 3.5rem) + var(--spacing-050, 0.125rem));
 }
+
+rux-global-status-bar rux-icon {
+  margin-left: var(--spacing-2);
+}
+
