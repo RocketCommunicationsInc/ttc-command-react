@@ -45,7 +45,7 @@ rux-menu-item[value="themeToggle"] span {
   height: calc(var(--spacing-14, 3.5rem) + var(--spacing-050, 0.125rem));
 }
 
-rux-global-status-bar rux-icon {
-  margin-left: var(--spacing-2);
+rux-global-status-bar {
+  padding-right: var(--spacing-4);
 }
 
