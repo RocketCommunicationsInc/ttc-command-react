@@ -12,7 +12,7 @@ const layout: DagreLayoutOptions = {
   name: "dagre",
   rankDir: "LR",
   nodeDimensionsIncludeLabels: true,
-  spacingFactor: 1.4,
+  spacingFactor: 1.2,
 };
 
 type ChildSubsystemNoMnemonics = {
