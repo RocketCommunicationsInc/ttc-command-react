@@ -1,14 +1,19 @@
 import { RuxContainer } from "@astrouxds/react";
 import CytoscapeComponent from "react-cytoscapejs";
-import cytoscape from "cytoscape";
+import cytoscape, { Core } from "cytoscape";
 import { cytoscapeTheme } from "./CytoScapeStyles";
-import dagre from "cytoscape-dagre";
+import dagre, { DagreLayoutOptions } from "cytoscape-dagre";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getRandomInt } from "utils";
 
 cytoscape.use(dagre);
-cytoscape({ headless: false });
+const layout: DagreLayoutOptions = {
+  name: "dagre",
+  rankDir: "LR",
+  nodeDimensionsIncludeLabels: true,
+  spacingFactor: 1.4,
+};
 
 type ChildSubsystemNoMnemonics = {
   name: string;
@@ -26,8 +31,8 @@ const Assembly = () => {
   }: ContextType = useAppContext();
   const [childSubsystem, setChildSubsystem] =
     useState<ChildSubsystemNoMnemonics | null>(null);
-  const [cyElements, setCyElements] = useState<any>(null);
-  const cyRef = useRef<any>(null);
+  const [cy, setCy] = useState<Core | null>(null);
+  const [cyElements, setCyElements] = useState<any[]>([]);
   const theme = cytoscapeTheme(lightTheme);
 
   const subsytemWithoutMnuemonics = selectedChildSubsystem
@@ -45,31 +50,11 @@ const Assembly = () => {
       }
     : null;
 
-  const width = cyRef.current
-    ? cyRef.current.container().getBoundingClientRect().width
-    : 1200;
-
-  const height = cyRef.current
-    ? cyRef.current.container().getBoundingClientRect().height
-    : 300;
-
-  const layout = {
-    name: "dagre",
-    align: "UL",
-    rankDir: "LR",
-    boundingBox: {
-      x1: 0,
-      y1: 0,
-      h: 500 > height && height >= 200 ? height : 300,
-      w: width >= 1200 ? width : 1200,
-    }, // constrain layout bounds; { x1, y1, x2, y2 } or { x1, y1, w, h }
-    nodeDimensionsIncludeLabels: true,
-    fit: true,
-  };
-
   //compare our subsystem to our stored array, if different set the new array
   if (
-    JSON.stringify(childSubsystem) !== JSON.stringify(subsytemWithoutMnuemonics)
+    JSON.stringify(childSubsystem) !==
+      JSON.stringify(subsytemWithoutMnuemonics) &&
+    cy
   ) {
     setChildSubsystem(subsytemWithoutMnuemonics);
 
@@ -111,57 +96,54 @@ const Assembly = () => {
   }
 
   useEffect(() => {
-    if (!cyRef.current) return;
-    cyRef.current.layout(layout).run();
-    cyRef.current.resize();
-  }, [cyElements]);
+    if (!cy) return;
+    cy.layout(layout).run();
+    cy.center();
+    cy.resize();
+  });
 
   useEffect(() => {
-    if (selectedAssemblyDeviceName && cyRef.current) {
-      cyRef.current.nodes().deselect();
-      cyRef.current.$(`node[label="${selectedAssemblyDeviceName}"]`).select();
+    if (selectedAssemblyDeviceName && cy) {
+      cy.nodes().deselect();
+      cy.$(`node[label="${selectedAssemblyDeviceName}"]`).select();
     }
-  }, [selectedAssemblyDeviceName]);
+  }, [selectedAssemblyDeviceName, cy]);
 
   const findAssemblyDeviceByName = (name: string) =>
     childSubsystem!.assemblyDevices.find((device) => device?.name === name);
 
-  const handleClick = (e: any) => {
-    const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
-    if (!assemblyDevice) return;
-    selectAssemblyDevice(assemblyDevice);
-  };
-
-  const resize = () => {
-    if (cyRef.current) {
-      cyRef.current.layout(layout).run();
-      cyRef.current.center();
-      cyRef.current.resize();
-    }
-  };
-
   useEffect(() => {
-    if (cyRef.current) {
-      const cy = cyRef.current;
-      cy.container().classList.add("cytoscape-container");
-      cy.on("click", "node", handleClick);
-      cy.on("mouseout", "node", function (e: any) {
-        e.target.removeClass("hover");
-        cy.container().style.cursor = "initial";
-      });
-      cy.on("mouseover", "node", function (e: any) {
-        e.target.addClass("hover");
-        cy.container().style.cursor = "pointer";
-      });
-      cy.on("resize", function () {
-        cy.fit();
-      });
-    }
+    if (!cy) return;
+    const resize = () => {
+      cy.layout(layout).run();
+      cy.resize();
+    };
+
+    const handleClick = (e: any) => {
+      const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
+      if (!assemblyDevice) return;
+      selectAssemblyDevice(assemblyDevice);
+    };
+
+    cy.container()!.classList.add("cytoscape-container");
+    cy.on("click", "node", handleClick);
+    cy.on("mouseout", "node", function (e: any) {
+      e.target.removeClass("hover");
+      cy.container()!.style.cursor = "initial";
+    });
+    cy.on("mouseover", "node", function (e: any) {
+      e.target.addClass("hover");
+      cy.container()!.style.cursor = "pointer";
+    });
+    cy.on("resize", function () {
+      cy.fit();
+    });
+
     window.addEventListener("resize", resize);
     return () => {
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  });
 
   return (
     <RuxContainer className="star-tracker">
@@ -172,10 +154,7 @@ const Assembly = () => {
         autoungrabify
         boxSelectionEnabled={false}
         userPanningEnabled={false}
-        layout={layout}
-        cy={(cy: any) => {
-          cyRef.current = cy;
-        }}
+        cy={setCy}
       />
     </RuxContainer>
   );
