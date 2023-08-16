@@ -42,8 +42,7 @@
 .alert-list-headers {
   display: flex;
   flex-flow: row nowrap;
-  margin-inline: 3px;
-  margin-block: 0px;
+  margin: 0;
   font-size: var(--font-heading-5-font-size);
   box-shadow: var(--list-panel-box-shadow);
   padding: var(--spacing-2) var(--spacing-4);
@@ -70,17 +69,13 @@
 .alert-list-label {
   display: flex;
   flex-flow: row nowrap;
-  min-height: 2rem;
+  height: 2rem;
   width: 100%;
   align-items: center;
 }
 
 .alerts rux-accordion-item::part(container) {
-  padding-inline: 3px;
-}
-
-.alerts rux-accordion-item::part(label-wrapper):hover {
-  background-color: var(--color-background-surface-hover);
+  padding-inline: 0px;
 }
 
 .alerts rux-accordion-item::part(label) {
@@ -91,10 +86,15 @@
   margin-right: 44px;
 }
 
+.alert-list-headers {
+  white-space: nowrap;
+}
+
 .alert-list-headers span:nth-of-type(1),
 .alert-list-label span:nth-of-type(1) {
   width: 54%;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
 }
 
@@ -102,15 +102,11 @@
 .alert-list-label span:nth-of-type(2) {
   width: 20%;
   text-transform: capitalize;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .alert-list-headers span:nth-of-type(3),
 .alert-list-label span:nth-of-type(3) {
   width: 20%;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .alert-list-headers span:nth-of-type(3) {
@@ -130,11 +126,10 @@ rux-accordion rux-status {
   display: flex;
   flex-direction: column;
   background-color: var(--color-background-surface-default);
-  overflow-y: scroll;
+  overflow-y: auto;
   flex-grow: 1;
   padding-left: 0;
   margin: 0;
-  padding-top: 3px;
 }
 
 li {
