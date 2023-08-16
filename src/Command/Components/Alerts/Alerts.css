@@ -66,6 +66,16 @@
   transform: rotate(-90deg);
 } */
 
+.alert-list {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-background-surface-default);
+  overflow-y: scroll;
+  flex-grow: 1;
+  padding-left: 0;
+  margin: 0;
+}
+
 .alert-list-label {
   display: flex;
   flex-flow: row nowrap;
@@ -116,16 +126,6 @@
 
 rux-accordion rux-status {
   padding-inline: 1rem;
-}
-
-.alert-list {
-  display: flex;
-  flex-direction: column;
-  background-color: var(--color-background-surface-default);
-  overflow-y: auto;
-  flex-grow: 1;
-  padding-left: 0;
-  margin: 0;
 }
 
 li {
