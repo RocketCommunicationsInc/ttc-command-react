@@ -18,6 +18,8 @@ export type ContextType = {
   selectedAssemblyDevice: AssemblyDevice;
   selectedAssemblyDeviceName: string;
   selectedMnemonic: Mnemonic;
+  lightTheme: boolean;
+  toggleTheme: () => void;
   resetSelected: () => void;
   selectMnemonic: (mnemonic: Mnemonic) => void;
   selectSubsystem: (subsystem: Subsystem) => void;
@@ -55,6 +57,12 @@ const AppProvider = ({ children }: PropTypes) => {
   const [selectedMnemonic, setSelectedMnemonic] = useState<Mnemonic | null>(
     null
   );
+  const [lightTheme, setLightTheme] = useState(false);
+
+  //toggles light theme
+  const toggleTheme = () => {
+    setLightTheme((prevState) => !prevState);
+  };
 
   //Utility finder functions
   const findSubsystemByName = (name?: string) =>
@@ -176,6 +184,8 @@ const AppProvider = ({ children }: PropTypes) => {
     selectedAssemblyDevice,
     selectedAssemblyDeviceName,
     selectedMnemonic,
+    lightTheme,
+    toggleTheme,
     resetSelected,
     selectSubsystem,
     selectChildSubsystem,
