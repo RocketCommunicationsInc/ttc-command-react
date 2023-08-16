@@ -6,6 +6,7 @@ import dagre, { DagreLayoutOptions } from "cytoscape-dagre";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
 import { useEffect, useState } from "react";
 import { getRandomInt } from "utils";
+import type { AssemblyDevice } from "@astrouxds/mock-data"
 
 cytoscape.use(dagre);
 const layout: DagreLayoutOptions = {
@@ -19,7 +20,7 @@ type ChildSubsystemNoMnemonics = {
   name: string;
   status: string;
   subsystemParent: string;
-  assemblyDevices: any[];
+  assemblyDevices: Omit<AssemblyDevice, "mnemonics">[];
 };
 
 const Assembly = () => {
@@ -35,11 +36,9 @@ const Assembly = () => {
   const [cyElements, setCyElements] = useState<any[]>([]);
   const theme = cytoscapeTheme(lightTheme);
 
-  const subsytemWithoutMnuemonics = selectedChildSubsystem
+  const childSubsytemWithoutMnemonics = selectedChildSubsystem
     ? {
-        name: selectedChildSubsystem.name,
-        status: selectedChildSubsystem.status,
-        subsystemParent: selectedChildSubsystem.subsystemParent,
+        ...selectedChildSubsystem,
         assemblyDevices: [
           ...selectedChildSubsystem.assemblyDevices.map((device) => ({
             name: device.name,
@@ -50,16 +49,18 @@ const Assembly = () => {
       }
     : null;
 
+  resize();
+  
   //compare our subsystem to our stored array, if different set the new array
   if (
     JSON.stringify(childSubsystem) !==
-      JSON.stringify(subsytemWithoutMnuemonics) &&
+      JSON.stringify(childSubsytemWithoutMnemonics) &&
     cy
   ) {
-    setChildSubsystem(subsytemWithoutMnuemonics);
+    setChildSubsystem(childSubsytemWithoutMnemonics);
 
-    const elements = subsytemWithoutMnuemonics
-      ? subsytemWithoutMnuemonics.assemblyDevices.map(
+    const elements = childSubsytemWithoutMnemonics
+      ? childSubsytemWithoutMnemonics.assemblyDevices.map(
           ({ name, status }, index) => ({
             data: {
               id: index,
@@ -95,12 +96,17 @@ const Assembly = () => {
     setCyElements([...elements, ...randomEdges(elements)]);
   }
 
-  useEffect(() => {
-    if (!cy) return;
-    cy.layout(layout).run();
-    cy.center();
-    cy.resize();
-  });
+  function resize (){ 
+      if (!cy) return;
+      cy.layout(layout).run();
+      cy.center();
+      cy.resize();
+  }
+
+  const findAssemblyDeviceByName = (name: string) =>
+    selectedChildSubsystem!.assemblyDevices.find((device) => device?.name === name);
+
+
 
   useEffect(() => {
     if (selectedAssemblyDeviceName && cy) {
@@ -109,15 +115,8 @@ const Assembly = () => {
     }
   }, [selectedAssemblyDeviceName, cy]);
 
-  const findAssemblyDeviceByName = (name: string) =>
-    childSubsystem!.assemblyDevices.find((device) => device?.name === name);
-
   useEffect(() => {
     if (!cy) return;
-    const resize = () => {
-      cy.layout(layout).run();
-      cy.resize();
-    };
 
     const handleClick = (e: any) => {
       const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
