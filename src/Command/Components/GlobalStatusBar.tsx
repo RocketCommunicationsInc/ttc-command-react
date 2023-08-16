@@ -89,7 +89,12 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
           slot="left-side"
           closeOnSelect
         >
-          <RuxIcon slot="trigger" size="small" icon="apps" />
+          <RuxIcon
+            className="app-switcher-icon"
+            slot="trigger"
+            size="small"
+            icon="apps"
+          />
           <RuxMenu onRuxmenuselected={(e) => menuSelect(e)}>
             <RuxMenuItem value="investigate">
               TTC {showInvestigate ? "Command" : "Investigate"}
