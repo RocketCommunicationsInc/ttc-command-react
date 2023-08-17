@@ -23,9 +23,13 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
   const [notifications1, setNotifications1] = useState(0);
   const [notifications2, setNotifications2] = useState(2);
   const [notifications3, setNotifications3] = useState(4);
-  const [lightTheme, setLightTheme] = useState(false);
-  const { contact, toggleInvestigate, showInvestigate }: ContextType =
-    useAppContext();
+  const {
+    contact,
+    toggleInvestigate,
+    showInvestigate,
+    lightTheme,
+    toggleTheme,
+  }: ContextType = useAppContext();
 
   const statusValuesArr = [
     "off",
@@ -55,14 +59,14 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
       setNotifications1(notificationsArr[randomNumber]);
       setNotifications2(notificationsArr[randomNumber2]);
       setNotifications3(notificationsArr[randomNumber3]);
-    }, 3000);
+    }, 12000);
     return () => clearInterval(interval);
   });
 
   function menuSelect(e: CustomEvent) {
     const { detail } = e;
     if (detail.value === "themeToggle") {
-      setLightTheme(!lightTheme);
+      toggleTheme();
       document.body.classList.toggle("light-theme");
       return;
     }
@@ -89,7 +93,12 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
           slot="left-side"
           closeOnSelect
         >
-          <RuxIcon slot="trigger" size="small" icon="apps" />
+          <RuxIcon
+            className="app-switcher-icon"
+            slot="trigger"
+            size="small"
+            icon="apps"
+          />
           <RuxMenu onRuxmenuselected={(e) => menuSelect(e)}>
             <RuxMenuItem value="investigate">
               TTC {showInvestigate ? "Command" : "Investigate"}
