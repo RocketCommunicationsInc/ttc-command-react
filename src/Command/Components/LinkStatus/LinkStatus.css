@@ -1,15 +1,15 @@
 .link-status div:nth-child(even) {
   background-color: var(--color-background-surface-default);
-  text-align: right;
-  font-style: italic;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-sm);
-  padding-block: var(--spacing-15);
+  padding-block: var(--spacing-1);
   padding-inline: var(--spacing-2);
   margin-top: var(--spacing-1);
 }
 
 .link-status div:nth-child(odd) {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  font-style: italic;
+  text-align: right;
   padding-block: var(--spacing-1);
   padding-inline: var(--spacing-2);
   background-color: var(--color-background-base-header);
