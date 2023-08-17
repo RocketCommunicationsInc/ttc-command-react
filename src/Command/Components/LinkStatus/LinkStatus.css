@@ -2,7 +2,7 @@
   background-color: var(--color-background-surface-default);
   padding-block: var(--spacing-1);
   padding-inline: var(--spacing-2);
-  margin-top: var(--spacing-1);
+  margin-top: var(--spacing-2);
 }
 
 .link-status div:nth-child(odd) {
