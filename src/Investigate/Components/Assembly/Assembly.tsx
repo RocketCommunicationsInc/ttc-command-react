@@ -148,14 +148,28 @@ const Assembly = () => {
   return (
     <RuxContainer className="star-tracker">
       <div slot="header">{selectedChildSubsystem?.name}</div>
-      <CytoscapeComponent
-        elements={cyElements}
-        stylesheet={theme}
-        autoungrabify
-        boxSelectionEnabled={false}
-        userPanningEnabled={false}
-        cy={setCy}
-      />
+      {!(navigator.userAgent.indexOf("Firefox") > -1) ? (
+        <CytoscapeComponent
+          elements={cyElements}
+          stylesheet={theme}
+          autoungrabify
+          boxSelectionEnabled={false}
+          userPanningEnabled={false}
+          cy={setCy}
+        />
+      ) : (
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "middle",
+            justifyContent: "center",
+          }}
+        >
+          <h2>Firefox does not support this element.</h2>
+        </div>
+      )}
     </RuxContainer>
   );
 };
