@@ -6,7 +6,7 @@ import dagre, { DagreLayoutOptions } from "cytoscape-dagre";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
 import { useEffect, useState } from "react";
 import { getRandomInt } from "utils";
-import type { AssemblyDevice } from "@astrouxds/mock-data"
+import type { AssemblyDevice } from "@astrouxds/mock-data";
 
 cytoscape.use(dagre);
 const layout: DagreLayoutOptions = {
@@ -50,7 +50,7 @@ const Assembly = () => {
     : null;
 
   resize();
-  
+
   //compare our subsystem to our stored array, if different set the new array
   if (
     JSON.stringify(childSubsystem) !==
@@ -96,17 +96,17 @@ const Assembly = () => {
     setCyElements([...elements, ...randomEdges(elements)]);
   }
 
-  function resize (){ 
-      if (!cy) return;
-      cy.layout(layout).run();
-      cy.center();
-      cy.resize();
+  function resize() {
+    if (!cy) return;
+    cy.layout(layout).run();
+    cy.center();
+    cy.resize();
   }
 
   const findAssemblyDeviceByName = (name: string) =>
-    selectedChildSubsystem!.assemblyDevices.find((device) => device?.name === name);
-
-
+    selectedChildSubsystem!.assemblyDevices.find(
+      (device) => device?.name === name
+    );
 
   useEffect(() => {
     if (selectedAssemblyDeviceName && cy) {
@@ -162,7 +162,7 @@ const Assembly = () => {
             width: "100%",
             height: "100%",
             display: "flex",
-            alignItems: "middle",
+            alignItems: "center",
             justifyContent: "center",
           }}
         >
