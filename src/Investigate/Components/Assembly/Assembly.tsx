@@ -1,4 +1,4 @@
-import { RuxContainer } from "@astrouxds/react";
+import { RuxContainer, RuxButton } from "@astrouxds/react";
 import CytoscapeComponent from "react-cytoscapejs";
 import cytoscape, { Core } from "cytoscape";
 import { cytoscapeTheme } from "./CytoScapeStyles";
@@ -108,6 +108,16 @@ const Assembly = () => {
       (device) => device?.name === name
     );
 
+  const handleClick = (e: any) => {
+    const data =
+      e.target.nodeName === "RUX-BUTTON"
+        ? e.target.textContent
+        : e.target.data("label");
+    const assemblyDevice = findAssemblyDeviceByName(data);
+    if (!assemblyDevice) return;
+    selectAssemblyDevice(assemblyDevice);
+  };
+
   useEffect(() => {
     if (selectedAssemblyDeviceName && cy) {
       cy.nodes().deselect();
@@ -117,12 +127,6 @@ const Assembly = () => {
 
   useEffect(() => {
     if (!cy) return;
-
-    const handleClick = (e: any) => {
-      const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
-      if (!assemblyDevice) return;
-      selectAssemblyDevice(assemblyDevice);
-    };
 
     cy.container()!.classList.add("cytoscape-container");
     cy.on("click", "node", handleClick);
@@ -157,16 +161,27 @@ const Assembly = () => {
           cy={setCy}
         />
       ) : (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <h2>Firefox does not support this element.</h2>
+        <div className="firefox-list">
+          <h3>Devices</h3>
+          <ul>
+            {childSubsytemWithoutMnemonics &&
+              childSubsytemWithoutMnemonics.assemblyDevices.map(
+                (device, index) => {
+                  return (
+                    <li key={index}>
+                      <RuxButton
+                        borderless
+                        secondary
+                        size="small"
+                        onClick={handleClick}
+                      >
+                        {device.name}
+                      </RuxButton>
+                    </li>
+                  );
+                }
+              )}
+          </ul>
         </div>
       )}
     </RuxContainer>
