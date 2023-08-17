@@ -18,8 +18,15 @@
   padding-left: var(--spacing-4);
 }
 
-.table-wrapper.mnemonics rux-table-header-cell:nth-of-type(6) {
-  width: 16%;
+.table-wrapper.mnemonics rux-table-header-cell,
+.table-wrapper.mnemonics rux-table-cell {
+  width: 17%;
+  padding-right: var(--spacing-20);
+}
+
+.table-wrapper.mnemonics rux-table-header-cell:nth-of-type(4),
+.table-wrapper.mnemonics rux-table-cell:nth-of-type(4) {
+  text-align: right;
 }
 
 .table-wrapper.mnemonics rux-table-cell:nth-of-type(4) {
