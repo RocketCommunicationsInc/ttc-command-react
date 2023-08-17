@@ -1,4 +1,4 @@
-import { RuxContainer } from "@astrouxds/react";
+import { RuxContainer, RuxButton } from "@astrouxds/react";
 import CytoscapeComponent from "react-cytoscapejs";
 import cytoscape, { Core } from "cytoscape";
 import { cytoscapeTheme } from "./CytoScapeStyles";
@@ -6,7 +6,7 @@ import dagre, { DagreLayoutOptions } from "cytoscape-dagre";
 import { useAppContext, ContextType } from "../../../provider/useAppContext";
 import { useEffect, useState } from "react";
 import { getRandomInt } from "utils";
-import type { AssemblyDevice } from "@astrouxds/mock-data"
+import type { AssemblyDevice } from "@astrouxds/mock-data";
 
 cytoscape.use(dagre);
 const layout: DagreLayoutOptions = {
@@ -50,7 +50,7 @@ const Assembly = () => {
     : null;
 
   resize();
-  
+
   //compare our subsystem to our stored array, if different set the new array
   if (
     JSON.stringify(childSubsystem) !==
@@ -96,17 +96,27 @@ const Assembly = () => {
     setCyElements([...elements, ...randomEdges(elements)]);
   }
 
-  function resize (){ 
-      if (!cy) return;
-      cy.layout(layout).run();
-      cy.center();
-      cy.resize();
+  function resize() {
+    if (!cy) return;
+    cy.layout(layout).run();
+    cy.center();
+    cy.resize();
   }
 
   const findAssemblyDeviceByName = (name: string) =>
-    selectedChildSubsystem!.assemblyDevices.find((device) => device?.name === name);
+    selectedChildSubsystem!.assemblyDevices.find(
+      (device) => device?.name === name
+    );
 
-
+  const handleClick = (e: any) => {
+    const data =
+      e.target.nodeName === "RUX-BUTTON"
+        ? e.target.textContent
+        : e.target.data("label");
+    const assemblyDevice = findAssemblyDeviceByName(data);
+    if (!assemblyDevice) return;
+    selectAssemblyDevice(assemblyDevice);
+  };
 
   useEffect(() => {
     if (selectedAssemblyDeviceName && cy) {
@@ -117,12 +127,6 @@ const Assembly = () => {
 
   useEffect(() => {
     if (!cy) return;
-
-    const handleClick = (e: any) => {
-      const assemblyDevice = findAssemblyDeviceByName(e.target.data("label"));
-      if (!assemblyDevice) return;
-      selectAssemblyDevice(assemblyDevice);
-    };
 
     cy.container()!.classList.add("cytoscape-container");
     cy.on("click", "node", handleClick);
@@ -147,14 +151,39 @@ const Assembly = () => {
   return (
     <RuxContainer className="star-tracker">
       <div slot="header">{selectedChildSubsystem?.name}</div>
-      <CytoscapeComponent
-        elements={cyElements}
-        stylesheet={theme}
-        autoungrabify
-        boxSelectionEnabled={false}
-        userPanningEnabled={false}
-        cy={setCy}
-      />
+      {!(navigator.userAgent.indexOf("Firefox") > -1) ? (
+        <CytoscapeComponent
+          elements={cyElements}
+          stylesheet={theme}
+          autoungrabify
+          boxSelectionEnabled={false}
+          userPanningEnabled={false}
+          cy={setCy}
+        />
+      ) : (
+        <div className="firefox-list">
+          <h3>Devices</h3>
+          <ul>
+            {childSubsytemWithoutMnemonics &&
+              childSubsytemWithoutMnemonics.assemblyDevices.map(
+                (device, index) => {
+                  return (
+                    <li key={index}>
+                      <RuxButton
+                        borderless
+                        secondary
+                        size="small"
+                        onClick={handleClick}
+                      >
+                        {device.name}
+                      </RuxButton>
+                    </li>
+                  );
+                }
+              )}
+          </ul>
+        </div>
+      )}
     </RuxContainer>
   );
 };
