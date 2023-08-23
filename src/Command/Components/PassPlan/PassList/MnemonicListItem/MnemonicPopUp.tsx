@@ -48,7 +48,7 @@ const MnemonicPopUp = ({ triggerValue, data }: PropTypes) => {
 
   return (
     <RuxPopUp
-      placement="right-end"
+      placement="right"
       strategy="fixed"
       className="mnemonic-pop-up"
     >
