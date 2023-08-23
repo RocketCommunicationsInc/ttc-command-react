@@ -75,6 +75,7 @@ rux-tree.pass-plan_tree-wrapper {
 rux-tree.pass-plan_tree-wrapper rux-tree-node::part(text) {
   padding-inline-start: var(--spacing-8);
   width: 100%;
+  padding-block: var(--spacing-1);
 }
 
 .pass-plan_tree-content-wrapper {

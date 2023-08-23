@@ -37,10 +37,6 @@
   padding-inline-end: var(--spacing-2);
 }
 
-.pass-plan_executable-wrapper rux-icon {
-  color: var(--color-text-primary);
-}
-
 .pass-plan_progress-time {
   display: flex;
   align-items: center;
