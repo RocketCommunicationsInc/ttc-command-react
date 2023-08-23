@@ -5,6 +5,7 @@ import {
   RuxTable,
   RuxIcon,
   RuxStatus,
+  RuxTooltip,
 } from "@astrouxds/react";
 import "./Subsystems.css";
 import type { Subsystem } from "@astrouxds/mock-data";
@@ -33,11 +34,13 @@ const Subsystems = () => {
               {subsystem.name}
             </RuxTableCell>
             <RuxTableCell>
-              <RuxIcon
-                size="1rem"
-                icon="launch"
-                onClick={() => handleSubsystemClick(subsystem)}
-              />
+              <RuxTooltip message="Investigate" placement="left" delay={300}>
+                <RuxIcon
+                  size="1rem"
+                  icon="launch"
+                  onClick={() => handleSubsystemClick(subsystem)}
+                />
+              </RuxTooltip>
             </RuxTableCell>
           </RuxTableRow>
         ))}
