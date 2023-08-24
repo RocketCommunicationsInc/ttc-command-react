@@ -7,11 +7,13 @@ import {
   RuxMenu,
   RuxMenuItem,
   RuxTooltip,
+  RuxDialog,
 } from "@astrouxds/react";
 import type { Mnemonic, Status } from "@astrouxds/mock-data";
 import { useTTCGRMActions } from "@astrouxds/mock-data";
 
 import { useAppContext, ContextType } from "provider/useAppContext";
+import { RuxDialogCustomEvent } from "@astrouxds/astro-web-components";
 
 type PropTypes = {
   rowData: Mnemonic;
@@ -29,10 +31,8 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
 
   const handleRuxMenuSelected = (e: any, mnemonic: Mnemonic) => {
     if (e.detail.value === "remove") {
-      modifyMnemonic({
-        ...rowData,
-        watched: false,
-      });
+      const dialog: HTMLRuxDialogElement = document.querySelector(`rux-dialog.watcher-dialog-${rowData.mnemonicId}`)!;
+      dialog.open = true;      
     }
     if (e.detail.value === "investigate") {
       selectMnemonic(mnemonic);
@@ -42,9 +42,20 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
     return;
   };
 
+  const handleDialogConfirm = (e: RuxDialogCustomEvent<boolean | null>) => {
+    if (e.detail === true) {
+      modifyMnemonic({
+        ...rowData,
+        watched: false,
+      });
+    }
+  }
+
   const tooltipMessage = `${rowData.subsystem}/ ${rowData.measurement} - ${rowData.mnemonicId} `;
 
   return (
+    <>
+    <RuxDialog className={`watcher-dialog-${rowData.mnemonicId}`} confirmText="Yes, Delete" denyText="Cancel" message="Please confirm you wish to delete the selected item from the Watcher?" onRuxdialogclosed={(e) => handleDialogConfirm(e)} />
     <RuxTableRow key={rowData.mnemonicId} data-index={index}>
       <RuxTableCell>
         <RuxStatus status={rowData.status as Status} />
@@ -76,6 +87,7 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
         </RuxPopUp>
       </RuxTableCell>
     </RuxTableRow>
+    </>
   );
 };
 
