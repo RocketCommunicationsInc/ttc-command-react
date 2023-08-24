@@ -78,6 +78,18 @@ rux-tree.pass-plan_tree-wrapper rux-tree-node::part(text) {
   padding-block: var(--spacing-1);
 }
 
+rux-tree.pass-plan_tree-wrapper rux-tree-node[aria-level="2"] {
+  padding-block-start: var(--spacing-050);
+}
+
+rux-tree.pass-plan_tree-wrapper rux-tree-node:first-child {
+  padding-block-start: var(--spacing-050);
+}
+
+rux-tree.pass-plan_tree-wrapper rux-tree-node:last-child:not([aria-level="2"]) {
+  padding-block-end: var(--spacing-050);
+}
+
 .pass-plan_tree-content-wrapper {
   display: flex;
   align-items: center;
