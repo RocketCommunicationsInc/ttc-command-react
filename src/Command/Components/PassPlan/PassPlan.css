@@ -78,6 +78,7 @@ rux-tree.pass-plan_tree-wrapper rux-tree-node::part(text) {
   padding-block: var(--spacing-1);
 }
 
+/* Styles to fix row padding */
 rux-tree.pass-plan_tree-wrapper rux-tree-node[aria-level="2"] {
   padding-block-start: var(--spacing-050);
 }
