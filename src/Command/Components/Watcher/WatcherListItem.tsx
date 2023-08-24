@@ -31,8 +31,10 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
 
   const handleRuxMenuSelected = (e: any, mnemonic: Mnemonic) => {
     if (e.detail.value === "remove") {
-      const dialog: HTMLRuxDialogElement = document.querySelector(`rux-dialog.watcher-dialog-${rowData.mnemonicId}`)!;
-      dialog.open = true;      
+      const dialog: HTMLRuxDialogElement = document.querySelector(
+        `rux-dialog.watcher-dialog-${rowData.mnemonicId}`
+      )!;
+      dialog.open = true;
     }
     if (e.detail.value === "investigate") {
       selectMnemonic(mnemonic);
@@ -49,44 +51,53 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
         watched: false,
       });
     }
-  }
+  };
 
   const tooltipMessage = `${rowData.subsystem}/ ${rowData.measurement} - ${rowData.mnemonicId} `;
 
   return (
     <>
-    <RuxDialog className={`watcher-dialog-${rowData.mnemonicId}`} confirmText="Yes, Delete" denyText="Cancel" message="Please confirm you wish to delete the selected item from the Watcher?" onRuxdialogclosed={(e) => handleDialogConfirm(e)} />
-    <RuxTableRow key={rowData.mnemonicId} data-index={index}>
-      <RuxTableCell>
-        <RuxStatus status={rowData.status as Status} />
-      </RuxTableCell>
-      <RuxTableCell>
-        <RuxTooltip message={tooltipMessage} placement="top" delay={300}>
-          {rowData.mnemonicId}
-        </RuxTooltip>
-      </RuxTableCell>
-      <RuxTableCell>{rowData.unit}</RuxTableCell>
-      <RuxTableCell>{String(rowData.thresholdMax)}</RuxTableCell>
-      <RuxTableCell>
-        <>
-          {rowData.currentValue}
-          {chartDataSlope >= 0 ? (
-            <RuxIcon icon="arrow-upward" size="extra-small" />
-          ) : (
-            <RuxIcon icon="arrow-downward" size="extra-small" />
-          )}
-        </>
-      </RuxTableCell>
-      <RuxTableCell>
-        <RuxPopUp placement="left" closeOnSelect>
-          <RuxIcon slot="trigger" icon="more-horiz" size="1.5rem" />
-          <RuxMenu onRuxmenuselected={(e) => handleRuxMenuSelected(e, rowData)}>
-            <RuxMenuItem value="remove">Remove from Watcher</RuxMenuItem>
-            <RuxMenuItem value="investigate">Investigate</RuxMenuItem>
-          </RuxMenu>
-        </RuxPopUp>
-      </RuxTableCell>
-    </RuxTableRow>
+      <RuxDialog
+        className={`watcher-dialog-${rowData.mnemonicId}`}
+        confirmText="Yes, Delete"
+        denyText="Cancel"
+        message="Please confirm you wish to delete the selected item from the Watcher?"
+        clickToClose
+        onRuxdialogclosed={(e) => handleDialogConfirm(e)}
+      />
+      <RuxTableRow key={rowData.mnemonicId} data-index={index}>
+        <RuxTableCell>
+          <RuxStatus status={rowData.status as Status} />
+        </RuxTableCell>
+        <RuxTableCell>
+          <RuxTooltip message={tooltipMessage} placement="top" delay={300}>
+            {rowData.mnemonicId}
+          </RuxTooltip>
+        </RuxTableCell>
+        <RuxTableCell>{rowData.unit}</RuxTableCell>
+        <RuxTableCell>{String(rowData.thresholdMax)}</RuxTableCell>
+        <RuxTableCell>
+          <>
+            {rowData.currentValue}
+            {chartDataSlope >= 0 ? (
+              <RuxIcon icon="arrow-upward" size="extra-small" />
+            ) : (
+              <RuxIcon icon="arrow-downward" size="extra-small" />
+            )}
+          </>
+        </RuxTableCell>
+        <RuxTableCell>
+          <RuxPopUp placement="left" closeOnSelect>
+            <RuxIcon slot="trigger" icon="more-horiz" size="1.5rem" />
+            <RuxMenu
+              onRuxmenuselected={(e) => handleRuxMenuSelected(e, rowData)}
+            >
+              <RuxMenuItem value="remove">Remove from Watcher</RuxMenuItem>
+              <RuxMenuItem value="investigate">Investigate</RuxMenuItem>
+            </RuxMenu>
+          </RuxPopUp>
+        </RuxTableCell>
+      </RuxTableRow>
     </>
   );
 };
