@@ -20,10 +20,10 @@ const SelectMenuListItem = ({ stepNumber }: PropTypes) => {
           value={xyz}
           onRuxchange={(e) => setXyz(e.target.value as string)}
         >
-          <RuxOption label="yes" value="yes">
+          <RuxOption label="Yes" value="yes">
             Yes
           </RuxOption>
-          <RuxOption label="no" value="no">
+          <RuxOption label="No" value="no">
             No
           </RuxOption>
         </RuxSelect>
@@ -32,10 +32,10 @@ const SelectMenuListItem = ({ stepNumber }: PropTypes) => {
           value={receiveTelemetry}
           onRuxchange={(e) => setReceiveTelemetry(e.target.value as string)}
         >
-          <RuxOption label="yes" value="yes">
+          <RuxOption label="Yes" value="yes">
             Yes
           </RuxOption>
-          <RuxOption label="no" value="no">
+          <RuxOption label="No" value="no">
             No
           </RuxOption>
         </RuxSelect>

@@ -38,8 +38,10 @@
 
 .mnemonic-pop-up rux-card div {
   display: flex;
-  justify-content: space-between;
-  gap: var(--spacing-8);
+}
+
+.mnemonic-pop-up rux-card div .subsystem-button {
+  margin-left: var(--spacing-1);
 }
 
 .mnemonic-pop-up rux-checkbox::part(label) {

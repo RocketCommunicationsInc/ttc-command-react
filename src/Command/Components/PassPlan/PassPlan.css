@@ -46,7 +46,7 @@ rux-select.pass-plan_header-select::part(label) {
 }
 
 .pass-plan_header-instruction {
-  padding-inline-start: var(--spacing-20);
+  padding-inline-start: var(--spacing-16);
 }
 
 /* Content/Body Styles */
@@ -73,8 +73,22 @@ rux-tree.pass-plan_tree-wrapper {
 }
 
 rux-tree.pass-plan_tree-wrapper rux-tree-node::part(text) {
-  padding-inline-start: var(--spacing-8);
+  padding-inline-start: var(--spacing-6);
   width: 100%;
+  padding-block: var(--spacing-1);
+}
+
+/* Styles to fix row padding */
+rux-tree.pass-plan_tree-wrapper rux-tree-node[aria-level="2"] {
+  padding-block-start: var(--spacing-1);
+}
+
+rux-tree.pass-plan_tree-wrapper rux-tree-node:first-child {
+  padding-block-start: var(--spacing-1);
+}
+
+rux-tree.pass-plan_tree-wrapper rux-tree-node:last-child:not([aria-level="2"]) {
+  padding-block-end: var(--spacing-1);
 }
 
 .pass-plan_tree-content-wrapper {
@@ -89,6 +103,10 @@ rux-tree.pass-plan_tree-wrapper rux-tree-node::part(text) {
 
 .pass-plan_tree-content-wrapper > rux-progress {
   margin-inline-start: auto;
+}
+
+rux-tree-node[aria-level="2"]::part(node) {
+  padding-left: var(--spacing-20);
 }
 
 /* List Item Styles */
