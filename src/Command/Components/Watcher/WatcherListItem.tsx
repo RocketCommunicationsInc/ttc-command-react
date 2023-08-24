@@ -1,4 +1,4 @@
-import { useRef } from "react"
+import { useEffect, useRef, useState } from "react";
 import {
   RuxStatus,
   RuxTableRow,
@@ -23,13 +23,16 @@ type PropTypes = {
 };
 
 const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
+  const tableCellRef = useRef(null);
+  const [textTruncated, setTextTruncated] = useState(false);
   const { modifyMnemonic } = useTTCGRMActions();
   const {
     toggleInvestigate,
     selectSubsystemsFromMnemonic,
     selectMnemonic,
   }: ContextType = useAppContext();
-  const dialogElement = useRef<HTMLRuxDialogElement>(null)
+
+  const dialogElement = useRef<HTMLRuxDialogElement>(null);
 
   const handleRuxMenuSelected = (e: any, mnemonic: Mnemonic) => {
     if (e.detail.value === "remove") {
@@ -51,6 +54,30 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
       });
     }
   };
+
+  useEffect(() => {
+    if (tableCellRef.current) {
+      const textEl = (tableCellRef.current as any).firstChild;
+      console.log(textEl, "text");
+      if (textEl) {
+        const textWidth = textEl.scrollWidth;
+        console.log(textWidth, "text width");
+        const cellWidth = (tableCellRef.current as any).clientWidth;
+        console.log(cellWidth, "cell width");
+        setTextTruncated(textWidth > cellWidth);
+      }
+    }
+  }, []);
+
+  // useEffect(() => {
+  //   const textEl = (tableRowRef.current as any).firstChild;
+  //   console.log(textEl.offSetWidth, "width");
+  //   console.log(textEl.scrollWidth, "scroll");
+  //   if (tableRowRef.current) {
+  //     setTextTruncated(textEl.scrollWidth > textEl.offSetWidth);
+  //   }
+  // }, []);
+  // console.log(textTruncated);
 
   const tooltipMessage = `${rowData.subsystem}/ ${rowData.measurement} - ${rowData.mnemonicId} `;
 
@@ -75,16 +102,35 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
         </RuxTableCell>
         <RuxTableCell>{rowData.unit}</RuxTableCell>
         <RuxTableCell>{String(rowData.thresholdMax)}</RuxTableCell>
-        <RuxTableCell>
-          <>
-            {rowData.currentValue}
-            {chartDataSlope >= 0 ? (
-              <RuxIcon icon="arrow-upward" size="extra-small" />
-            ) : (
-              <RuxIcon icon="arrow-downward" size="extra-small" />
-            )}
-          </>
-        </RuxTableCell>
+        {!textTruncated ? (
+          <RuxTableCell ref={tableCellRef}>
+            <>
+              {rowData.currentValue}
+              {chartDataSlope >= 0 ? (
+                <RuxIcon icon="arrow-upward" size="extra-small" />
+              ) : (
+                <RuxIcon icon="arrow-downward" size="extra-small" />
+              )}
+            </>
+          </RuxTableCell>
+        ) : (
+          <RuxTableCell ref={tableCellRef}>
+            <RuxTooltip
+              message={rowData.currentValue.toString()}
+              placement="top"
+              delay={300}
+            >
+              {rowData.currentValue}
+
+              {chartDataSlope >= 0 ? (
+                <RuxIcon icon="arrow-upward" size="extra-small" />
+              ) : (
+                <RuxIcon icon="arrow-downward" size="extra-small" />
+              )}
+            </RuxTooltip>
+          </RuxTableCell>
+        )}
+
         <RuxTableCell>
           <RuxPopUp placement="left" closeOnSelect>
             <RuxIcon slot="trigger" icon="more-horiz" size="1.5rem" />
