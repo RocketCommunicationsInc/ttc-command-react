@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import {
   RuxStatus,
   RuxTableRow,
@@ -28,13 +29,11 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
     selectSubsystemsFromMnemonic,
     selectMnemonic,
   }: ContextType = useAppContext();
+  const dialogElement = useRef<HTMLRuxDialogElement>(null)
 
   const handleRuxMenuSelected = (e: any, mnemonic: Mnemonic) => {
     if (e.detail.value === "remove") {
-      const dialog: HTMLRuxDialogElement = document.querySelector(
-        `rux-dialog.watcher-dialog-${rowData.mnemonicId}`
-      )!;
-      dialog.open = true;
+      if (dialogElement.current) dialogElement.current.open = true;
     }
     if (e.detail.value === "investigate") {
       selectMnemonic(mnemonic);
@@ -58,7 +57,7 @@ const WatcherListItem = ({ rowData, chartDataSlope, index }: PropTypes) => {
   return (
     <>
       <RuxDialog
-        className={`watcher-dialog-${rowData.mnemonicId}`}
+        ref={dialogElement}
         confirmText="Yes, Delete"
         denyText="Cancel"
         message="Please confirm you wish to delete the selected item from the Watcher?"
