@@ -6,8 +6,9 @@
   display: grid;
   gap: var(--spacing-2);
   grid-template-columns: calc(20% - 12px) calc(80%);
-  grid-template-rows: calc(55% - 8px) calc(45%);
+  grid-template-rows: calc(4%) calc(53% - 8px) calc(43%);
   grid-template-areas:
+    "breadcrumb breadcrumb"
     "investigate-subsystems star-tracker"
     "investigate-subsystems mnemonics";
 }
