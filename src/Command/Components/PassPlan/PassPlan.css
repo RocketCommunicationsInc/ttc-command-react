@@ -80,15 +80,15 @@ rux-tree.pass-plan_tree-wrapper rux-tree-node::part(text) {
 
 /* Styles to fix row padding */
 rux-tree.pass-plan_tree-wrapper rux-tree-node[aria-level="2"] {
-  padding-block-start: var(--spacing-050);
+  padding-block-start: var(--spacing-1);
 }
 
 rux-tree.pass-plan_tree-wrapper rux-tree-node:first-child {
-  padding-block-start: var(--spacing-050);
+  padding-block-start: var(--spacing-1);
 }
 
 rux-tree.pass-plan_tree-wrapper rux-tree-node:last-child:not([aria-level="2"]) {
-  padding-block-end: var(--spacing-050);
+  padding-block-end: var(--spacing-1);
 }
 
 .pass-plan_tree-content-wrapper {
