@@ -3,7 +3,6 @@ import {
   RuxTree,
   RuxTreeNode,
   RuxStatus,
-  RuxButton,
 } from "@astrouxds/react";
 import "./SubsystemsTree.css";
 
@@ -12,20 +11,13 @@ import { useAppContext, ContextType } from "../../../provider/useAppContext";
 const SubsystemsTree = () => {
   const {
     contact,
-    toggleInvestigate,
     selectedChildSubsystem,
     selectChildSubsystem,
-    resetSelected,
     selectedSubsystem,
   }: ContextType = useAppContext();
 
   const subsystems = contact.subsystems;
   const satName = contact.satellite;
-
-  const handleReturnToCommand = () => {
-    toggleInvestigate();
-    resetSelected();
-  };
 
   return (
     <RuxContainer className="investigate-subsystem">
@@ -58,15 +50,6 @@ const SubsystemsTree = () => {
           </RuxTreeNode>
         ))}
       </RuxTree>
-      <div className="subsystems_footer" slot="footer">
-        <RuxButton
-          borderless
-          icon="keyboard-arrow-left"
-          onClick={() => handleReturnToCommand()}
-        >
-          Return to Command
-        </RuxButton>
-      </div>
     </RuxContainer>
   );
 };
