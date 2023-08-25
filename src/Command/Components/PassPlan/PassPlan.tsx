@@ -8,6 +8,8 @@ import PassList from "./PassList/PassList";
 import { useAppContext, ContextType } from "provider/useAppContext";
 import PrePassComplete from "./PrePassComplete/PrePassComplete";
 import { Mnemonic } from "@astrouxds/mock-data";
+import { RuxSelectCustomEvent } from "@astrouxds/astro-web-components";
+import { addToast } from "utils";
 
 const PassPlan = () => {
   const [command, setCommand] = useState<object>({});
@@ -26,6 +28,13 @@ const PassPlan = () => {
     if (!commandListItem) return;
     setCommandList([...commandList, commandListItem.commandString]);
   };
+
+  const handlePassModeSelect = (e: RuxSelectCustomEvent<void>) => {
+    if (e.target.value === 'automatic') {
+      addToast('Feature not implemented.', false, 800);
+      e.target.value = "semi-auto"
+    }
+  }
 
   useEffect(() => {
     let interval: any;
@@ -55,9 +64,12 @@ const PassPlan = () => {
           className="pass-plan_header-select"
           size="small"
           label="Mode"
+          disabled={ pass !== "Pass" ? true : false }
+          value={ pass !== "Pass" ? "automatic" : "semi-auto" }
+          onRuxchange={(e) => handlePassModeSelect(e)}
         >
-          <RuxOption label="Semi-Auto" value="" />
-          <RuxOption label="Automatic" value="" />
+          <RuxOption label="Automatic" value="automatic" />
+          <RuxOption label="Semi-Auto" value="semi-auto" />
         </RuxSelect>
       </div>
       <div className={`pass-plan_banner ${pass}`}>

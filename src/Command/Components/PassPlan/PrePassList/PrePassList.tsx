@@ -1,9 +1,4 @@
-import {
-  RuxCheckbox,
-  RuxProgress,
-  RuxTree,
-  RuxTreeNode,
-} from "@astrouxds/react";
+import { RuxProgress, RuxStatus, RuxTree, RuxTreeNode } from "@astrouxds/react";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 type PropTypes = {
@@ -32,9 +27,6 @@ const PrePassList = ({ setPass }: PropTypes) => {
     const ruxProgress: HTMLRuxProgressElement[] = Array.from(
       document.querySelectorAll("rux-progress.pre-pass_progress")
     )!;
-    const ruxCheckbox: HTMLRuxCheckboxElement[] = Array.from(
-      document.querySelectorAll("rux-checkbox.pass-plan_checkbox")
-    )!;
 
     // if the current list item is the length of the state function array, set the pass from 'pre-pass' into 'pass'
     if (currentListItem === stateFunctionArray.length) {
@@ -58,7 +50,6 @@ const PrePassList = ({ setPass }: PropTypes) => {
     //for each list item, wait the allotted time and then set the checkbox to checked and the text to complete.
     setTimeout(() => {
       stateFunctionArray[currentListItem]("CONNECTED");
-      ruxCheckbox[currentListItem].checked = true;
 
       // if on the last item, wait a little longer to make sure the user can see the state change to 'complete' before swapping to 'pass'
       if (currentListItem === stateFunctionArray.length - 1) {
@@ -79,7 +70,11 @@ const PrePassList = ({ setPass }: PropTypes) => {
           1
         </div>
         <div className="pass-plan_tree-content-wrapper">
-          <RuxCheckbox className="pass-plan_checkbox" />
+          {aimState === "PENDING" ? (
+            <RuxStatus className="pass-plan_status-symbol" status="standby" />
+          ) : (
+            <RuxStatus className="pass-plan_status-symbol" status="normal" />
+          )}
           AIM = {aimState}
         </div>
         <RuxProgress
@@ -93,7 +88,11 @@ const PrePassList = ({ setPass }: PropTypes) => {
           2
         </div>
         <div className="pass-plan_tree-content-wrapper">
-          <RuxCheckbox className="pass-plan_checkbox" />
+          {sarmState === "PENDING" ? (
+            <RuxStatus className="pass-plan_status-symbol" status="standby" />
+          ) : (
+            <RuxStatus className="pass-plan_status-symbol" status="normal" />
+          )}
           SARM = {sarmState}
         </div>
         <RuxProgress
@@ -107,7 +106,11 @@ const PrePassList = ({ setPass }: PropTypes) => {
           3
         </div>
         <div className="pass-plan_tree-content-wrapper">
-          <RuxCheckbox className="pass-plan_checkbox" />
+          {lockState === "PENDING" ? (
+            <RuxStatus className="pass-plan_status-symbol" status="standby" />
+          ) : (
+            <RuxStatus className="pass-plan_status-symbol" status="normal" />
+          )}
           LOCK = {lockState}
         </div>
         <RuxProgress
@@ -121,7 +124,11 @@ const PrePassList = ({ setPass }: PropTypes) => {
           4
         </div>
         <div className="pass-plan_tree-content-wrapper">
-          <RuxCheckbox className="pass-plan_checkbox" />
+          {aosState === "PENDING" ? (
+            <RuxStatus className="pass-plan_status-symbol" status="standby" />
+          ) : (
+            <RuxStatus className="pass-plan_status-symbol" status="normal" />
+          )}
           AOS = {aosState}
         </div>
         <RuxProgress
@@ -135,7 +142,11 @@ const PrePassList = ({ setPass }: PropTypes) => {
           5
         </div>
         <div className="pass-plan_tree-content-wrapper">
-          <RuxCheckbox className="pass-plan_checkbox" />
+          {vccState === "PENDING" ? (
+            <RuxStatus className="pass-plan_status-symbol" status="standby" />
+          ) : (
+            <RuxStatus className="pass-plan_status-symbol" status="normal" />
+          )}
           VCC = {vccState}
         </div>
         <RuxProgress
@@ -149,7 +160,11 @@ const PrePassList = ({ setPass }: PropTypes) => {
           6
         </div>
         <div className="pass-plan_tree-content-wrapper">
-          <RuxCheckbox className="pass-plan_checkbox" />
+          {passPlanState === "PENDING" ? (
+            <RuxStatus className="pass-plan_status-symbol" status="standby" />
+          ) : (
+            <RuxStatus className="pass-plan_status-symbol" status="normal" />
+          )}
           PASS PLAN = {passPlanState}
         </div>
         <RuxProgress
