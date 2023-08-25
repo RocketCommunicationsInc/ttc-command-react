@@ -6,7 +6,7 @@
   display: grid;
   gap: var(--spacing-2);
   grid-template-columns: calc(20% - 12px) calc(80%);
-  grid-template-rows: calc(4%) calc(53% - 8px) calc(43%);
+  grid-template-rows: calc(4%) calc(52.5% - 8px) calc(42.5%);
   grid-template-areas:
     "breadcrumb breadcrumb"
     "investigate-subsystems star-tracker"
@@ -15,6 +15,14 @@
 
 .investigate-background[data-active="false"] {
   display: none;
+}
+
+rux-button.investigate-breadcrumb {
+  width: fit-content;
+}
+
+rux-button.investigate-breadcrumb::part(container) {
+  padding-inline-start: 0;
 }
 
 .cytoscape-container {

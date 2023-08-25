@@ -24,6 +24,7 @@ const Investigate = () => {
       <RuxButton
         className="investigate-breadcrumb"
         borderless
+        size="small"
         icon="keyboard-arrow-left"
         onClick={() => handleReturnToCommand()}
       >
