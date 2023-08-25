@@ -47,23 +47,20 @@ const MnemonicPopUp = ({ triggerValue, data }: PropTypes) => {
   };
 
   return (
-    <RuxPopUp
-      placement="right-end"
-      strategy="fixed"
-      className="mnemonic-pop-up"
-    >
+    <RuxPopUp placement="right" strategy="fixed" className="mnemonic-pop-up">
       <RuxCard>
         <span slot="header">{data.mnemonicId}</span>
         {<LineChart chartData={menmonicData} />}
         <div>
-          <span>Value</span>
+          <span>Value:</span>
           <span>
             {data.currentValue} {data.unit}
           </span>
         </div>
         <div>
-          <span className="subsystem">Subsystem</span>
+          <span className="subsystem">Subsystem:</span>
           <RuxButton
+            className="subsystem-button"
             size="small"
             borderless
             onClick={() => handleSubsystemPassPlanClick()}

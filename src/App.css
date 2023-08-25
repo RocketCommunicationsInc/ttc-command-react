@@ -82,6 +82,12 @@ rux-status::part(status) {
   margin-inline: auto;
 }
 
+/* GLOBAL TREE STYLES */
+
+rux-tree-node::part(node):focus {
+  outline-offset: -1px;
+}
+
 /* INVESTIGATE OVERLAY STYLES */
 
 .investigate__overlay {
