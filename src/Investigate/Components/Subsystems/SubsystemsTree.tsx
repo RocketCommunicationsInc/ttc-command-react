@@ -17,27 +17,22 @@ const SubsystemsTree = () => {
     selectAssemblyDevice,
     selectedAssemblyDeviceName,
     selectedSubsystem,
+    selectSubsystem,
   }: ContextType = useAppContext();
   const tree = useRef<HTMLRuxTreeElement | null>(null);
 
   const subsystems = contact.subsystems;
   const satName = contact.satellite;
 
-  //we need to make sure that the correct node is selected
+  //we need to make sure that the correct node is selected and its parents are expanded
   useEffect(() => {
     if (!tree.current) return;
+
     const treeNodes = Array.from(
       tree.current.querySelectorAll("rux-tree-node")
     );
+
     const selectedElement = treeNodes.find((treeItem) => {
-      // const treeItemID = treeItem.id;
-      // const parentItemID = treeItem.parentElement
-      //   ? treeItem.parentElement.id
-      //   : null;
-      // const grandparentItemID = treeItem.parentElement?.parentElement
-      // ? treeItem.parentElement.parentElement.id
-      // : null;
-      // console.log(selectedAssemblyDeviceName);
       if (selectedAssemblyDeviceName) {
         return (
           treeItem.id ===
@@ -56,10 +51,6 @@ const SubsystemsTree = () => {
       } else return null;
     });
     if (selectedElement && !selectedElement?.hasAttribute("selected")) {
-      if (selectedElement.ariaLevel === "1") {
-        selectedElement.setSelected(true);
-        selectedElement.setExpanded(true);
-      }
       const parentElement =
         selectedElement.parentElement as HTMLRuxTreeNodeElement;
       const grandparentElement =
@@ -76,7 +67,13 @@ const SubsystemsTree = () => {
       <RuxTree ref={tree}>
         {subsystems.map((subsystem, index) => (
           <RuxTreeNode
-            // expanded={selectedSubsystem.name === subsystem.name}
+            onRuxtreenodeselected={(e) => {
+              if (e.target !== e.currentTarget) {
+                return;
+              }
+              selectSubsystem(subsystem);
+              selectChildSubsystem(subsystem.childSubsystems[0]);
+            }}
             id={`subsystem${subsystem.name}`}
             key={index}
           >
