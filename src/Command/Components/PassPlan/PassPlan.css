@@ -124,6 +124,10 @@ rux-tree.pass-plan_tree-wrapper rux-tree-node:last-child:not([aria-level="2"]) {
   margin-right: var(--spacing-2);
 }
 
+.pass-plan_status-symbol {
+  padding-inline-end: var(--spacing-4);
+}
+
 /* Pre-Pass Complete Styles */
 
 .pass_pre-pass-complete-wrapper {

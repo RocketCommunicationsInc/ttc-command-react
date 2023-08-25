@@ -3,7 +3,6 @@ import {
   RuxTree,
   RuxTreeNode,
   RuxStatus,
-  RuxButton,
 } from "@astrouxds/react";
 import "./SubsystemsTree.css";
 
@@ -13,8 +12,7 @@ import { AssemblyDevice, ChildSubsystem } from "@astrouxds/mock-data";
 const SubsystemsTree = () => {
   const {
     contact,
-    toggleInvestigate,
-    // selectedChildSubsystem,
+    selectedChildSubsystem,
     selectChildSubsystem,
     selectAssemblyDevice,
     resetSelected,
@@ -23,11 +21,6 @@ const SubsystemsTree = () => {
 
   const subsystems = contact.subsystems;
   const satName = contact.satellite;
-
-  const handleReturnToCommand = () => {
-    toggleInvestigate();
-    resetSelected();
-  };
 
   const handleSelected = (
     childSubsystem: ChildSubsystem,
@@ -83,15 +76,6 @@ const SubsystemsTree = () => {
           </RuxTreeNode>
         ))}
       </RuxTree>
-      <div className="subsystems_footer" slot="footer">
-        <RuxButton
-          borderless
-          icon="keyboard-arrow-left"
-          onClick={() => handleReturnToCommand()}
-        >
-          Return to Command
-        </RuxButton>
-      </div>
     </RuxContainer>
   );
 };

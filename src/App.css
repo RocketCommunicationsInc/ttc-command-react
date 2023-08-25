@@ -54,6 +54,10 @@ rux-container.investigate-subsystem {
   grid-area: investigate-subsystems;
 }
 
+rux-button.investigate-breadcrumb {
+  grid-area: breadcrumb;
+}
+
 /* GlOBAL TABLE STYLES */
 
 .table-wrapper {
