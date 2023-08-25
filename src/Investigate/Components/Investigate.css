@@ -1,12 +1,13 @@
 .investigate-background[data-active="true"] {
   height: calc(100% - var(--spacing-24));
   padding: var(--spacing-3);
+  padding-block-start: var(--spacing-2);
   background-color: var(--color-background-base-default);
   color: var(--color-text-primary);
   display: grid;
   gap: var(--spacing-2);
   grid-template-columns: calc(20% - 12px) calc(80%);
-  grid-template-rows: calc(4%) calc(52.5% - 8px) calc(42.5%);
+  grid-template-rows: calc(2.5%) calc(53.25% - 8px) calc(43.25%);
   grid-template-areas:
     "breadcrumb breadcrumb"
     "investigate-subsystems star-tracker"
@@ -23,6 +24,7 @@ rux-button.investigate-breadcrumb {
 
 rux-button.investigate-breadcrumb::part(container) {
   padding-inline-start: 0;
+  padding-block: 0;
 }
 
 .cytoscape-container {
