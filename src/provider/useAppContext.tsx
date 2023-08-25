@@ -119,7 +119,6 @@ const AppProvider = ({ children }: PropTypes) => {
       return;
     setSelectedSubsystemName(subsystem.name);
     setSelectedChildSubsystemName(childSubsystem.name);
-    setSelectedAssemblyDeviceName(childSubsystem.assemblyDevices[0].name);
     setSelectedMnemonic(null);
   };
 

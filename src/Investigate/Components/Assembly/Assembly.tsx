@@ -119,6 +119,7 @@ const Assembly = () => {
   };
 
   useEffect(() => {
+    console.log("run!", selectedAssemblyDeviceName);
     if (selectedAssemblyDeviceName && cy) {
       cy.nodes().deselect();
       cy.$(`node[label="${selectedAssemblyDeviceName}"]`).select();
