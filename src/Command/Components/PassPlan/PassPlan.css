@@ -105,7 +105,7 @@ rux-tree.pass-plan_tree-wrapper rux-tree-node:last-child:not([aria-level="2"]) {
   margin-inline-start: auto;
 }
 
-rux-tree-node[aria-level="2"]::part(node) {
+.pass-plan_tree-wrapper rux-tree-node[aria-level="2"]::part(node) {
   padding-left: var(--spacing-20);
 }
 
