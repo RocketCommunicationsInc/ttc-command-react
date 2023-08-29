@@ -102,7 +102,7 @@ const Mnemonics = ({ title }: PropTypes) => {
         <RuxInput
           onRuxinput={(e) => setSearchValue(e.target.value)}
           type="search"
-          placeholder="Filter by name"
+          placeholder="Search by name..."
         />
         <RuxSegmentedButton
           selected={filterValue}

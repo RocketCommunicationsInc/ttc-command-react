@@ -1,3 +1,13 @@
 .investigate-subsystem rux-tree {
   overflow: auto;
 }
+
+.investigate-subsystem rux-tree-node {
+  cursor: pointer;
+  align-items: center;
+}
+
+.investigate-subsystem rux-tree-node::part(text) {
+  display: flex;
+  align-items: center;
+}
