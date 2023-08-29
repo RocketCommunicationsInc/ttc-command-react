@@ -44,7 +44,7 @@
 }
 
 .table-wrapper.mnemonics rux-table-header-cell:has(rux-icon.visible) {
-  color: var(--color-text-interactive-default);
+  cursor: pointer;
 }
 
 .table-wrapper.mnemonics rux-table-header-cell[data-sortprop="status"] {
