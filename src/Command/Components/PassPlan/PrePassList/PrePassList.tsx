@@ -1,86 +1,124 @@
 import { RuxProgress, RuxStatus, RuxTree, RuxTreeNode } from "@astrouxds/react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 
 type PropTypes = {
   setPass: Dispatch<SetStateAction<string>>;
 };
 
 const PrePassList = ({ setPass }: PropTypes) => {
-  const [aimState, setAimState] = useState<string>("PENDING");
-  const [sarmState, setSarmState] = useState<string>("PENDING");
-  const [lockState, setLockState] = useState<string>("PENDING");
-  const [aosState, setAosState] = useState<string>("PENDING");
-  const [vccState, setVccState] = useState<string>("PENDING");
-  const [passPlanState, setPassPlanState] = useState<string>("PENDING");
+  const [passPlanListItemState, setPassPlanListItemState] = useState<{
+    [key: string]: string;
+  }>({
+    aimState: "PENDING",
+    sarmState: "PENDING",
+    lockState: "PENDING",
+    aosState: "PENDING",
+    vccState: "PENDING",
+    passPlanState: "PENDING",
+  });
   let [currentListItem, setCurrentListItem] = useState<number>(0);
+  let [stateValue, setStateValue] = useState<number>(0);
+
+  const progressRefs = useRef<HTMLRuxProgressElement[]>([]);
+
+  const stateArray = ["AIM", "SARM", "LOCK", "AOS", "VCC", "PASS PLAN"];
 
   useEffect(() => {
-    // Grab an array of the state functions for each table row, their progress bars and checkboxes
-    const stateFunctionArray = [
-      setAimState,
-      setSarmState,
-      setLockState,
-      setAosState,
-      setVccState,
-      setPassPlanState,
-    ];
-    const ruxProgress: HTMLRuxProgressElement[] = Array.from(
-      document.querySelectorAll("rux-progress.pre-pass_progress")
-    )!;
-
-    // if the current list item is the length of the state function array, set the pass from 'pre-pass' into 'pass'
-    if (currentListItem === stateFunctionArray.length) {
-      setPass("Pre-Pass-Complete");
-      return;
-    }
-
-    // every 7 milliseconds for each progress bar, set the progress value from 0-100 (filling the bar)
-    let value: number = 0;
+    // every 20 milliseconds for each progress bar, set the progress value from 0-100 (filling the bar)
     const loadBar = () => {
-      if (value > 100) {
+      if (stateValue > 100) {
+        // if the current list item is the length of the state function array, set the pre-pass as complete
+        if (currentListItem === stateArray.length) {
+          setPass("Pre-Pass-Complete");
+          clearInterval(progressInterval);
+          return;
+        }
+
+        let listKey = Object.keys(passPlanListItemState)[currentListItem];
+        setPassPlanListItemState({
+          ...passPlanListItemState,
+          [listKey]: "CONNECTED",
+        });
+
+        setCurrentListItem((prevState) => prevState + 1);
+        setStateValue(0);
         clearInterval(progressInterval);
       } else {
-        ruxProgress[currentListItem].value = value;
-        value = value + 1;
+        setStateValue((prevValue) => prevValue + 1);
+        if (currentListItem < stateArray.length) {
+          progressRefs.current[currentListItem].value = stateValue;
+        }
       }
     };
 
-    const progressInterval = setInterval(loadBar, 10);
+    const progressInterval = setInterval(loadBar, 20);
 
-    //for each list item, wait the allotted time and then set the checkbox to checked and the text to complete.
-    setTimeout(() => {
-      stateFunctionArray[currentListItem]("CONNECTED");
-
-      // if on the last item, wait a little longer to make sure the user can see the state change to 'complete' before swapping to 'pass'
-      if (currentListItem === stateFunctionArray.length - 1) {
-        setTimeout(() => {
-          setCurrentListItem(currentListItem + 1);
-        }, 300);
-      } else {
-        setCurrentListItem(currentListItem + 1);
-      }
-    }, 1500);
-    return;
-  }, [currentListItem, setPass]);
+    return () => {
+      clearInterval(progressInterval);
+    };
+  }, [
+    currentListItem,
+    passPlanListItemState,
+    setPass,
+    stateArray.length,
+    stateValue,
+  ]);
 
   return (
     <RuxTree className="pass-plan_tree-wrapper">
-      <RuxTreeNode>
+      {stateArray.map((listItem, index) => {
+        return (
+          <RuxTreeNode key={`${listItem}-${index}`}>
+            <div slot="prefix" className="pass-plan_number-wrapper">
+              {index + 1}
+            </div>
+            <div className="pass-plan_tree-content-wrapper">
+              {passPlanListItemState[
+                Object.keys(passPlanListItemState)[index]
+              ] === "PENDING" ? (
+                <RuxStatus
+                  className="pass-plan_status-symbol"
+                  status="standby"
+                />
+              ) : (
+                <RuxStatus
+                  className="pass-plan_status-symbol"
+                  status="normal"
+                />
+              )}
+              {listItem} ={" "}
+              {passPlanListItemState[Object.keys(passPlanListItemState)[index]]}
+            </div>
+            <RuxProgress
+              slot="suffix"
+              className="pre-pass_progress"
+              hideLabel={true}
+              ref={(element) =>
+                (progressRefs.current[index] =
+                  element as HTMLRuxProgressElement)
+              }
+            />
+          </RuxTreeNode>
+        );
+      })}
+
+      {/* <RuxTreeNode>
         <div slot="prefix" className="pass-plan_number-wrapper">
           1
         </div>
         <div className="pass-plan_tree-content-wrapper">
-          {aimState === "PENDING" ? (
+          {passPlanListItemState.aimState === "PENDING" ? (
             <RuxStatus className="pass-plan_status-symbol" status="standby" />
           ) : (
             <RuxStatus className="pass-plan_status-symbol" status="normal" />
           )}
-          AIM = {aimState}
+          AIM = {passPlanListItemState.aimState}
         </div>
         <RuxProgress
           slot="suffix"
           className="pre-pass_progress"
           hideLabel={true}
+          ref={(ref) => refs.current.push(ref as HTMLRuxProgressElement)}
         />
       </RuxTreeNode>
       <RuxTreeNode>
@@ -99,6 +137,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
           slot="suffix"
           className="pre-pass_progress"
           hideLabel={true}
+          ref={(ref) => refs.current.push(ref as HTMLRuxProgressElement)}
         />
       </RuxTreeNode>
       <RuxTreeNode>
@@ -117,6 +156,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
           slot="suffix"
           className="pre-pass_progress"
           hideLabel={true}
+          ref={(ref) => refs.current.push(ref as HTMLRuxProgressElement)}
         />
       </RuxTreeNode>
       <RuxTreeNode>
@@ -135,6 +175,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
           slot="suffix"
           className="pre-pass_progress"
           hideLabel={true}
+          ref={(ref) => refs.current.push(ref as HTMLRuxProgressElement)}
         />
       </RuxTreeNode>
       <RuxTreeNode>
@@ -153,6 +194,7 @@ const PrePassList = ({ setPass }: PropTypes) => {
           slot="suffix"
           className="pre-pass_progress"
           hideLabel={true}
+          ref={(ref) => refs.current.push(ref as HTMLRuxProgressElement)}
         />
       </RuxTreeNode>
       <RuxTreeNode>
@@ -171,8 +213,9 @@ const PrePassList = ({ setPass }: PropTypes) => {
           slot="suffix"
           className="pre-pass_progress"
           hideLabel={true}
+          ref={(ref) => refs.current.push(ref as HTMLRuxProgressElement)}
         />
-      </RuxTreeNode>
+      </RuxTreeNode> */}
     </RuxTree>
   );
 };
