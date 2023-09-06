@@ -6,173 +6,84 @@ type PropTypes = {
 };
 
 const PrePassList = ({ setPass }: PropTypes) => {
-  const [aimState, setAimState] = useState<string>("PENDING");
-  const [sarmState, setSarmState] = useState<string>("PENDING");
-  const [lockState, setLockState] = useState<string>("PENDING");
-  const [aosState, setAosState] = useState<string>("PENDING");
-  const [vccState, setVccState] = useState<string>("PENDING");
-  const [passPlanState, setPassPlanState] = useState<string>("PENDING");
-  let [currentListItem, setCurrentListItem] = useState<number>(0);
+  const [passPlanListItemState, setPassPlanListItemState] = useState<{
+    [key: string]: number;
+  }>({
+    aim: 0,
+    sarm: 0,
+    lock: 0,
+    aos: 0,
+    vcc: 0,
+    passPlan: 0,
+  });
 
   useEffect(() => {
-    // Grab an array of the state functions for each table row, their progress bars and checkboxes
-    const stateFunctionArray = [
-      setAimState,
-      setSarmState,
-      setLockState,
-      setAosState,
-      setVccState,
-      setPassPlanState,
-    ];
-    const ruxProgress: HTMLRuxProgressElement[] = Array.from(
-      document.querySelectorAll("rux-progress.pre-pass_progress")
-    )!;
-
-    // if the current list item is the length of the state function array, set the pass from 'pre-pass' into 'pass'
-    if (currentListItem === stateFunctionArray.length) {
-      setPass("Pre-Pass-Complete");
-      return;
-    }
-
-    // every 7 milliseconds for each progress bar, set the progress value from 0-100 (filling the bar)
-    let value: number = 0;
+    // every 20 milliseconds for each progress bar, set the progress value from 0-100 (filling the bar)
     const loadBar = () => {
-      if (value > 100) {
-        clearInterval(progressInterval);
-      } else {
-        ruxProgress[currentListItem].value = value;
-        value = value + 1;
+      if (Object.values(passPlanListItemState).every(value => value === 100)) {
+        setPass("Pre-Pass-Complete");
+        clearInterval(progressInterval)
+        return
+      };
+
+      for (const key in passPlanListItemState) { 
+        const value = passPlanListItemState[key]
+        if (value < 100 ) {
+          setPassPlanListItemState((prevState) => {
+            return {
+              ...passPlanListItemState,
+              [key]: prevState[key] + 1,
+            }
+          });
+          break
+        } else { 
+          continue
+        }
+        
       }
     };
 
-    const progressInterval = setInterval(loadBar, 10);
+    const progressInterval = setInterval(loadBar, 40);
 
-    //for each list item, wait the allotted time and then set the checkbox to checked and the text to complete.
-    setTimeout(() => {
-      stateFunctionArray[currentListItem]("CONNECTED");
-
-      // if on the last item, wait a little longer to make sure the user can see the state change to 'complete' before swapping to 'pass'
-      if (currentListItem === stateFunctionArray.length - 1) {
-        setTimeout(() => {
-          setCurrentListItem(currentListItem + 1);
-        }, 300);
-      } else {
-        setCurrentListItem(currentListItem + 1);
-      }
-    }, 1500);
-    return;
-  }, [currentListItem, setPass]);
+    return () => {
+      clearInterval(progressInterval);
+    };
+  }, [
+    passPlanListItemState,
+    setPass,
+  ]);
 
   return (
     <RuxTree className="pass-plan_tree-wrapper">
-      <RuxTreeNode>
-        <div slot="prefix" className="pass-plan_number-wrapper">
-          1
-        </div>
-        <div className="pass-plan_tree-content-wrapper">
-          {aimState === "PENDING" ? (
-            <RuxStatus className="pass-plan_status-symbol" status="standby" />
-          ) : (
-            <RuxStatus className="pass-plan_status-symbol" status="normal" />
-          )}
-          AIM = {aimState}
-        </div>
-        <RuxProgress
-          slot="suffix"
-          className="pre-pass_progress"
-          hideLabel={true}
-        />
-      </RuxTreeNode>
-      <RuxTreeNode>
-        <div slot="prefix" className="pass-plan_number-wrapper">
-          2
-        </div>
-        <div className="pass-plan_tree-content-wrapper">
-          {sarmState === "PENDING" ? (
-            <RuxStatus className="pass-plan_status-symbol" status="standby" />
-          ) : (
-            <RuxStatus className="pass-plan_status-symbol" status="normal" />
-          )}
-          SARM = {sarmState}
-        </div>
-        <RuxProgress
-          slot="suffix"
-          className="pre-pass_progress"
-          hideLabel={true}
-        />
-      </RuxTreeNode>
-      <RuxTreeNode>
-        <div slot="prefix" className="pass-plan_number-wrapper">
-          3
-        </div>
-        <div className="pass-plan_tree-content-wrapper">
-          {lockState === "PENDING" ? (
-            <RuxStatus className="pass-plan_status-symbol" status="standby" />
-          ) : (
-            <RuxStatus className="pass-plan_status-symbol" status="normal" />
-          )}
-          LOCK = {lockState}
-        </div>
-        <RuxProgress
-          slot="suffix"
-          className="pre-pass_progress"
-          hideLabel={true}
-        />
-      </RuxTreeNode>
-      <RuxTreeNode>
-        <div slot="prefix" className="pass-plan_number-wrapper">
-          4
-        </div>
-        <div className="pass-plan_tree-content-wrapper">
-          {aosState === "PENDING" ? (
-            <RuxStatus className="pass-plan_status-symbol" status="standby" />
-          ) : (
-            <RuxStatus className="pass-plan_status-symbol" status="normal" />
-          )}
-          AOS = {aosState}
-        </div>
-        <RuxProgress
-          slot="suffix"
-          className="pre-pass_progress"
-          hideLabel={true}
-        />
-      </RuxTreeNode>
-      <RuxTreeNode>
-        <div slot="prefix" className="pass-plan_number-wrapper">
-          5
-        </div>
-        <div className="pass-plan_tree-content-wrapper">
-          {vccState === "PENDING" ? (
-            <RuxStatus className="pass-plan_status-symbol" status="standby" />
-          ) : (
-            <RuxStatus className="pass-plan_status-symbol" status="normal" />
-          )}
-          VCC = {vccState}
-        </div>
-        <RuxProgress
-          slot="suffix"
-          className="pre-pass_progress"
-          hideLabel={true}
-        />
-      </RuxTreeNode>
-      <RuxTreeNode>
-        <div slot="prefix" className="pass-plan_number-wrapper">
-          6
-        </div>
-        <div className="pass-plan_tree-content-wrapper">
-          {passPlanState === "PENDING" ? (
-            <RuxStatus className="pass-plan_status-symbol" status="standby" />
-          ) : (
-            <RuxStatus className="pass-plan_status-symbol" status="normal" />
-          )}
-          PASS PLAN = {passPlanState}
-        </div>
-        <RuxProgress
-          slot="suffix"
-          className="pre-pass_progress"
-          hideLabel={true}
-        />
-      </RuxTreeNode>
+      {Object.entries(passPlanListItemState).map(([key, value], index) => {
+        return (
+          <RuxTreeNode key={`${key}`}>
+            <div slot="prefix" className="pass-plan_number-wrapper">
+              {index + 1}
+            </div>
+            <div className="pass-plan_tree-content-wrapper">
+              {value < 100 ? (
+                <RuxStatus
+                  className="pass-plan_status-symbol"
+                  status="standby"
+                />
+              ) : (
+                <RuxStatus
+                  className="pass-plan_status-symbol"
+                  status="normal"
+                />
+              )}
+              {`${key.toUpperCase()} = ${value >= 100 ? 'CONNECTED' : 'PENDING'}`}
+            </div>
+            <RuxProgress
+              slot="suffix"
+              className="pre-pass_progress"
+              hideLabel={true}
+              value={passPlanListItemState[key]}
+            />
+          </RuxTreeNode>
+        );
+      })}
     </RuxTree>
   );
 };
