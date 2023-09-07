@@ -65,6 +65,7 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
 
   function menuSelect(e: CustomEvent) {
     const { detail } = e;
+    if (detail.href) return;
     if (detail.value === "themeToggle") {
       toggleTheme();
       document.body.classList.toggle("light-theme");
@@ -102,6 +103,9 @@ const GlobalStatusBar = ({ appName }: { appName: string }) => {
           <RuxMenu onRuxmenuselected={(e) => menuSelect(e)}>
             <RuxMenuItem value="investigate">
               TTC {showInvestigate ? "Command" : "Investigate"}
+            </RuxMenuItem>
+            <RuxMenuItem href="https://monitor-ttc.netlify.app/">
+              TTC Monitor
             </RuxMenuItem>
             <RuxMenuItemDivider />
             <RuxMenuItem value="themeToggle">
