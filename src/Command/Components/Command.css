@@ -5,7 +5,7 @@
   color: var(--color-text-primary);
   display: grid;
   gap: var(--spacing-2);
-  grid-template-columns: calc(30% - 4px) calc(45% - 4px) calc(25%);
+  grid-template-columns: calc(30% - 5px) calc(45% - 5px) calc(25% - 5px);
   grid-template-rows: calc(31.6%) calc(29.05%) calc(39.35% - 16px);
   grid-template-areas:
     "alerts pass-plan link-status"
