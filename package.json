@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@astrouxds/mock-data": "^0.6.4",
+    "@astrouxds/mock-data": "^0.6.5",
     "@astrouxds/react": "^7.22.1",
     "@astrouxds/tokens": "^1.12.0",
     "@testing-library/jest-dom": "^6.4.6",
